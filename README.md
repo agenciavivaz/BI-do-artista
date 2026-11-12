@@ -5,7 +5,8 @@ Painel público, sem login, que transforma exports da Chartmetric em decisões d
 Primeiro artista: **Fresno** → `/fresno`
 
 - **v1 (no ar):** relatório estático — `public/fresno/index.html`
-- **v2 (a construir):** sistema "Camarim" com perguntas, raciocínio visível e simuladores — ver [PRD v2](docs/PRD-v2-sistema.md) e `CLAUDE.md`
+- **v2 (no ar):** sistema "Camarim" com perguntas, raciocínio visível, mesa de cruzamento e simuladores — `app/` (Vite + React + TypeScript). Ver [PRD v2](docs/PRD-v2-sistema.md) e `CLAUDE.md`
+- O relatório v1 continua em `/fresno/relatorio`
 
 ## Como funciona
 
@@ -43,7 +44,17 @@ O que precisa revisar no `config.json`: `tema`, `carta`, `casos_show_cidade` (sh
 
 ## Deploy na Vercel
 
-Importar o repositório na Vercel → Framework: *Other* → sem build. O `vercel.json` já aponta `outputDirectory: public`, ativa URLs limpas e marca tudo como `noindex`.
+Importar o repositório na Vercel → Framework: *Other* (a Vercel lê o `vercel.json`). Ele roda `cd app && npm ci && npm run build`, publica `app/dist`, ativa URLs limpas, reescreve as rotas do app para `index.html` e marca tudo como `noindex`. Cada commit na `main` publica sozinho.
+
+Desenvolvimento local do app:
+
+```bash
+cd app
+npm ci
+npm run dev          # http://localhost:5173/fresno
+npm run build        # tsc + vite build -> app/dist
+npm run test:match   # testa o casamento de texto livre (PRD §8)
+```
 
 ## Documentos
 

@@ -1,0 +1,37 @@
+/* Tokens do Camarim — PRD v2 §6.2. Cor do sistema é fixa; só a "capa" muda por artista. */
+:root {
+  --palco: #16141d;
+  --coxia: #1f1c28;
+  --ferragem: #2e2a3a;
+  --luz: #ede9f2;
+  --fumaca: #9c95ab;
+  --refletor: #f2b33d;
+  --capa: #ff4d3d; /* sobrescrito por config.json */
+
+  --dado-1: #e5533f;
+  --dado-2: #3a8fd6;
+  --dado-pos: #2e9e8f;
+  --dado-neg: #e5533f;
+  --dado-neutro: #4a4250;
+
+  --font-display: 'Bricolage Grotesque', 'Arial Narrow', system-ui, sans-serif;
+  --font-ui: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* escala 1,25 */
+  --t-13: 0.8125rem;
+  --t-15: 0.9375rem;
+  --t-17: 1.0625rem;
+  --t-21: 1.3125rem;
+  --t-26: 1.625rem;
+  --t-33: 2.0625rem;
+  --t-41: 2.5625rem;
+  --t-52: 3.25rem;
+
+  --r-controle: 6px;
+  --r-painel: 12px;
+  --r-pill: 999px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 200ms;
+  --alvo: 44px;
+}
