@@ -17,7 +17,7 @@ import answers  # noqa: E402
 import build as build_v1  # noqa: E402
 from analytics import ROOT  # noqa: E402
 
-PUBLIC_CFG = ('nome', 'subtitulo', 'cidade_origem', 'desde', 'carta', 'contato', 'tema')
+PUBLIC_CFG = ('nome', 'subtitulo', 'cidade_origem', 'desde', 'carta', 'contato', 'tema', 'calibracao')
 
 
 def main(slug):

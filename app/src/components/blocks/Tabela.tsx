@@ -1,5 +1,6 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { compact, dec, int, signed } from '../../lib/format';
+import { CONFIANCA } from '../../lib/publico';
 import { FAIXAS } from '../../types';
 
 function Spark({ v }: { v: number[] }) {
@@ -17,8 +18,12 @@ export const COLUNAS: Record<string, Col> = {
   por100k: { rotulo: 'Ouvintes por 100 mil hab.', num: true, ...txt((v) => int(v)) },
   demanda_rel: { rotulo: 'Demanda vs mediana', num: true, ...txt((v) => `${dec(v, 1)}x`) },
   faixa: { rotulo: 'Faixa de cachê', ...txt((v) => FAIXAS[v as keyof typeof FAIXAS]?.rotulo ?? String(v)) },
-  ingressos_min: { rotulo: 'Ingressos (mín.)', num: true, ...txt((v) => int(v)) },
-  ingressos_max: { rotulo: 'Ingressos (máx.)', num: true, ...txt((v) => int(v)) },
+  ingressos_min: { rotulo: 'Público provável (mín.)', num: true, ...txt((v) => int(v)) },
+  ingressos_max: { rotulo: 'Público provável (máx.)', num: true, ...txt((v) => int(v)) },
+  publico: { rotulo: 'Público provável', num: true, ...txt((v) => int(v)) },
+  conv_pct: { rotulo: 'Conversão da base', num: true, ...txt((v) => `${dec(v, 1)}%`) },
+  base_fa: { rotulo: 'Base de fãs na praça', num: true, ...txt((v) => int(v)) },
+  confianca: { rotulo: 'Confiança', ...txt((v) => CONFIANCA[v as string]?.rotulo ?? String(v)) },
   yt_3m: { rotulo: 'YouTube em 3 meses', num: true, ...txt((v) => (v == null ? '—' : signed(v, 0))) },
   afinidade: { rotulo: 'Afinidade', num: true, ...txt((v) => (v == null ? '—' : dec(v, 1))) },
   faixa_musica: { rotulo: 'Música', ...txt((v) => v) },

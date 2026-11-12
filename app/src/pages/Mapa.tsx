@@ -4,6 +4,7 @@ import { MapaBR } from '../components/blocks/Mapa';
 import { Gaveta } from '../components/shell/Gaveta';
 import { useArtist } from '../data/ArtistContext';
 import { dec, int, signed } from '../lib/format';
+import { CONFIANCA, fraseAncora } from '../lib/publico';
 import { FAIXAS, type Cidade } from '../types';
 
 function Dado({ rotulo, valor, sub }: { rotulo: string; valor: string; sub?: string }) {
@@ -51,7 +52,15 @@ export default function MapaPage() {
               <Dado rotulo="Ouvintes por 100 mil habitantes" valor={int(sel.por100k)} sub={`mediana das praças: ${int(data.cidades_mediana_100k)}`} />
               <Dado rotulo="Demanda vs mediana" valor={`${dec(sel.demanda_rel, 1)}x`} />
               <Dado rotulo="Faixa de cachê" valor={FAIXAS[sel.faixa].rotulo} />
-              <Dado rotulo="Ingressos prováveis (3% a 5%)" valor={`${int(sel.ingressos_min)} a ${int(sel.ingressos_max)}`} />
+              <Dado
+                rotulo="Público provável num show próprio"
+                valor={`${int(sel.publico_min)} a ${int(sel.publico_max)}`}
+                sub={`${dec(sel.conv_pct, 1)}% da base de fãs daqui · ${CONFIANCA[sel.confianca].rotulo}`}
+              />
+              {sel.publico_ano && (
+                <Dado rotulo="No ano" valor={int(sel.publico_ano)} sub={`${sel.datas_ano} datas próprias por ano`} />
+              )}
+              {sel.ancora && <Dado rotulo="Último show próprio aqui" valor={sel.ancora.local} sub={fraseAncora(sel.ancora)} />}
               <Dado rotulo="Views no YouTube, 3 meses" valor={sel.yt_3m == null ? 'sem dado' : signed(sel.yt_3m, 0)} />
             </dl>
             <div className="chips">

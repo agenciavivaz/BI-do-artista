@@ -9,7 +9,7 @@ type Aba = { id: string; nome: string; blocos: (nome: string) => BlocoT[] };
 const ABAS: Aba[] = [
   { id: 'pracas', nome: 'Praças', blocos: () => [
     { tipo: 'mapa', dados: 'cidades' },
-    { tipo: 'tabela', dados: 'cidades', colunas: ['cidade', 'ouvintes', 'por100k', 'demanda_rel', 'faixa', 'ingressos_min', 'ingressos_max', 'yt_3m'], titulo: 'Todas as praças' },
+    { tipo: 'tabela', dados: 'cidades', colunas: ['cidade', 'ouvintes', 'por100k', 'demanda_rel', 'faixa', 'base_fa', 'conv_pct', 'publico', 'confianca', 'yt_3m'], titulo: 'Todas as praças' },
     { tipo: 'barras', dados: 'cidades', campo: 'yt_3m' },
   ] },
   { id: 'shows', nome: 'Shows', blocos: () => [

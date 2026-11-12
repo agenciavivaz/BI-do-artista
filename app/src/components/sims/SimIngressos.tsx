@@ -1,18 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { useArtist } from '../../data/ArtistContext';
-import { dec, dezena, int } from '../../lib/format';
+import { dec, int } from '../../lib/format';
+import { CASAS, CONFIANCA, casaPara, fraseAncora, pct, pub, publicoCom } from '../../lib/publico';
 import { evento } from '../../lib/track';
 import { CidadeBusca } from './CidadeBusca';
-
-// faixas de casa do PRD §5.5
-const CASAS = [
-  { ate: 400, rotulo: 'até 400 lugares', curto: 'até 400' },
-  { ate: 800, rotulo: '400 a 800 lugares', curto: '400–800' },
-  { ate: 2000, rotulo: '800 a 2 mil lugares', curto: '800–2 mil' },
-  { ate: 5000, rotulo: '2 mil a 5 mil lugares', curto: '2–5 mil' },
-  { ate: Infinity, rotulo: '5 mil lugares ou mais', curto: '5 mil+' },
-];
-export const casaPara = (n: number) => CASAS.findIndex((c) => n < c.ate);
 
 export function useDebounceEvento() {
   const t = useRef<number>();
@@ -23,50 +14,107 @@ export function useDebounceEvento() {
 }
 
 export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null }) {
-  const { data } = useArtist();
+  const { data, config } = useArtist();
+  const p = pub(data);
   const cidades = data.cidades;
-  const inicial = cidades.find((c) => c.cidade === cidadeInicial) ?? [...cidades].sort((a, b) => b.demanda_rel - a.demanda_rel)[0];
+  const inicial = cidades.find((c) => c.cidade === cidadeInicial) ?? [...cidades].sort((a, b) => b.publico - a.publico)[0];
   const [cidade, setCidade] = useState(inicial);
-  const [min, setMin] = useState(3);
-  const [max, setMax] = useState(5);
+  const [conv, setConv] = useState<number | null>(null); // null = taxa calibrada da praça
   const marcar = useDebounceEvento();
-  useEffect(() => { if (cidadeInicial) { const c = cidades.find((x) => x.cidade === cidadeInicial); if (c) setCidade(c); } }, [cidadeInicial, cidades]);
+  useEffect(() => {
+    if (!cidadeInicial) return;
+    const c = cidades.find((x) => x.cidade === cidadeInicial);
+    if (c) { setCidade(c); setConv(null); }
+  }, [cidadeInicial, cidades]);
 
-  const lo = dezena((cidade.ouvintes * min) / 100);
-  const hi = dezena((cidade.ouvintes * max) / 100);
-  const casa = casaPara((lo + hi) / 2);
-  const pc = (v: number) => `${dec(v, v % 1 ? 1 : 0)}%`;
-  const frase = min === max
-    ? `Em ${cidade.cidade}, com ${pc(min)} de conversão: cerca de ${int(lo)} pessoas. Casa sugerida: ${CASAS[casa].rotulo}.`
-    : `Em ${cidade.cidade}, com ${pc(min)} a ${pc(max)} de conversão: ${int(lo)} a ${int(hi)} pessoas. Casa sugerida: ${CASAS[casa].rotulo}.`;
+  const taxa = conv ?? cidade.conv_pct;
+  const naTaxa = conv == null;
+  const banda = p.banda[cidade.confianca];
+  const centro = naTaxa ? cidade.publico : publicoCom(cidade, taxa);
+  const lo = naTaxa ? cidade.publico_min : Math.round((centro * (1 - banda)) / 10) * 10;
+  const hi = naTaxa ? cidade.publico_max : Math.round((centro * (1 + banda)) / 10) * 10;
+  const casa = casaPara(centro);
+  const conf = CONFIANCA[cidade.confianca];
+  const noAno = cidade.datas_ano > 1 ? (naTaxa ? cidade.publico_ano : Math.round((centro * cidade.datas_ano) / 100) * 100) : null;
 
-  const mudou = (c = cidade, a = min, b = max) => marcar('simulador_usado', { sim: 'ingressos', cidade: c.cidade, de: a, ate: b });
+  const mudou = (c = cidade, t = taxa) => marcar('simulador_usado', { sim: 'ingressos', cidade: c.cidade, conv: t });
 
   return (
     <div className="sim">
-      <CidadeBusca cidades={cidades} valor={cidade} onChange={(c) => { setCidade(c); mudou(c); }} />
-      <div className="sliders">
-        <div className="campo">
-          <label htmlFor="conv-min" className="campo-rotulo">Conversão mínima: <strong className="num">{dec(min, min % 1 ? 1 : 0)}%</strong></label>
-          <input id="conv-min" className="slider" type="range" min={1} max={6} step={0.5} value={min}
-            onChange={(e) => { const v = Number(e.target.value); setMin(v); if (v > max) setMax(v); mudou(cidade, v, Math.max(v, max)); }} />
-        </div>
-        <div className="campo">
-          <label htmlFor="conv-max" className="campo-rotulo">Conversão máxima: <strong className="num">{dec(max, max % 1 ? 1 : 0)}%</strong></label>
-          <input id="conv-max" className="slider" type="range" min={1} max={6} step={0.5} value={max}
-            onChange={(e) => { const v = Number(e.target.value); setMax(v); if (v < min) setMin(v); mudou(cidade, Math.min(v, min), v); }} />
-        </div>
-      </div>
-      <p className="apoio nota">Conversão é a parte dos ouvintes mensais da cidade que compra ingresso. Em geral fica entre 3% e 5%.</p>
+      <CidadeBusca cidades={cidades} valor={cidade} onChange={(c) => { setCidade(c); setConv(null); mudou(c, c.conv_pct); }} />
 
       <div className="sim-saida painel" aria-live="polite">
-        <p className="sim-numero num">{lo === hi ? int(lo) : <>{int(lo)} <span>a</span> {int(hi)}</>}</p>
-        <p className="sim-frase">{frase}</p>
+        <p className="sim-numero num">{int(lo)} <span>a</span> {int(hi)}</p>
+        <p className="sim-frase">
+          Em {cidade.cidade}, com {pct(taxa)} da base de fãs comprando: {int(lo)} a {int(hi)} pessoas.
+          Casa sugerida: {CASAS[casa].rotulo}.
+        </p>
+        <p className="apoio linha-conf">
+          <span className={`pastilha pastilha-${cidade.confianca}`}>{conf.rotulo}</span> {conf.motivo}
+        </p>
+        {cidade.ancora && <p className="apoio ancora">{fraseAncora(cidade.ancora)}</p>}
+        {noAno && (
+          <p className="apoio">
+            A praça recebe {cidade.datas_ano} datas próprias por ano: cerca de <strong className="num">{int(noAno)}</strong> pessoas no ano.
+          </p>
+        )}
         <ol className="casas" aria-label="Tamanho de casa">
           {CASAS.map((c, i) => <li key={c.curto} className={i === casa ? 'sel' : ''} aria-current={i === casa ? 'true' : undefined}>{c.curto}</li>)}
         </ol>
       </div>
-      <p className="apoio nota">{cidade.cidade} tem {int(cidade.ouvintes)} ouvintes mensais, dado de {cidade.atualizado.split('-').reverse().join('/')}.</p>
+
+      <div className="campo">
+        <label htmlFor="conv" className="campo-rotulo">
+          Conversão da base de fãs: <strong className="num">{pct(taxa)}</strong>
+          {naTaxa && <span className="apoio"> · taxa calibrada desta praça</span>}
+        </label>
+        <input id="conv" className="slider" type="range" min={p.conv_min_pct} max={p.conv_max_pct} step={0.5} value={taxa}
+          onChange={(e) => { const v = Number(e.target.value); setConv(v); mudou(cidade, v); }} />
+        {!naTaxa && (
+          <button type="button" className="btn btn-leve btn-reset" onClick={() => { setConv(null); mudou(cidade, cidade.conv_pct); }}>
+            Voltar para {pct(cidade.conv_pct)}, a taxa calibrada
+          </button>
+        )}
+      </div>
+
+      <details className="conta">
+        <summary>Como essa conta é feita</summary>
+        <ol className="conta-passos">
+          <li>
+            <span>Ouvintes mensais na praça</span>
+            <strong className="num">{int(cidade.ouvintes)}</strong>
+            <small className="apoio">snapshot de {cidade.atualizado.split('-').reverse().join('/')}</small>
+          </li>
+          <li>
+            <span>Corrigido para hoje</span>
+            <strong className="num">{int(cidade.ouvintes_hoje)}</strong>
+            <small className="apoio">
+              ×{dec(p.fator_atualizacao, 2)} — o snapshot somava {int(p.ouvintes_snapshot)} ouvintes e a banda está com {int(p.ouvintes_atuais)}
+            </small>
+          </li>
+          <li>
+            <span>Base de fãs da praça</span>
+            <strong className="num">{int(cidade.base_fa)}</strong>
+            <small className="apoio">
+              ×{dec(p.fator_fa, 2)} — para cada 100 ouvintes do mês, {int(data.kpis.lealdade)} seguem a banda. Quem compra ingresso de banda
+              de {new Date(data.meta.gerado_em).getFullYear() - config.desde} anos inclui o fã que já não ouve toda semana.
+            </small>
+          </li>
+          <li>
+            <span>Fatia que compra ingresso aqui</span>
+            <strong className="num">{pct(cidade.conv_pct)}</strong>
+            <small className="apoio">
+              {pct(p.conv_ref_pct)} numa praça de {int(p.base_ref)} fãs, caindo conforme a praça cresce e subindo com a afinidade local
+              ({dec(cidade.demanda_rel, 1)}x a mediana). Calibrado em {p.ancoras_calibradas} shows com bilheteria conhecida.
+            </small>
+          </li>
+          <li>
+            <span>Público provável</span>
+            <strong className="num">{int(cidade.publico)}</strong>
+            <small className="apoio">faixa de ±{pct(banda * 100)}, pela confiança da praça</small>
+          </li>
+        </ol>
+      </details>
     </div>
   );
 }

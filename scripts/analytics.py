@@ -16,6 +16,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+import publico
+
 ROOT = Path(__file__).resolve().parent.parent
 
 MESES = {'jan': 1, 'fev': 2, 'mar': 3, 'abr': 4, 'mai': 5, 'jun': 6, 'jul': 7,
@@ -288,7 +290,8 @@ def cities(d: Data):
             'cidade': bonito, 'ouvintes': int(row.ouvintes), 'populacao': int(row['pop']),
             'por100k': r(row.por100k, 0), 'demanda_rel': r(dr, 2), 'faixa': faixa, 'acao': acao,
             'afinidade': r(aff.get(nome), 1), 'yt_3m': r(ytinfo['m3']) if ytinfo else None,
-            'ingressos_min': int(round(row.ouvintes * 0.03, -1)), 'ingressos_max': int(round(row.ouvintes * 0.05, -1)),
+            # público provável é calculado depois, em publico.aplicar() (modelo calibrado)
+            'ingressos_min': None, 'ingressos_max': None,
             'coord': COORD.get(nome), 'atualizado': row.atualizado,
         })
     rows.sort(key=lambda x: -x['ouvintes'])
@@ -637,6 +640,7 @@ def build(slug: str):
         'contexto': cfg.get('contexto', {}),
         'qualidade': cfg.get('qualidade_dados', []),
     }
+    publico.aplicar(out, cfg)  # público provável por praça, calibrado nas âncoras do config
     out['recomendacoes'] = recommendations(out, cfg)
     return out, cfg
 

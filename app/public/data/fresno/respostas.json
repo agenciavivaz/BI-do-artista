@@ -216,8 +216,8 @@
             "por100k",
             "demanda_rel",
             "faixa",
-            "ingressos_min",
-            "ingressos_max"
+            "publico",
+            "conv_pct"
           ],
           "filtro": {
             "faixa": [
@@ -337,14 +337,15 @@
       ],
       "pensando": [
         {
-          "texto": "Pegando os ouvintes da cidade",
+          "texto": "Pegando os ouvintes da cidade e corrigindo o snapshot para hoje",
           "fontes": [
-            "cidades"
+            "cidades",
+            "ouvintes"
           ],
           "ms": 700
         },
         {
-          "texto": "Aplicando a taxa de conversão de uma base fiel (3% a 5%)",
+          "texto": "Virando base de fãs: 128 seguidores a cada 100 ouvintes",
           "fontes": [
             "cidades",
             "seguidores"
@@ -352,19 +353,40 @@
           "ms": 700
         },
         {
+          "texto": "Calibrando a fatia que compra ingresso em 2 shows com bilheteria conhecida",
+          "fontes": [
+            "shows",
+            "imprensa"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Ajustando pelo tamanho e pela afinidade da praça",
+          "fontes": [
+            "cidades",
+            "ibge"
+          ],
+          "ms": 700
+        },
+        {
           "texto": "Sugerindo o tamanho de casa",
           "fontes": [
-            "cidades"
+            "cidades",
+            "shows"
           ],
           "ms": 700
         }
       ],
-      "veredito": "Escolha a cidade e veja a faixa de ingressos e o tamanho de casa recomendado.",
-      "explicacao": "Para cada 100 ouvintes, 128 seguem a banda: é base fiel. Por isso usamos 3% a 5% dos ouvintes da cidade como público pagante provável (fã casual converte 0,5% a 1%).",
+      "veredito": "Em Porto Alegre a conta fecha em 3.000 a 3.900 pessoas por data, e a praça recebe 2 datas próprias por ano.",
+      "explicacao": "Ouvinte mensal não é fã: para cada 100 ouvintes, 128 seguem a banda, e quem compra ingresso inclui o fã que já não ouve toda semana. A conta parte da base de fãs da praça e aplica a fatia que a própria bilheteria da banda mostra — 6,1% numa praça de 40.000 fãs, caindo quando a praça cresce (São Paulo converte 1,9x menos que Porto Alegre) e subindo com a afinidade local.",
       "numeros": [
         {
-          "valor": "3.160–5.270",
+          "valor": "7.000–9.000",
           "rotulo": "São Paulo"
+        },
+        {
+          "valor": "3.000–3.900",
+          "rotulo": "Porto Alegre"
         }
       ],
       "blocos": [
@@ -372,14 +394,27 @@
           "tipo": "simulador",
           "simulador": "ingressos",
           "dados": "cidades"
+        },
+        {
+          "tipo": "tabela",
+          "dados": "cidades",
+          "colunas": [
+            "cidade",
+            "base_fa",
+            "conv_pct",
+            "publico",
+            "confianca"
+          ],
+          "titulo": "Público provável por praça"
         }
       ],
       "acoes": [
-        "Prefira a casa que lota no limite de baixo da faixa: casa cheia vira conteúdo e escassez."
+        "Prefira a casa que lota no limite de baixo da faixa: casa cheia vira conteúdo e escassez.",
+        "Depois de cada show, anote capacidade e ocupação em config.json → calibracao.ancoras: a estimativa toda se recalibra."
       ],
       "confianca": {
-        "nivel": "média",
-        "motivo": "Taxa de conversão é referência de mercado; calibrar com bilheteria real."
+        "nivel": "alta",
+        "motivo": "Taxa calibrada na bilheteria real de 2 shows. Praça sem show próprio no histórico aparece com faixa mais larga."
       },
       "seguintes": [
         "onde-cobrar-mais",

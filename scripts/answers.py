@@ -91,7 +91,7 @@ def build_answers(d):
         'numeros': [{'valor': br(c['demanda_rel']) + 'x', 'rotulo': f"{c['cidade']} vs mediana"} for c in premium[:3]],
         'blocos': [
             {'tipo': 'mapa', 'dados': 'cidades', 'titulo': 'Fãs por habitante'},
-            {'tipo': 'tabela', 'dados': 'cidades', 'colunas': ['cidade', 'por100k', 'demanda_rel', 'faixa', 'ingressos_min', 'ingressos_max'],
+            {'tipo': 'tabela', 'dados': 'cidades', 'colunas': ['cidade', 'por100k', 'demanda_rel', 'faixa', 'publico', 'conv_pct'],
              'filtro': {'faixa': ['premium']}, 'titulo': 'Praças com prêmio de cachê'},
         ],
         'acoes': ['Anexe o card da cidade na proposta para o contratante.',
@@ -129,22 +129,39 @@ def build_answers(d):
         'seguintes': ['quantos-ingressos', 'festival-ou-proprio'],
     })
 
+    pp = d['publico_praca']
+    ancoradas = sorted([c for c in cid if c['confianca'] == 'alta'], key=lambda c: -c['publico'])
+    anc0 = max(ancoradas, key=lambda c: c['conv_pct']) if ancoradas else cid[0]   # praça que mais converte
+    ancg = max(ancoradas, key=lambda c: c['publico']) if ancoradas else cid[0]     # praça de maior público
     A.append({
         'id': 'quantos-ingressos', 'tema': 'cache', 'simulador': 'ingressos',
         'pergunta': 'Quantos ingressos dá pra vender numa cidade?',
         'variacoes': ['ingressos', 'lotar', 'tamanho da casa', 'capacidade', 'vender ingresso', 'casa de show'],
         'pensando': [
-            step('Pegando os ouvintes da cidade', ['cidades']),
-            step('Aplicando a taxa de conversão de uma base fiel (3% a 5%)', ['cidades', 'seguidores']),
-            step('Sugerindo o tamanho de casa', ['cidades']),
+            step('Pegando os ouvintes da cidade e corrigindo o snapshot para hoje', ['cidades', 'ouvintes']),
+            step(f"Virando base de fãs: {d['kpis']['lealdade']:.0f} seguidores a cada 100 ouvintes", ['cidades', 'seguidores']),
+            step(f"Calibrando a fatia que compra ingresso em {pp['ancoras_calibradas']} shows com bilheteria conhecida", ['shows', 'imprensa']),
+            step('Ajustando pelo tamanho e pela afinidade da praça', ['cidades', 'ibge']),
+            step('Sugerindo o tamanho de casa', ['cidades', 'shows']),
         ],
-        'veredito': 'Escolha a cidade e veja a faixa de ingressos e o tamanho de casa recomendado.',
-        'explicacao': (f"Para cada 100 ouvintes, {d['kpis']['lealdade']:.0f} seguem a banda: é base fiel. Por isso usamos 3% a 5% "
-                       "dos ouvintes da cidade como público pagante provável (fã casual converte 0,5% a 1%)."),
-        'numeros': [{'valor': f"{n(sp['ingressos_min'])}–{n(sp['ingressos_max'])}", 'rotulo': 'São Paulo'}] if sp else [],
-        'blocos': [{'tipo': 'simulador', 'simulador': 'ingressos', 'dados': 'cidades'}],
-        'acoes': ['Prefira a casa que lota no limite de baixo da faixa: casa cheia vira conteúdo e escassez.'],
-        'confianca': {'nivel': 'média', 'motivo': 'Taxa de conversão é referência de mercado; calibrar com bilheteria real.'},
+        'veredito': (f"Em {anc0['cidade']} a conta fecha em {n(anc0['publico_min'])} a {n(anc0['publico_max'])} pessoas por data"
+                     + (f", e a praça recebe {anc0['datas_ano']} datas próprias por ano." if anc0['datas_ano'] > 1 else '.')),
+        'explicacao': (f"Ouvinte mensal não é fã: para cada 100 ouvintes, {d['kpis']['lealdade']:.0f} seguem a banda, e quem compra ingresso "
+                       f"inclui o fã que já não ouve toda semana. A conta parte da base de fãs da praça e aplica a fatia que a própria "
+                       f"bilheteria da banda mostra — {br(pp['conv_ref_pct'])}% numa praça de {n(pp['base_ref'])} fãs, caindo quando a praça "
+                       f"cresce ({ancg['cidade']} converte {br(anc0['conv_pct']/ancg['conv_pct'])}x menos que {anc0['cidade']}) "
+                       f"e subindo com a afinidade local."),
+        'numeros': ([{'valor': f"{n(c['publico_min'])}–{n(c['publico_max'])}", 'rotulo': c['cidade']}
+                     for c in ancoradas[:2]] or ([{'valor': f"{n(sp['publico_min'])}–{n(sp['publico_max'])}", 'rotulo': 'São Paulo'}] if sp else [])),
+        'blocos': [{'tipo': 'simulador', 'simulador': 'ingressos', 'dados': 'cidades'},
+                   {'tipo': 'tabela', 'dados': 'cidades', 'colunas': ['cidade', 'base_fa', 'conv_pct', 'publico', 'confianca'],
+                    'titulo': 'Público provável por praça'}],
+        'acoes': ['Prefira a casa que lota no limite de baixo da faixa: casa cheia vira conteúdo e escassez.',
+                  'Depois de cada show, anote capacidade e ocupação em config.json → calibracao.ancoras: a estimativa toda se recalibra.'],
+        'confianca': {'nivel': 'alta' if pp['ancoras_calibradas'] >= 2 else 'média',
+                      'motivo': (f"Taxa calibrada na bilheteria real de {pp['ancoras_calibradas']} shows"
+                                 + (f" (resíduo médio de {br(pp['residuo_pct'],0)}%)" if pp['residuo_pct'] else '')
+                                 + '. Praça sem show próprio no histórico aparece com faixa mais larga.')},
         'seguintes': ['onde-cobrar-mais', 'proxima-cidade'],
     })
 

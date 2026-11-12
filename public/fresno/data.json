@@ -1709,13 +1709,31 @@
    "acao": "Cobrar prêmio de 15–25% no cachê / ingresso",
    "afinidade": 5.4,
    "yt_3m": -9.0,
-   "ingressos_min": 3160,
-   "ingressos_max": 5270,
+   "ingressos_min": 7000,
+   "ingressos_max": 9000,
    "coord": [
     -46.63,
     -23.55
    ],
-   "atualizado": "2024-12-06"
+   "atualizado": "2024-12-06",
+   "ouvintes_hoje": 124463,
+   "base_fa": 159313,
+   "conv_pct": 5.02,
+   "publico_min": 7000,
+   "publico": 8000,
+   "publico_max": 9000,
+   "casa": 4,
+   "confianca": "alta",
+   "datas_ano": 2,
+   "publico_ano": 16000,
+   "ancora": {
+    "local": "Espaço Unimed",
+    "data": "2026-04-18",
+    "capacidade": 8000,
+    "ocupacao": 1.0,
+    "publico": 8000,
+    "fonte": "Billboard Brasil: estreia da turnê Carta de Adeus com Espaço Unimed lotado"
+   }
   },
   {
    "cidade": "Rio de Janeiro",
@@ -1727,13 +1745,31 @@
    "acao": "Tabela cheia — demanda acima da média",
    "afinidade": 3.6,
    "yt_3m": -4.0,
-   "ingressos_min": 970,
-   "ingressos_max": 1620,
+   "ingressos_min": 2400,
+   "ingressos_max": 3500,
    "coord": [
     -43.2,
     -22.91
    ],
-   "atualizado": "2024-12-06"
+   "atualizado": "2024-12-06",
+   "ouvintes_hoje": 38341,
+   "base_fa": 49076,
+   "conv_pct": 6.0,
+   "publico_min": 2400,
+   "publico": 2900,
+   "publico_max": 3500,
+   "casa": 3,
+   "confianca": "media",
+   "datas_ano": 2,
+   "publico_ano": 5900,
+   "ancora": {
+    "local": "Qualistage",
+    "data": "2024-07-05",
+    "capacidade": 9500,
+    "ocupacao": null,
+    "publico": null,
+    "fonte": "Chartmetric (live_events) — capacidade da casa, ocupação não informada"
+   }
   },
   {
    "cidade": "Porto Alegre",
@@ -1745,13 +1781,31 @@
    "acao": "Cobrar prêmio de 15–25% no cachê / ingresso",
    "afinidade": 3.3,
    "yt_3m": -13.0,
-   "ingressos_min": 720,
-   "ingressos_max": 1200,
+   "ingressos_min": 3000,
+   "ingressos_max": 3900,
    "coord": [
     -51.23,
     -30.03
    ],
-   "atualizado": "2024-12-06"
+   "atualizado": "2024-12-06",
+   "ouvintes_hoje": 28257,
+   "base_fa": 36168,
+   "conv_pct": 9.52,
+   "publico_min": 3000,
+   "publico": 3400,
+   "publico_max": 3900,
+   "casa": 3,
+   "confianca": "alta",
+   "datas_ano": 2,
+   "publico_ano": 6900,
+   "ancora": {
+    "local": "Auditório Araújo Vianna",
+    "data": "2026-11-20",
+    "capacidade": 3628,
+    "ocupacao": 0.95,
+    "publico": 3400,
+    "fonte": "Equipe da banda: quase esgotado na semana do show; a casa recebe 2 datas próprias por ano"
+   }
   },
   {
    "cidade": "Curitiba",
@@ -1763,13 +1817,31 @@
    "acao": "Cobrar prêmio de 15–25% no cachê / ingresso",
    "afinidade": 2.3,
    "yt_3m": -12.0,
-   "ingressos_min": 690,
-   "ingressos_max": 1160,
+   "ingressos_min": 2400,
+   "ingressos_max": 3700,
    "coord": [
     -49.27,
     -25.43
    ],
-   "atualizado": "2024-12-06"
+   "atualizado": "2024-12-06",
+   "ouvintes_hoje": 27311,
+   "base_fa": 34958,
+   "conv_pct": 8.73,
+   "publico_min": 2400,
+   "publico": 3100,
+   "publico_max": 3700,
+   "casa": 3,
+   "confianca": "media",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": {
+    "local": "Live Curitiba",
+    "data": "2023-10-14",
+    "capacidade": 5000,
+    "ocupacao": null,
+    "publico": null,
+    "fonte": "Chartmetric (live_events) — capacidade da casa, ocupação não informada"
+   }
   },
   {
    "cidade": "Campinas",
@@ -1781,13 +1853,31 @@
    "acao": "Cobrar prêmio de 15–25% no cachê / ingresso",
    "afinidade": 2.5,
    "yt_3m": -28.0,
-   "ingressos_min": 670,
-   "ingressos_max": 1110,
+   "ingressos_min": 2700,
+   "ingressos_max": 4000,
    "coord": [
     -47.06,
     -22.91
    ],
-   "atualizado": "2024-12-06"
+   "atualizado": "2024-12-06",
+   "ouvintes_hoje": 26282,
+   "base_fa": 33641,
+   "conv_pct": 9.97,
+   "publico_min": 2700,
+   "publico": 3400,
+   "publico_max": 4000,
+   "casa": 3,
+   "confianca": "media",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": {
+    "local": "Multi Arena",
+    "data": "2026-07-25",
+    "capacidade": null,
+    "ocupacao": null,
+    "publico": null,
+    "fonte": "Chartmetric (live_events) + turnê Carta de Adeus — capacidade não informada"
+   }
   },
   {
    "cidade": "Belo Horizonte",
@@ -1799,13 +1889,31 @@
    "acao": "Cobrar prêmio de 15–25% no cachê / ingresso",
    "afinidade": 2.1,
    "yt_3m": -28.0,
-   "ingressos_min": 480,
-   "ingressos_max": 800,
+   "ingressos_min": 1560,
+   "ingressos_max": 2300,
    "coord": [
     -43.94,
     -19.92
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 18854,
+   "base_fa": 24133,
+   "conv_pct": 8.06,
+   "publico_min": 1560,
+   "publico": 1940,
+   "publico_max": 2300,
+   "casa": 2,
+   "confianca": "media",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": {
+    "local": "BeFly Hall",
+    "data": "2025-05-24",
+    "capacidade": 5000,
+    "ocupacao": null,
+    "publico": null,
+    "fonte": "Chartmetric (live_events) — capacidade da casa, ocupação não informada"
+   }
   },
   {
    "cidade": "Brasília",
@@ -1817,13 +1925,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": 1.0,
    "yt_3m": -2.0,
-   "ingressos_min": 380,
-   "ingressos_max": 630,
+   "ingressos_min": 1150,
+   "ingressos_max": 1720,
    "coord": [
     -47.88,
     -15.79
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 14785,
+   "base_fa": 18925,
+   "conv_pct": 7.58,
+   "publico_min": 1150,
+   "publico": 1440,
+   "publico_max": 1720,
+   "casa": 2,
+   "confianca": "media",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Fortaleza",
@@ -1835,13 +1954,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": 1.2,
    "yt_3m": -21.0,
-   "ingressos_min": 290,
-   "ingressos_max": 480,
+   "ingressos_min": 920,
+   "ingressos_max": 1370,
    "coord": [
     -38.54,
     -3.73
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 11302,
+   "base_fa": 14466,
+   "conv_pct": 7.92,
+   "publico_min": 920,
+   "publico": 1150,
+   "publico_max": 1370,
+   "casa": 2,
+   "confianca": "media",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Florianópolis",
@@ -1853,13 +1983,31 @@
    "acao": "Cobrar prêmio de 15–25% no cachê / ingresso",
    "afinidade": 1.9,
    "yt_3m": 22.0,
-   "ingressos_min": 220,
-   "ingressos_max": 370,
+   "ingressos_min": 1120,
+   "ingressos_max": 1670,
    "coord": [
     -48.55,
     -27.6
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 8745,
+   "base_fa": 11193,
+   "conv_pct": 12.46,
+   "publico_min": 1120,
+   "publico": 1390,
+   "publico_max": 1670,
+   "casa": 2,
+   "confianca": "media",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": {
+    "local": "Hard Rock Live Florianópolis",
+    "data": "2025-03-28",
+    "capacidade": null,
+    "ocupacao": null,
+    "publico": null,
+    "fonte": "Chartmetric (live_events) — capacidade do export é inconsistente, não usada"
+   }
   },
   {
    "cidade": "Recife",
@@ -1871,13 +2019,24 @@
    "acao": "Tabela cheia — demanda acima da média",
    "afinidade": 1.2,
    "yt_3m": -26.0,
-   "ingressos_min": 210,
-   "ingressos_max": 360,
+   "ingressos_min": 790,
+   "ingressos_max": 1190,
    "coord": [
     -34.88,
     -8.05
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 8404,
+   "base_fa": 10757,
+   "conv_pct": 9.18,
+   "publico_min": 790,
+   "publico": 990,
+   "publico_max": 1190,
+   "casa": 2,
+   "confianca": "media",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Manaus",
@@ -1889,13 +2048,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": 1.5,
    "yt_3m": -11.0,
-   "ingressos_min": 200,
-   "ingressos_max": 330,
+   "ingressos_min": 660,
+   "ingressos_max": 990,
    "coord": [
     -60.02,
     -3.12
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 7775,
+   "base_fa": 9952,
+   "conv_pct": 8.32,
+   "publico_min": 660,
+   "publico": 830,
+   "publico_max": 990,
+   "casa": 2,
+   "confianca": "media",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Salvador",
@@ -1907,13 +2077,24 @@
    "acao": "Abrir mercado — abertura/festival, preço de entrada",
    "afinidade": 1.2,
    "yt_3m": null,
-   "ingressos_min": 180,
-   "ingressos_max": 290,
+   "ingressos_min": 560,
+   "ingressos_max": 840,
    "coord": [
     -38.5,
     -12.97
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 6953,
+   "base_fa": 8900,
+   "conv_pct": 7.91,
+   "publico_min": 560,
+   "publico": 700,
+   "publico_max": 840,
+   "casa": 1,
+   "confianca": "media",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Sorocaba",
@@ -1925,13 +2106,24 @@
    "acao": "Cobrar prêmio de 15–25% no cachê / ingresso",
    "afinidade": 0.0,
    "yt_3m": null,
-   "ingressos_min": 150,
-   "ingressos_max": 260,
+   "ingressos_min": 710,
+   "ingressos_max": 1070,
    "coord": [
     -47.46,
     -23.5
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 6099,
+   "base_fa": 7807,
+   "conv_pct": 11.37,
+   "publico_min": 710,
+   "publico": 890,
+   "publico_max": 1070,
+   "casa": 2,
+   "confianca": "media",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Goiânia",
@@ -1943,13 +2135,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": 0.8,
    "yt_3m": null,
-   "ingressos_min": 130,
-   "ingressos_max": 220,
+   "ingressos_min": 430,
+   "ingressos_max": 800,
    "coord": [
     -49.25,
     -16.68
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 5224,
+   "base_fa": 6687,
+   "conv_pct": 9.24,
+   "publico_min": 430,
+   "publico": 620,
+   "publico_max": 800,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Guarulhos",
@@ -1961,13 +2164,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": 1.0,
    "yt_3m": null,
-   "ingressos_min": 130,
-   "ingressos_max": 210,
+   "ingressos_min": 430,
+   "ingressos_max": 810,
    "coord": [
     -46.53,
     -23.46
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 5072,
+   "base_fa": 6492,
+   "conv_pct": 9.56,
+   "publico_min": 430,
+   "publico": 620,
+   "publico_max": 810,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Santos",
@@ -1979,13 +2193,24 @@
    "acao": "Cobrar prêmio de 15–25% no cachê / ingresso",
    "afinidade": 1.6,
    "yt_3m": null,
-   "ingressos_min": 120,
-   "ingressos_max": 210,
+   "ingressos_min": 590,
+   "ingressos_max": 1090,
    "coord": [
     -46.33,
     -23.96
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 4884,
+   "base_fa": 6251,
+   "conv_pct": 13.39,
+   "publico_min": 590,
+   "publico": 840,
+   "publico_max": 1090,
+   "casa": 2,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Santo André",
@@ -1997,13 +2222,24 @@
    "acao": "Tabela cheia — demanda acima da média",
    "afinidade": 1.0,
    "yt_3m": null,
-   "ingressos_min": 120,
-   "ingressos_max": 200,
+   "ingressos_min": 480,
+   "ingressos_max": 890,
    "coord": [
     -46.54,
     -23.66
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 4768,
+   "base_fa": 6103,
+   "conv_pct": 11.25,
+   "publico_min": 480,
+   "publico": 690,
+   "publico_max": 890,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Belém",
@@ -2015,13 +2251,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": 0.8,
    "yt_3m": null,
-   "ingressos_min": 120,
-   "ingressos_max": 190,
+   "ingressos_min": 390,
+   "ingressos_max": 730,
    "coord": [
     -48.5,
     -1.46
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 4583,
+   "base_fa": 5866,
+   "conv_pct": 9.52,
+   "publico_min": 390,
+   "publico": 560,
+   "publico_max": 730,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Ribeirão Preto",
@@ -2033,13 +2280,24 @@
    "acao": "Tabela cheia — demanda acima da média",
    "afinidade": 2.0,
    "yt_3m": null,
-   "ingressos_min": 110,
-   "ingressos_max": 180,
+   "ingressos_min": 440,
+   "ingressos_max": 810,
    "coord": [
     -47.81,
     -21.18
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 4244,
+   "base_fa": 5432,
+   "conv_pct": 11.49,
+   "publico_min": 440,
+   "publico": 620,
+   "publico_max": 810,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Bauru",
@@ -2051,13 +2309,24 @@
    "acao": "Cobrar prêmio de 15–25% no cachê / ingresso",
    "afinidade": 0.0,
    "yt_3m": null,
-   "ingressos_min": 110,
-   "ingressos_max": 180,
+   "ingressos_min": 510,
+   "ingressos_max": 950,
    "coord": [
     -49.06,
     -22.31
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 4153,
+   "base_fa": 5316,
+   "conv_pct": 13.79,
+   "publico_min": 510,
+   "publico": 730,
+   "publico_max": 950,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Joinville",
@@ -2069,13 +2338,24 @@
    "acao": "Tabela cheia — demanda acima da média",
    "afinidade": 0.8,
    "yt_3m": null,
-   "ingressos_min": 100,
-   "ingressos_max": 170,
+   "ingressos_min": 420,
+   "ingressos_max": 780,
    "coord": [
     -48.85,
     -26.3
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 3927,
+   "base_fa": 5027,
+   "conv_pct": 11.91,
+   "publico_min": 420,
+   "publico": 600,
+   "publico_max": 780,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "São José dos Campos",
@@ -2087,13 +2367,24 @@
    "acao": "Tabela cheia — demanda acima da média",
    "afinidade": 0.0,
    "yt_3m": null,
-   "ingressos_min": 100,
-   "ingressos_max": 160,
+   "ingressos_min": 400,
+   "ingressos_max": 740,
    "coord": [
     -45.89,
     -23.18
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 3855,
+   "base_fa": 4935,
+   "conv_pct": 11.47,
+   "publico_min": 400,
+   "publico": 570,
+   "publico_max": 740,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Osasco",
@@ -2105,13 +2396,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": 0.0,
    "yt_3m": null,
-   "ingressos_min": 100,
-   "ingressos_max": 160,
+   "ingressos_min": 380,
+   "ingressos_max": 710,
    "coord": [
     -46.79,
     -23.53
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 3783,
+   "base_fa": 4842,
+   "conv_pct": 11.32,
+   "publico_min": 380,
+   "publico": 550,
+   "publico_max": 710,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Campo Grande",
@@ -2123,13 +2425,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": 1.1,
    "yt_3m": null,
-   "ingressos_min": 90,
-   "ingressos_max": 150,
+   "ingressos_min": 350,
+   "ingressos_max": 640,
    "coord": [
     -54.62,
     -20.47
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 3646,
+   "base_fa": 4667,
+   "conv_pct": 10.63,
+   "publico_min": 350,
+   "publico": 500,
+   "publico_max": 640,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "São Bernardo do Campo",
@@ -2141,13 +2454,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": null,
    "yt_3m": null,
-   "ingressos_min": 80,
-   "ingressos_max": 140,
+   "ingressos_min": 320,
+   "ingressos_max": 600,
    "coord": [
     -46.56,
     -23.69
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 3266,
+   "base_fa": 4180,
+   "conv_pct": 10.98,
+   "publico_min": 320,
+   "publico": 460,
+   "publico_max": 600,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Vitória",
@@ -2159,13 +2483,24 @@
    "acao": "Cobrar prêmio de 15–25% no cachê / ingresso",
    "afinidade": null,
    "yt_3m": null,
-   "ingressos_min": 80,
-   "ingressos_max": 140,
+   "ingressos_min": 420,
+   "ingressos_max": 780,
    "coord": [
     -40.31,
     -20.32
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 3237,
+   "base_fa": 4144,
+   "conv_pct": 14.46,
+   "publico_min": 420,
+   "publico": 600,
+   "publico_max": 780,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Londrina",
@@ -2177,13 +2512,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": 1.4,
    "yt_3m": null,
-   "ingressos_min": 70,
-   "ingressos_max": 120,
+   "ingressos_min": 320,
+   "ingressos_max": 600,
    "coord": [
     -51.16,
     -23.31
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 2924,
+   "base_fa": 3743,
+   "conv_pct": 12.26,
+   "publico_min": 320,
+   "publico": 460,
+   "publico_max": 600,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Blumenau",
@@ -2195,13 +2541,24 @@
    "acao": "Tabela cheia — demanda acima da média",
    "afinidade": 0.0,
    "yt_3m": null,
-   "ingressos_min": 70,
-   "ingressos_max": 120,
+   "ingressos_min": 360,
+   "ingressos_max": 670,
    "coord": [
     -49.07,
     -26.92
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 2894,
+   "base_fa": 3704,
+   "conv_pct": 13.96,
+   "publico_min": 360,
+   "publico": 520,
+   "publico_max": 670,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Uberlândia",
@@ -2213,13 +2570,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": 1.1,
    "yt_3m": null,
-   "ingressos_min": 70,
-   "ingressos_max": 120,
+   "ingressos_min": 280,
+   "ingressos_max": 530,
    "coord": [
     -48.28,
     -18.92
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 2773,
+   "base_fa": 3550,
+   "conv_pct": 11.39,
+   "publico_min": 280,
+   "publico": 400,
+   "publico_max": 530,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Maringá",
@@ -2231,13 +2599,24 @@
    "acao": "Tabela cheia — demanda acima da média",
    "afinidade": 1.7,
    "yt_3m": null,
-   "ingressos_min": 70,
-   "ingressos_max": 120,
+   "ingressos_min": 330,
+   "ingressos_max": 610,
    "coord": [
     -51.94,
     -23.42
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 2730,
+   "base_fa": 3494,
+   "conv_pct": 13.44,
+   "publico_min": 330,
+   "publico": 470,
+   "publico_max": 610,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Natal",
@@ -2249,13 +2628,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": 1.5,
    "yt_3m": null,
-   "ingressos_min": 70,
-   "ingressos_max": 120,
+   "ingressos_min": 270,
+   "ingressos_max": 510,
    "coord": [
     -35.21,
     -5.79
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 2722,
+   "base_fa": 3485,
+   "conv_pct": 11.21,
+   "publico_min": 270,
+   "publico": 390,
+   "publico_max": 510,
+   "casa": 0,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Canoas",
@@ -2267,13 +2657,24 @@
    "acao": "Tabela cheia — demanda acima da média",
    "afinidade": null,
    "yt_3m": null,
-   "ingressos_min": 60,
-   "ingressos_max": 110,
+   "ingressos_min": 320,
+   "ingressos_max": 600,
    "coord": [
     -51.18,
     -29.92
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 2555,
+   "base_fa": 3270,
+   "conv_pct": 14.12,
+   "publico_min": 320,
+   "publico": 460,
+   "publico_max": 600,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Vila Velha",
@@ -2285,13 +2686,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": 1.2,
    "yt_3m": null,
-   "ingressos_min": 60,
-   "ingressos_max": 100,
+   "ingressos_min": 290,
+   "ingressos_max": 530,
    "coord": [
     -40.29,
     -20.33
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 2464,
+   "base_fa": 3154,
+   "conv_pct": 12.94,
+   "publico_min": 290,
+   "publico": 410,
+   "publico_max": 530,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Maceió",
@@ -2303,13 +2715,24 @@
    "acao": "Abrir mercado — abertura/festival, preço de entrada",
    "afinidade": 1.3,
    "yt_3m": null,
-   "ingressos_min": 60,
-   "ingressos_max": 100,
+   "ingressos_min": 230,
+   "ingressos_max": 420,
    "coord": [
     -35.74,
     -9.67
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 2425,
+   "base_fa": 3104,
+   "conv_pct": 10.43,
+   "publico_min": 230,
+   "publico": 320,
+   "publico_max": 420,
+   "casa": 0,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "João Pessoa",
@@ -2321,13 +2744,24 @@
    "acao": "Abrir mercado — abertura/festival, preço de entrada",
    "afinidade": 0.4,
    "yt_3m": null,
-   "ingressos_min": 60,
-   "ingressos_max": 100,
+   "ingressos_min": 230,
+   "ingressos_max": 420,
    "coord": [
     -34.86,
     -7.12
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 2346,
+   "base_fa": 3002,
+   "conv_pct": 10.85,
+   "publico_min": 230,
+   "publico": 330,
+   "publico_max": 420,
+   "casa": 0,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "São Luís",
@@ -2339,13 +2773,24 @@
    "acao": "Abrir mercado — abertura/festival, preço de entrada",
    "afinidade": null,
    "yt_3m": null,
-   "ingressos_min": 60,
-   "ingressos_max": 100,
+   "ingressos_min": 210,
+   "ingressos_max": 390,
    "coord": [
     -44.3,
     -2.53
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 2289,
+   "base_fa": 2930,
+   "conv_pct": 10.18,
+   "publico_min": 210,
+   "publico": 300,
+   "publico_max": 390,
+   "casa": 0,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Niterói",
@@ -2357,13 +2802,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": 0.0,
    "yt_3m": null,
-   "ingressos_min": 60,
-   "ingressos_max": 90,
+   "ingressos_min": 260,
+   "ingressos_max": 480,
    "coord": [
     -43.1,
     -22.88
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 2243,
+   "base_fa": 2871,
+   "conv_pct": 12.79,
+   "publico_min": 260,
+   "publico": 370,
+   "publico_max": 480,
+   "casa": 0,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Caxias do Sul",
@@ -2375,13 +2831,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": 0.0,
    "yt_3m": null,
-   "ingressos_min": 50,
-   "ingressos_max": 90,
+   "ingressos_min": 250,
+   "ingressos_max": 460,
    "coord": [
     -51.18,
     -29.17
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 2122,
+   "base_fa": 2717,
+   "conv_pct": 12.96,
+   "publico_min": 250,
+   "publico": 350,
+   "publico_max": 460,
+   "casa": 0,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Novo Hamburgo",
@@ -2393,13 +2860,24 @@
    "acao": "Cobrar prêmio de 15–25% no cachê / ingresso",
    "afinidade": null,
    "yt_3m": null,
-   "ingressos_min": 50,
-   "ingressos_max": 90,
+   "ingressos_min": 300,
+   "ingressos_max": 560,
    "coord": [
     -51.13,
     -29.68
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 2085,
+   "base_fa": 2668,
+   "conv_pct": 16.04,
+   "publico_min": 300,
+   "publico": 430,
+   "publico_max": 560,
+   "casa": 1,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Jundiaí",
@@ -2411,13 +2889,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": null,
    "yt_3m": null,
-   "ingressos_min": 50,
-   "ingressos_max": 80,
+   "ingressos_min": 230,
+   "ingressos_max": 430,
    "coord": [
     -46.88,
     -23.19
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 1964,
+   "base_fa": 2514,
+   "conv_pct": 13.12,
+   "publico_min": 230,
+   "publico": 330,
+   "publico_max": 430,
+   "casa": 0,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "São José do Rio Preto",
@@ -2429,13 +2918,24 @@
    "acao": "Praça em construção — festival ou casa menor",
    "afinidade": null,
    "yt_3m": null,
-   "ingressos_min": 50,
-   "ingressos_max": 80,
+   "ingressos_min": 230,
+   "ingressos_max": 420,
    "coord": [
     -49.38,
     -20.82
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 1963,
+   "base_fa": 2513,
+   "conv_pct": 12.82,
+   "publico_min": 230,
+   "publico": 320,
+   "publico_max": 420,
+   "casa": 0,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Cuiabá",
@@ -2447,13 +2947,24 @@
    "acao": "Abrir mercado — abertura/festival, preço de entrada",
    "afinidade": 0.8,
    "yt_3m": null,
-   "ingressos_min": 50,
-   "ingressos_max": 80,
+   "ingressos_min": 200,
+   "ingressos_max": 380,
    "coord": [
     -56.1,
     -15.6
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 1946,
+   "base_fa": 2491,
+   "conv_pct": 11.67,
+   "publico_min": 200,
+   "publico": 290,
+   "publico_max": 380,
+   "casa": 0,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "Itajaí",
@@ -2465,13 +2976,24 @@
    "acao": "Tabela cheia — demanda acima da média",
    "afinidade": 1.0,
    "yt_3m": null,
-   "ingressos_min": 50,
-   "ingressos_max": 80,
+   "ingressos_min": 260,
+   "ingressos_max": 480,
    "coord": [
     -48.66,
     -26.91
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 1896,
+   "base_fa": 2426,
+   "conv_pct": 15.32,
+   "publico_min": 260,
+   "publico": 370,
+   "publico_max": 480,
+   "casa": 0,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   },
   {
    "cidade": "São José",
@@ -2483,13 +3005,24 @@
    "acao": "Tabela cheia — demanda acima da média",
    "afinidade": null,
    "yt_3m": null,
-   "ingressos_min": 40,
-   "ingressos_max": 70,
+   "ingressos_min": 240,
+   "ingressos_max": 450,
    "coord": [
     -48.63,
     -27.59
    ],
-   "atualizado": "2024-08-12"
+   "atualizado": "2024-08-12",
+   "ouvintes_hoje": 1761,
+   "base_fa": 2254,
+   "conv_pct": 15.22,
+   "publico_min": 240,
+   "publico": 340,
+   "publico_max": 450,
+   "casa": 0,
+   "confianca": "baixa",
+   "datas_ano": 1,
+   "publico_ano": null,
+   "ancora": null
   }
  ],
  "cidades_mediana_100k": 457.0,
@@ -4122,6 +4655,7 @@
  },
  "qualidade": [
   "Ouvintes por cidade no Spotify vêm do último snapshot disponível na Chartmetric (ago–dez/2024). A versão com API atualiza isso diariamente.",
+  "O público provável por praça é calibrado na bilheteria de 2 shows com ocupação conhecida (Espaço Unimed 18/04/2026, lotado; Auditório Araújo Vianna 20/11/2026, ~95%). Cada show novo com capacidade e ocupação anotadas em config.json → calibracao.ancoras recalibra a estimativa de todas as 44 praças.",
   "A lista de shows da Chartmetric tem 60+ eventos desde 2018, não a agenda completa. Os efeitos de show são uma amostra.",
   "O export 'Popularidade do Spotify' por faixa veio idêntico ao de streams (bug do export) e foi descartado.",
   "Comparação por faixa cobre 5 músicas escolhidas no export; Shazam só tem 1 faixa.",
@@ -4208,5 +4742,89 @@
    "acao": "Leve o recorte de público (idade, gênero, cidades) para a conversa com a marca.",
    "impacto": "Patrocínio"
   }
- ]
+ ],
+ "publico_praca": {
+  "fator_atualizacao": 1.1811,
+  "fator_fa": 1.28,
+  "conv_ref_pct": 6.13,
+  "base_ref": 40000,
+  "expoente_escala": 0.2964,
+  "expoente_demanda": 0.3,
+  "bonus_cidade_casa": 1.0,
+  "cidade_casa": "Porto Alegre",
+  "conv_min_pct": 2.0,
+  "conv_max_pct": 20.0,
+  "banda": {
+   "alta": 0.12,
+   "media": 0.2,
+   "baixa": 0.3
+  },
+  "ancoras_calibradas": 2,
+  "residuo_pct": null,
+  "ouvintes_snapshot": 359252,
+  "ouvintes_atuais": 424312,
+  "datas_por_ano": {
+   "Porto Alegre": 2,
+   "São Paulo": 2,
+   "Rio de Janeiro": 2
+  },
+  "ancoras": [
+   {
+    "cidade": "São Paulo",
+    "local": "Espaço Unimed",
+    "data": "2026-04-18",
+    "capacidade": 8000,
+    "ocupacao": 1.0,
+    "fonte": "Billboard Brasil: estreia da turnê Carta de Adeus com Espaço Unimed lotado"
+   },
+   {
+    "cidade": "Porto Alegre",
+    "local": "Auditório Araújo Vianna",
+    "data": "2026-11-20",
+    "capacidade": 3628,
+    "ocupacao": 0.95,
+    "fonte": "Equipe da banda: quase esgotado na semana do show; a casa recebe 2 datas próprias por ano"
+   },
+   {
+    "cidade": "Rio de Janeiro",
+    "local": "Qualistage",
+    "data": "2024-07-05",
+    "capacidade": 9500,
+    "ocupacao": null,
+    "fonte": "Chartmetric (live_events) — capacidade da casa, ocupação não informada"
+   },
+   {
+    "cidade": "Curitiba",
+    "local": "Live Curitiba",
+    "data": "2023-10-14",
+    "capacidade": 5000,
+    "ocupacao": null,
+    "fonte": "Chartmetric (live_events) — capacidade da casa, ocupação não informada"
+   },
+   {
+    "cidade": "Belo Horizonte",
+    "local": "BeFly Hall",
+    "data": "2025-05-24",
+    "capacidade": 5000,
+    "ocupacao": null,
+    "fonte": "Chartmetric (live_events) — capacidade da casa, ocupação não informada"
+   },
+   {
+    "cidade": "Florianópolis",
+    "local": "Hard Rock Live Florianópolis",
+    "data": "2025-03-28",
+    "capacidade": null,
+    "ocupacao": null,
+    "fonte": "Chartmetric (live_events) — capacidade do export é inconsistente, não usada"
+   },
+   {
+    "cidade": "Campinas",
+    "local": "Multi Arena",
+    "data": "2026-07-25",
+    "capacidade": null,
+    "ocupacao": null,
+    "fonte": "Chartmetric (live_events) + turnê Carta de Adeus — capacidade não informada"
+   }
+  ]
+ }
 }

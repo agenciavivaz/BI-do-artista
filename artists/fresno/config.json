@@ -102,6 +102,7 @@
   },
   "qualidade_dados": [
     "Ouvintes por cidade no Spotify vêm do último snapshot disponível na Chartmetric (ago–dez/2024). A versão com API atualiza isso diariamente.",
+    "O público provável por praça é calibrado na bilheteria de 2 shows com ocupação conhecida (Espaço Unimed 18/04/2026, lotado; Auditório Araújo Vianna 20/11/2026, ~95%). Cada show novo com capacidade e ocupação anotadas em config.json → calibracao.ancoras recalibra a estimativa de todas as 44 praças.",
     "A lista de shows da Chartmetric tem 60+ eventos desde 2018, não a agenda completa. Os efeitos de show são uma amostra.",
     "O export 'Popularidade do Spotify' por faixa veio idêntico ao de streams (bug do export) e foi descartado.",
     "Comparação por faixa cobre 5 músicas escolhidas no export; Shazam só tem 1 faixa.",
@@ -114,5 +115,72 @@
     "whatsapp": "",
     "instagram": "",
     "texto_cta": "Este é um retrato de novembro de 2026. A versão viva atualiza toda semana, avisa quando uma cidade dispara e responde perguntas da equipe direto nos dados."
+  },
+  "calibracao": {
+    "expoente_demanda": 0.3,
+    "bonus_cidade_casa": 1.0,
+    "datas_por_ano": {
+      "Porto Alegre": 2,
+      "São Paulo": 2,
+      "Rio de Janeiro": 2
+    },
+    "ancoras": [
+      {
+        "cidade": "São Paulo",
+        "local": "Espaço Unimed",
+        "data": "2026-04-18",
+        "capacidade": 8000,
+        "ocupacao": 1.0,
+        "fonte": "Billboard Brasil: estreia da turnê Carta de Adeus com Espaço Unimed lotado"
+      },
+      {
+        "cidade": "Porto Alegre",
+        "local": "Auditório Araújo Vianna",
+        "data": "2026-11-20",
+        "capacidade": 3628,
+        "ocupacao": 0.95,
+        "fonte": "Equipe da banda: quase esgotado na semana do show; a casa recebe 2 datas próprias por ano"
+      },
+      {
+        "cidade": "Rio de Janeiro",
+        "local": "Qualistage",
+        "data": "2024-07-05",
+        "capacidade": 9500,
+        "ocupacao": null,
+        "fonte": "Chartmetric (live_events) — capacidade da casa, ocupação não informada"
+      },
+      {
+        "cidade": "Curitiba",
+        "local": "Live Curitiba",
+        "data": "2023-10-14",
+        "capacidade": 5000,
+        "ocupacao": null,
+        "fonte": "Chartmetric (live_events) — capacidade da casa, ocupação não informada"
+      },
+      {
+        "cidade": "Belo Horizonte",
+        "local": "BeFly Hall",
+        "data": "2025-05-24",
+        "capacidade": 5000,
+        "ocupacao": null,
+        "fonte": "Chartmetric (live_events) — capacidade da casa, ocupação não informada"
+      },
+      {
+        "cidade": "Florianópolis",
+        "local": "Hard Rock Live Florianópolis",
+        "data": "2025-03-28",
+        "capacidade": null,
+        "ocupacao": null,
+        "fonte": "Chartmetric (live_events) — capacidade do export é inconsistente, não usada"
+      },
+      {
+        "cidade": "Campinas",
+        "local": "Multi Arena",
+        "data": "2026-07-25",
+        "capacidade": null,
+        "ocupacao": null,
+        "fonte": "Chartmetric (live_events) + turnê Carta de Adeus — capacidade não informada"
+      }
+    ]
   }
 }
