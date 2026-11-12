@@ -502,7 +502,7 @@ function brmap(target, cities){
   $(target).appendChild(s);
   $('#map-legend').innerHTML = Object.values(FAIXA).map(f => `<span><i style="background:${f.c}"></i>${f.l}</span>`).join('');
 }
-function cityTip(c){ return `<b>${esc(c.cidade)}</b><br>${fmt(c.ouvintes)} ouvintes · ${fmt(c.por100k)} por 100 mil hab.<br>Demanda: <b>${fmt1(c.demanda_rel)}x</b> a mediana<br>${esc(c.acao)}<br>Público provável: ${fmt(c.publico_min)}–${fmt(c.publico_max)} (${fmt1(c.conv_pct)}% da base de fãs daqui)`; }
+function cityTip(c){ return `<b>${esc(c.cidade)}</b><br>${fmt(c.ouvintes)} ouvintes · ${fmt(c.por100k)} por 100 mil hab.<br>Demanda: <b>${fmt1(c.demanda_rel)}x</b> a mediana<br>${esc(c.acao)}<br>Público provável: <b>${fmt(c.publico)}</b> (${fmt(c.publico_min)}–${fmt(c.publico_max)})`; }
 
 /* ---------- tabela ordenável ---------- */
 function table(target, rows, cols, sortKey){
@@ -563,7 +563,7 @@ table('#cities-table', C.slice(0, 20), [
   {k:'faixa', h:'Cachê', f:(v)=>`<span class="chip"><i style="background:${FAIXA[v].c}"></i>${FAIXA[v].s}</span>`},
   {k:'publico', h:'Público*', r:1, f:(v,r)=>`${fmt(r.publico_min)}–${fmt(r.publico_max)}`},
 ], 'demanda_rel');
-$('#cities-note').innerHTML = `Mediana: ${fmt(D.cidades_mediana_100k)} ouvintes por 100 mil habitantes. *Público provável por show próprio: base de fãs da praça × a fatia que a bilheteria real da banda mostra (${fmt1(D.publico_praca.conv_ref_pct)}% numa praça de ${fmt(D.publico_praca.base_ref)} fãs, ajustada pelo tamanho e pela afinidade da praça; calibrada em ${D.publico_praca.ancoras_calibradas} shows). Ouvintes por cidade: último snapshot da Chartmetric (${esc(C[0].atualizado)}); população: IBGE, Censo 2022.`;
+$('#cities-note').innerHTML = `Mediana: ${fmt(D.cidades_mediana_100k)} ouvintes por 100 mil habitantes. *Público provável por show próprio: regressão sobre ${D.publico_praca.modelo.n_shows} shows próprios da banda com capacidade de casa conhecida (R² ${fmt1((D.publico_praca.modelo.r2||0)*100)}%), partindo da base de fãs da praça e da afinidade local. Ouvintes por cidade: último snapshot da Chartmetric (${esc(C[0].atualizado)}); população: IBGE, Censo 2022.`;
 hbars('#yt-cities', D.youtube_cidades_12m.map(c => ({label:c.cidade, value:c.var_12m, display: sign(c.var_12m,0), color:'var(--data-pos)', tip:`<b>${esc(c.cidade)}</b><br>Visualizações no YouTube: ${sign(c.var_12m,1)} em 12 meses`})), {labelW:150, valW:60});
 $('#copalco').innerHTML = D.co_palco.slice(0,6).map(c => `<div class="row"><span class="k">${esc(c.artista)}</span><span class="vv">${c.eventos} palcos juntos</span></div>`).join('');
 

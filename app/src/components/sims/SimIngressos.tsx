@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useArtist } from '../../data/ArtistContext';
 import { dec, int } from '../../lib/format';
-import { CASAS, CONFIANCA, casaPara, fraseAncora, pct, pub, publicoCom } from '../../lib/publico';
+import { CASAS, CONFIANCA, casaPara, chanceDeEsgotar, fraseProva, pct, pub } from '../../lib/publico';
 import { evento } from '../../lib/track';
 import { CidadeBusca } from './CidadeBusca';
 
@@ -13,107 +13,144 @@ export function useDebounceEvento() {
   };
 }
 
+/** degraus de casa para o controle: 200 … 20 mil, sempre redondos */
+const DEGRAUS = [200, 300, 400, 500, 700, 900, 1200, 1500, 2000, 2500, 3000, 3600, 4400, 5500, 7000, 8500, 10000, 13000, 16000, 20000];
+const maisPerto = (n: number) => DEGRAUS.reduce((a, b) => (Math.abs(b - n) < Math.abs(a - n) ? b : a), DEGRAUS[0]);
+
 export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null }) {
   const { data, config } = useArtist();
   const p = pub(data);
   const cidades = data.cidades;
   const inicial = cidades.find((c) => c.cidade === cidadeInicial) ?? [...cidades].sort((a, b) => b.publico - a.publico)[0];
   const [cidade, setCidade] = useState(inicial);
-  const [conv, setConv] = useState<number | null>(null); // null = taxa calibrada da praça
+  const [casa, setCasa] = useState<number | null>(null); // null = a casa que a banda já usou
   const marcar = useDebounceEvento();
+
+  const casaPadrao = useMemo(() => {
+    const ultima = cidade.provas.find((pr) => pr.capacidade);
+    return maisPerto(ultima?.capacidade ?? cidade.publico);
+  }, [cidade]);
   useEffect(() => {
     if (!cidadeInicial) return;
     const c = cidades.find((x) => x.cidade === cidadeInicial);
-    if (c) { setCidade(c); setConv(null); }
+    if (c) { setCidade(c); setCasa(null); }
   }, [cidadeInicial, cidades]);
 
-  const taxa = conv ?? cidade.conv_pct;
-  const naTaxa = conv == null;
-  const banda = p.banda[cidade.confianca];
-  const centro = naTaxa ? cidade.publico : publicoCom(cidade, taxa);
-  const lo = naTaxa ? cidade.publico_min : Math.round((centro * (1 - banda)) / 10) * 10;
-  const hi = naTaxa ? cidade.publico_max : Math.round((centro * (1 + banda)) / 10) * 10;
-  const casa = casaPara(centro);
+  const lugares = casa ?? casaPadrao;
+  const chance = chanceDeEsgotar(cidade, lugares);
+  const faixaCasa = casaPara(cidade.publico);
   const conf = CONFIANCA[cidade.confianca];
-  const noAno = cidade.datas_ano > 1 ? (naTaxa ? cidade.publico_ano : Math.round((centro * cidade.datas_ano) / 100) * 100) : null;
+  const m = p.modelo;
+  const sobra = cidade.publico - lugares;
 
-  const mudou = (c = cidade, t = taxa) => marcar('simulador_usado', { sim: 'ingressos', cidade: c.cidade, conv: t });
+  const mudou = (c = cidade, l = lugares) => marcar('simulador_usado', { sim: 'ingressos', cidade: c.cidade, casa: l });
 
   return (
     <div className="sim">
-      <CidadeBusca cidades={cidades} valor={cidade} onChange={(c) => { setCidade(c); setConv(null); mudou(c, c.conv_pct); }} />
+      <CidadeBusca cidades={cidades} valor={cidade} onChange={(c) => { setCidade(c); setCasa(null); mudou(c); }} />
 
       <div className="sim-saida painel" aria-live="polite">
-        <p className="sim-numero num">{int(lo)} <span>a</span> {int(hi)}</p>
+        <p className="sim-numero num">{int(cidade.publico)}</p>
         <p className="sim-frase">
-          Em {cidade.cidade}, com {pct(taxa)} da base de fãs comprando: {int(lo)} a {int(hi)} pessoas.
-          Casa sugerida: {CASAS[casa].rotulo}.
+          Em {cidade.cidade}, o público mais provável de um show próprio é de <strong className="num">{int(cidade.publico)}</strong> pessoas.
+          Em 8 de cada 10 cenários fica entre <strong className="num">{int(cidade.publico_min)}</strong> e{' '}
+          <strong className="num">{int(cidade.publico_max)}</strong>. Casa sugerida: {CASAS[faixaCasa].rotulo}.
         </p>
         <p className="apoio linha-conf">
           <span className={`pastilha pastilha-${cidade.confianca}`}>{conf.rotulo}</span> {conf.motivo}
         </p>
-        {cidade.ancora && <p className="apoio ancora">{fraseAncora(cidade.ancora)}</p>}
-        {noAno && (
-          <p className="apoio">
-            A praça recebe {cidade.datas_ano} datas próprias por ano: cerca de <strong className="num">{int(noAno)}</strong> pessoas no ano.
-          </p>
-        )}
         <ol className="casas" aria-label="Tamanho de casa">
-          {CASAS.map((c, i) => <li key={c.curto} className={i === casa ? 'sel' : ''} aria-current={i === casa ? 'true' : undefined}>{c.curto}</li>)}
+          {CASAS.map((c, i) => <li key={c.curto} className={i === faixaCasa ? 'sel' : ''} aria-current={i === faixaCasa ? 'true' : undefined}>{c.curto}</li>)}
         </ol>
       </div>
 
       <div className="campo">
-        <label htmlFor="conv" className="campo-rotulo">
-          Conversão da base de fãs: <strong className="num">{pct(taxa)}</strong>
-          {naTaxa && <span className="apoio"> · taxa calibrada desta praça</span>}
+        <label htmlFor="casa" className="campo-rotulo">
+          Casa de <strong className="num">{int(lugares)}</strong> lugares
+          {casa == null && <span className="apoio"> · {cidade.provas.find((pr) => pr.capacidade) ? 'a casa que a banda já usou aqui' : 'uma casa do tamanho da previsão'}</span>}
         </label>
-        <input id="conv" className="slider" type="range" min={p.conv_min_pct} max={p.conv_max_pct} step={0.5} value={taxa}
-          onChange={(e) => { const v = Number(e.target.value); setConv(v); mudou(cidade, v); }} />
-        {!naTaxa && (
-          <button type="button" className="btn btn-leve btn-reset" onClick={() => { setConv(null); mudou(cidade, cidade.conv_pct); }}>
-            Voltar para {pct(cidade.conv_pct)}, a taxa calibrada
-          </button>
-        )}
+        <input id="casa" className="slider" type="range" min={0} max={DEGRAUS.length - 1} step={1}
+          value={Math.max(DEGRAUS.indexOf(lugares), 0)}
+          onChange={(e) => { const v = DEGRAUS[Number(e.target.value)]; setCasa(v); mudou(cidade, v); }} />
+        <div className="chance">
+          <div className="chance-trilho"><i style={{ width: `${chance}%` }} /></div>
+          <p className="chance-valor">
+            <strong className="num">{chance}%</strong> de chance de esgotar {int(lugares)} lugares
+          </p>
+        </div>
+        <p className="apoio">
+          {sobra > lugares * 0.05
+            ? <>Sobra demanda: cerca de <strong className="num">{int(sobra)}</strong> pessoas ficariam sem ingresso — é o argumento de casa maior ou de uma segunda data.</>
+            : sobra < -lugares * 0.3
+              ? <>A casa é grande para a praça hoje: a previsão enche <strong className="num">{pct((cidade.publico / lugares) * 100)}</strong> dela.</>
+              : <>Casa e demanda batem: é o cenário de manter a casa e subir o preço.</>}
+        </p>
       </div>
+
+      {cidade.provas.length > 0 && (
+        <section className="provas" aria-labelledby="h-provas">
+          <h4 id="h-provas">O que a banda já fez em {cidade.cidade}</h4>
+          <ul>
+            {cidade.provas.map((pr) => (
+              <li key={pr.data + pr.local} className={pr.esgotou ? 'esgotou' : undefined}>
+                <span>{fraseProva(pr)}</span>
+                {pr.fonte && <small className="apoio">{pr.fonte}</small>}
+              </li>
+            ))}
+          </ul>
+          <p className="apoio">Datas próprias nos últimos 12 meses: <strong className="num">{cidade.datas_ano}</strong>.</p>
+        </section>
+      )}
 
       <details className="conta">
         <summary>Como essa conta é feita</summary>
-        <ol className="conta-passos">
-          <li>
-            <span>Ouvintes mensais na praça</span>
-            <strong className="num">{int(cidade.ouvintes)}</strong>
-            <small className="apoio">snapshot de {cidade.atualizado.split('-').reverse().join('/')}</small>
-          </li>
-          <li>
-            <span>Corrigido para hoje</span>
-            <strong className="num">{int(cidade.ouvintes_hoje)}</strong>
-            <small className="apoio">
-              ×{dec(p.fator_atualizacao, 2)} — o snapshot somava {int(p.ouvintes_snapshot)} ouvintes e a banda está com {int(p.ouvintes_atuais)}
-            </small>
-          </li>
-          <li>
-            <span>Base de fãs da praça</span>
-            <strong className="num">{int(cidade.base_fa)}</strong>
-            <small className="apoio">
-              ×{dec(p.fator_fa, 2)} — para cada 100 ouvintes do mês, {int(data.kpis.lealdade)} seguem a banda. Quem compra ingresso de banda
-              de {new Date(data.meta.gerado_em).getFullYear() - config.desde} anos inclui o fã que já não ouve toda semana.
-            </small>
-          </li>
-          <li>
-            <span>Fatia que compra ingresso aqui</span>
-            <strong className="num">{pct(cidade.conv_pct)}</strong>
-            <small className="apoio">
-              {pct(p.conv_ref_pct)} numa praça de {int(p.base_ref)} fãs, caindo conforme a praça cresce e subindo com a afinidade local
-              ({dec(cidade.demanda_rel, 1)}x a mediana). Calibrado em {p.ancoras_calibradas} shows com bilheteria conhecida.
-            </small>
-          </li>
-          <li>
-            <span>Público provável</span>
-            <strong className="num">{int(cidade.publico)}</strong>
-            <small className="apoio">faixa de ±{pct(banda * 100)}, pela confiança da praça</small>
-          </li>
-        </ol>
+        <div className="conta-corpo">
+          <p className="apoio">
+            Não é uma taxa de conversão escolhida a dedo: é uma regressão sobre {m.n_shows} shows próprios da banda
+            (de {m.n_provas} no histórico), nas praças com capacidade de casa conhecida. Cada show entra com peso —
+            bilheteria confirmada pesa mais que ocupação presumida, e casa de configuração variável fica fora, porque a
+            capacidade dela não diz quanta gente foi.
+          </p>
+          <ol className="conta-passos">
+            <li>
+              <span>Ouvintes mensais na praça</span>
+              <strong className="num">{int(cidade.ouvintes)}</strong>
+              <small className="apoio">snapshot de {cidade.atualizado.split('-').reverse().join('/')}</small>
+            </li>
+            <li>
+              <span>Corrigido para hoje</span>
+              <strong className="num">{int(cidade.ouvintes_hoje)}</strong>
+              <small className="apoio">
+                ×{dec(p.fator_atualizacao, 2)} — o snapshot somava {int(p.ouvintes_snapshot)} ouvintes e a banda está com {int(p.ouvintes_atuais)}
+              </small>
+            </li>
+            <li>
+              <span>Base de fãs da praça</span>
+              <strong className="num">{int(cidade.base_fa)}</strong>
+              <small className="apoio">
+                ×{dec(p.fator_fa, 2)} — para cada 100 ouvintes do mês, {int(data.kpis.lealdade)} seguem a banda. Quem compra ingresso de banda
+                de {new Date(data.meta.gerado_em).getFullYear() - config.desde} anos inclui o fã que já não ouve toda semana.
+              </small>
+            </li>
+            <li>
+              <span>Previsão da regressão</span>
+              <strong className="num">{int(cidade.publico)}</strong>
+              <small className="apoio">
+                público ∝ base<sup>{dec(m.beta[1], 2)}</sup> × afinidade<sup>{dec(m.beta[2], 2)}</sup>. O expoente da base é menor que 1:
+                praça grande converte uma fatia menor ({pct(cidade.conv_pct)} aqui).{' '}
+                {m.afinidade_fixa && 'Com poucos shows medidos, o expoente da afinidade fica fixo para não superajustar.'}
+              </small>
+            </li>
+            <li>
+              <span>Faixa de 8 em 10 cenários</span>
+              <strong className="num">{int(cidade.publico_min)}–{int(cidade.publico_max)}</strong>
+              <small className="apoio">
+                ±{cidade.incerteza_pct}%, somando o erro do ajuste (R² {m.r2 != null ? dec(m.r2, 2) : '—'}, desvio de {pct(m.sigma * 100)} em log)
+                e a distância desta praça para as praças que a banda já tocou.
+              </small>
+            </li>
+          </ol>
+        </div>
       </details>
     </div>
   );

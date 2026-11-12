@@ -217,7 +217,7 @@
             "demanda_rel",
             "faixa",
             "publico",
-            "conv_pct"
+            "chance_esgotar"
           ],
           "filtro": {
             "faixa": [
@@ -333,7 +333,10 @@
         "tamanho da casa",
         "capacidade",
         "vender ingresso",
-        "casa de show"
+        "casa de show",
+        "casa maior",
+        "segunda data",
+        "esgotar"
       ],
       "pensando": [
         {
@@ -353,7 +356,7 @@
           "ms": 700
         },
         {
-          "texto": "Calibrando a fatia que compra ingresso em 2 shows com bilheteria conhecida",
+          "texto": "Lendo a agenda: 34 shows próprios da banda",
           "fontes": [
             "shows",
             "imprensa"
@@ -361,32 +364,36 @@
           "ms": 700
         },
         {
-          "texto": "Ajustando pelo tamanho e pela afinidade da praça",
+          "texto": "Ajustando a regressão nos 6 shows com capacidade de casa conhecida",
+          "fontes": [
+            "shows",
+            "cidades"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Projetando público e chance de esgotar cada casa",
           "fontes": [
             "cidades",
             "ibge"
           ],
           "ms": 700
-        },
-        {
-          "texto": "Sugerindo o tamanho de casa",
-          "fontes": [
-            "cidades",
-            "shows"
-          ],
-          "ms": 700
         }
       ],
-      "veredito": "Em Porto Alegre a conta fecha em 3.000 a 3.900 pessoas por data, e a praça recebe 2 datas próprias por ano.",
-      "explicacao": "Ouvinte mensal não é fã: para cada 100 ouvintes, 128 seguem a banda, e quem compra ingresso inclui o fã que já não ouve toda semana. A conta parte da base de fãs da praça e aplica a fatia que a própria bilheteria da banda mostra — 6,1% numa praça de 40.000 fãs, caindo quando a praça cresce (São Paulo converte 1,9x menos que Porto Alegre) e subindo com a afinidade local.",
+      "veredito": "Em São Paulo, 8.000 pessoas é o cenário mais provável — 68% de chance de esgotar a casa que a banda usou lá.",
+      "explicacao": "A conta não é uma taxa de conversão escolhida a dedo. É uma regressão sobre os shows próprios da banda: o público cresce com a base de fãs da praça elevada a 0,61 — menor que 1, ou seja, praça grande converte uma fatia menor — e com a afinidade local elevada a 0,30. O ajuste explica 81% da variação dos 6 shows medidos, com desvio de 24% em escala log. Show esgotado entra como piso, não como teto: ele diz que a banda venderia pelo menos aquilo.",
       "numeros": [
         {
-          "valor": "7.000–9.000",
-          "rotulo": "São Paulo"
+          "valor": "8.000",
+          "rotulo": "São Paulo · 68% de esgotar"
         },
         {
-          "valor": "3.000–3.900",
-          "rotulo": "Porto Alegre"
+          "valor": "3.600",
+          "rotulo": "Porto Alegre · 50% de esgotar"
+        },
+        {
+          "valor": "2.900",
+          "rotulo": "Curitiba · 73% de esgotar"
         }
       ],
       "blocos": [
@@ -401,20 +408,23 @@
           "colunas": [
             "cidade",
             "base_fa",
-            "conv_pct",
+            "publico_min",
             "publico",
-            "confianca"
+            "publico_max",
+            "confianca",
+            "veredito_casa"
           ],
           "titulo": "Público provável por praça"
         }
       ],
       "acoes": [
+        "Em Curitiba, a previsão passa da casa usada: peça casa maior ou uma segunda data.",
         "Prefira a casa que lota no limite de baixo da faixa: casa cheia vira conteúdo e escassez.",
-        "Depois de cada show, anote capacidade e ocupação em config.json → calibracao.ancoras: a estimativa toda se recalibra."
+        "Depois de cada show, anote capacidade e ocupação em config.json → calibracao.ancoras: a regressão se refaz sozinha."
       ],
       "confianca": {
         "nivel": "alta",
-        "motivo": "Taxa calibrada na bilheteria real de 2 shows. Praça sem show próprio no histórico aparece com faixa mais larga."
+        "motivo": "Regressão sobre 6 shows próprios com capacidade conhecida (R² 0,81). Casa de configuração variável fica fora do ajuste, porque a capacidade da arena não diz quanta gente foi."
       },
       "seguintes": [
         "onde-cobrar-mais",

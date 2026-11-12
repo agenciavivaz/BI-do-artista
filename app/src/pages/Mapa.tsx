@@ -4,7 +4,7 @@ import { MapaBR } from '../components/blocks/Mapa';
 import { Gaveta } from '../components/shell/Gaveta';
 import { useArtist } from '../data/ArtistContext';
 import { dec, int, signed } from '../lib/format';
-import { CONFIANCA, fraseAncora } from '../lib/publico';
+import { CONFIANCA, fraseProva } from '../lib/publico';
 import { FAIXAS, type Cidade } from '../types';
 
 function Dado({ rotulo, valor, sub }: { rotulo: string; valor: string; sub?: string }) {
@@ -54,13 +54,13 @@ export default function MapaPage() {
               <Dado rotulo="Faixa de cachê" valor={FAIXAS[sel.faixa].rotulo} />
               <Dado
                 rotulo="Público provável num show próprio"
-                valor={`${int(sel.publico_min)} a ${int(sel.publico_max)}`}
-                sub={`${dec(sel.conv_pct, 1)}% da base de fãs daqui · ${CONFIANCA[sel.confianca].rotulo}`}
+                valor={int(sel.publico)}
+                sub={`${int(sel.publico_min)} a ${int(sel.publico_max)} em 8 de 10 cenários · ${CONFIANCA[sel.confianca].rotulo}`}
               />
-              {sel.publico_ano && (
-                <Dado rotulo="No ano" valor={int(sel.publico_ano)} sub={`${sel.datas_ano} datas próprias por ano`} />
+              {sel.chance_esgotar != null && sel.ancora?.capacidade && (
+                <Dado rotulo={`Chance de esgotar ${int(sel.ancora.capacidade)} lugares`} valor={`${sel.chance_esgotar}%`} sub={sel.veredito_casa} />
               )}
-              {sel.ancora && <Dado rotulo="Último show próprio aqui" valor={sel.ancora.local} sub={fraseAncora(sel.ancora)} />}
+              {sel.provas[0] && <Dado rotulo="Último show próprio aqui" valor={sel.provas[0].local} sub={fraseProva(sel.provas[0])} />}
               <Dado rotulo="Views no YouTube, 3 meses" valor={sel.yt_3m == null ? 'sem dado' : signed(sel.yt_3m, 0)} />
             </dl>
             <div className="chips">

@@ -64,20 +64,29 @@ export interface Cidade {
   ingressos_max: number;
   coord: [number, number] | null;
   atualizado: string;
-  /** público provável (scripts/publico.py, calibrado nas âncoras do config) */
+  /** público provável (scripts/publico.py: regressão sobre os shows próprios) */
   ouvintes_hoje: number;
   base_fa: number;
   conv_pct: number;
   publico_min: number;
   publico: number;
   publico_max: number;
+  incerteza_pct: number;
+  ep: number;
   casa: number;
   confianca: 'alta' | 'media' | 'baixa';
   datas_ano: number;
-  publico_ano: number | null;
+  excedente: number | null;
+  chance_esgotar: number | null;
+  folga: number | null;
+  veredito_casa: string;
+  provas: {
+    local: string; data: string; capacidade: number | null;
+    ocupacao: number | null; publico: number | null; esgotou: boolean; fonte: string;
+  }[];
   ancora: {
     local: string; data: string; capacidade: number | null;
-    ocupacao: number | null; publico: number | null; fonte: string;
+    ocupacao: number | null; publico: number | null; esgotou: boolean; fonte: string;
   } | null;
 }
 

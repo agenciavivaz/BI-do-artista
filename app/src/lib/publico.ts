@@ -1,17 +1,13 @@
 /**
  * Público provável por praça.
  *
- * Os números vêm prontos de data.json (campos `base_fa`, `conv_pct`, `publico*`,
- * `ancora`, `confianca`), calculados por `scripts/publico.py`. Aqui só ficam:
- * as faixas de casa, o recálculo ao vivo quando a pessoa mexe no slider de
- * conversão (uma multiplicação sobre a base da praça) e as frases de apoio.
- *
- * Modelo, em uma linha: a fatia da base de fãs que compra ingresso cai conforme
- * a praça cresce e sobe conforme a afinidade local. As duas constantes são
- * calibradas nos shows reais da banda (ver o cabeçalho de scripts/publico.py).
+ * Os números vêm prontos de data.json (`scripts/publico.py`): uma regressão
+ * ponderada em escala log sobre os shows próprios da banda. Aqui ficam só as
+ * faixas de casa, a conta da chance de esgotar uma casa qualquer (que é só a
+ * lognormal da predição) e as frases de apoio.
  */
 import type { Cidade, Data } from '../types';
-import { dec, dezena, int } from './format';
+import { dec, int } from './format';
 
 export const CASAS = [
   { ate: 400, rotulo: 'até 400 lugares', curto: 'até 400' },
@@ -22,55 +18,70 @@ export const CASAS = [
 ];
 export const casaPara = (n: number) => CASAS.findIndex((c) => n < c.ate);
 
-export interface Ancora {
-  local: string;
-  data: string;
-  capacidade: number | null;
-  ocupacao: number | null;
-  publico: number | null;
-  fonte: string;
+export interface Prova {
+  local: string; data: string; capacidade: number | null;
+  ocupacao: number | null; publico: number | null; esgotou: boolean; fonte: string;
 }
+
+export interface ShowUsado extends Prova { cidade: string; peso: number; no_ajuste: boolean; fator_tempo: number }
 
 export interface PublicoPraca {
   fator_atualizacao: number;
   fator_fa: number;
-  conv_ref_pct: number;
-  base_ref: number;
-  expoente_escala: number;
-  expoente_demanda: number;
-  conv_min_pct: number;
-  banda: Record<string, number>;
-  conv_max_pct: number;
-  cidade_casa: string | null;
-  ancoras_calibradas: number;
-  residuo_pct: number | null;
   ouvintes_snapshot: number;
   ouvintes_atuais: number;
-  ancoras: ({ cidade: string } & Ancora)[];
+  modelo: {
+    tipo: 'regressao' | 'referencia';
+    beta: number[];
+    erro_padrao: number[] | null;
+    sigma: number;
+    r2: number | null;
+    gl: number;
+    n_shows: number;
+    n_provas: number;
+    afinidade_fixa: boolean;
+    cidades: string[];
+  };
+  limiares: { crescer: number; encolher: number };
   datas_por_ano: Record<string, number>;
+  shows_usados: ShowUsado[];
 }
 
 export const CONFIANCA: Record<string, { rotulo: string; motivo: string }> = {
-  alta: { rotulo: 'ancorado em bilheteria', motivo: 'A banda já fez essa praça e sabemos quanto vendeu.' },
-  media: { rotulo: 'praça conhecida', motivo: 'Há show próprio na praça ou base grande o bastante para a conta ser estável.' },
-  baixa: { rotulo: 'estimativa larga', motivo: 'Praça pequena e sem show próprio no histórico: a faixa é larga de propósito.' },
+  alta: { rotulo: 'bilheteria conhecida', motivo: 'A banda esgotou uma casa aqui, então sabemos o piso da demanda.' },
+  media: { rotulo: 'praça já trabalhada', motivo: 'A banda já fez show próprio aqui; a bilheteria exata não é pública.' },
+  baixa: { rotulo: 'praça nova', motivo: 'Sem show próprio no histórico: a predição vem só do tamanho e da afinidade da praça.' },
 };
 
 export const pub = (d: Data): PublicoPraca => d.publico_praca as PublicoPraca;
 
-/** Público para uma conversão escolhida à mão (slider), sobre a base de fãs da praça. */
-export const publicoCom = (c: Cidade, convPct: number) => dezena((c.base_fa * convPct) / 100);
+/** Chance de encher uma casa de `lugares`, pela lognormal da predição. */
+export function chanceDeEsgotar(c: Cidade, lugares: number): number {
+  if (!lugares || !c.publico || !c.ep) return 0;
+  const z = (Math.log(lugares) - Math.log(c.publico)) / c.ep;
+  return Math.round((1 - fi(z)) * 100);
+}
+
+/** Φ(z) por série de Abramowitz-Stegun (erf não existe no JS). */
+function fi(z: number): number {
+  const s = z < 0 ? -1 : 1;
+  const x = Math.abs(z) / Math.SQRT2;
+  const t = 1 / (1 + 0.3275911 * x);
+  const y = 1 - ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
+  return 0.5 * (1 + s * y);
+}
 
 export const pct = (v: number) => `${dec(v, v % 1 ? 1 : 0)}%`;
+export const dataBr = (iso: string) => iso.split('-').reverse().join('/');
 
-const dataBr = (iso: string) => iso.split('-').reverse().join('/');
-
-/** "Em 20/11/2026 vocês levaram 3.450 pessoas ao Auditório Araújo Vianna (3.628 lugares, 95% da casa)." */
-export function fraseAncora(a: Ancora): string {
-  const onde = `${a.local}${a.capacidade ? ` (${int(a.capacidade)} lugares)` : ''}`;
-  if (a.publico) {
-    const ocup = a.ocupacao ? `, ${pct(a.ocupacao * 100)} da casa` : '';
-    return `Em ${dataBr(a.data)} a banda levou cerca de ${int(a.publico)} pessoas ao ${onde}${ocup}.`;
-  }
-  return `A banda já tocou no ${onde} em ${dataBr(a.data)}, mas a bilheteria não está no export.`;
+/** "Araújo Vianna, 20/11/2026 — 3.628 lugares, 95% da casa" */
+export function fraseProva(p: Prova): string {
+  const partes = [`${p.local}, ${dataBr(p.data)}`];
+  if (p.capacidade) partes.push(`${int(p.capacidade)} lugares`);
+  if (p.esgotou) partes.push('esgotado');
+  else if (p.ocupacao) partes.push(`${pct(p.ocupacao * 100)} da casa`);
+  else if (p.capacidade) partes.push('ocupação não publicada');
+  return partes.join(' — ');
 }
+
+export const fraseAncora = fraseProva;

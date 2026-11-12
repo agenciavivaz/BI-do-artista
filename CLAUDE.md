@@ -36,10 +36,12 @@ Commit na `main` → Vercel publica. O `vercel.json` roda o build do `app/` e pu
 - `components/shell/` rail, barra de pergunta, mesa, cabo de luz, gaveta · `components/answer/` raciocínio e resposta
 - `components/blocks/` os 14 tipos de bloco em SVG próprio (despacho em `Bloco.tsx`) · `components/sims/` simuladores
 - Decisão de produto: **público provável por praça** (`scripts/publico.py` + `app/src/lib/publico.ts`). A conta antiga
-  ("3% a 5% dos ouvintes mensais") errava 3 a 5 vezes para baixo — dava 720–1.200 em Porto Alegre enquanto a banda quase
-  esgota o Araújo Vianna (3.628) duas vezes por ano. A nova parte da **base de fãs** da praça (ouvintes do snapshot
-  corrigidos para hoje × lealdade) e aplica uma fatia **calibrada na bilheteria real**: ela cai quando a praça cresce e
-  sobe com a afinidade local. As âncoras ficam em `artists/<slug>/config.json → calibracao.ancoras` (local, data,
-  capacidade, ocupação, fonte) — **depois de cada show, anote a ocupação ali**: o modelo inteiro se recalibra. Só âncora
-  com ocupação conhecida entra no ajuste; as outras aparecem como prova na interface.
+  ("3% a 5% dos ouvintes mensais") errava 3 a 5 vezes para baixo. A nova é uma **regressão ponderada em escala log**
+  sobre a agenda própria da banda: `ln(público) = b0 + b1·ln(base de fãs) + b2·ln(demanda_rel)`. Saem dela o P50, a
+  faixa P10–P90 (erro do ajuste + alavancagem da praça), a **chance de esgotar** qualquer casa (lognormal da predição)
+  e o veredito de casa maior / segunda data / subir preço. Regras que importam: show esgotado é **piso**, não teto;
+  casa de configuração variável (arena) fica fora do ajuste porque capacidade não é lotação; por cidade e ano só a
+  maior evidência entra; com menos de 10 shows medidos o expoente da afinidade fica fixo no prior, para não
+  superajustar. Os shows ficam em `artists/<slug>/config.json → calibracao.ancoras` (local, data, capacidade,
+  ocupação, fonte, `escalavel`, `fora_do_ajuste`) — **anotar a ocupação depois de cada show refaz a regressão**.
 - Decisão de produto: o simulador "Janela de lançamento" mostra o **nível** de ouvintes 1 mês depois (índice sazonal do mês seguinte + mediana dos lançamentos) e o **salto** do PRD §5.5 como informação extra. Só a fórmula do salto apontaria março como melhor mês, contrariando o veredito de "quando lançar".

@@ -130,38 +130,45 @@ def build_answers(d):
     })
 
     pp = d['publico_praca']
-    ancoradas = sorted([c for c in cid if c['confianca'] == 'alta'], key=lambda c: -c['publico'])
-    anc0 = max(ancoradas, key=lambda c: c['conv_pct']) if ancoradas else cid[0]   # praça que mais converte
-    ancg = max(ancoradas, key=lambda c: c['publico']) if ancoradas else cid[0]     # praça de maior público
+    mod = pp['modelo']
+    com_casa = sorted([c for c in cid if c.get('chance_esgotar') is not None], key=lambda c: -c['publico'])
+    crescer = [c for c in com_casa if c['folga'] and c['folga'] >= pp['limiares']['crescer']
+               and (c['ancora'] or {}).get('capacidade', 0) >= 500]
+    melhor = com_casa[0] if com_casa else cid[0]
     A.append({
         'id': 'quantos-ingressos', 'tema': 'cache', 'simulador': 'ingressos',
         'pergunta': 'Quantos ingressos dá pra vender numa cidade?',
-        'variacoes': ['ingressos', 'lotar', 'tamanho da casa', 'capacidade', 'vender ingresso', 'casa de show'],
+        'variacoes': ['ingressos', 'lotar', 'tamanho da casa', 'capacidade', 'vender ingresso', 'casa de show',
+                      'casa maior', 'segunda data', 'esgotar'],
         'pensando': [
             step('Pegando os ouvintes da cidade e corrigindo o snapshot para hoje', ['cidades', 'ouvintes']),
             step(f"Virando base de fãs: {d['kpis']['lealdade']:.0f} seguidores a cada 100 ouvintes", ['cidades', 'seguidores']),
-            step(f"Calibrando a fatia que compra ingresso em {pp['ancoras_calibradas']} shows com bilheteria conhecida", ['shows', 'imprensa']),
-            step('Ajustando pelo tamanho e pela afinidade da praça', ['cidades', 'ibge']),
-            step('Sugerindo o tamanho de casa', ['cidades', 'shows']),
+            step(f"Lendo a agenda: {mod['n_provas']} shows próprios da banda", ['shows', 'imprensa']),
+            step(f"Ajustando a regressão nos {mod['n_shows']} shows com capacidade de casa conhecida", ['shows', 'cidades']),
+            step('Projetando público e chance de esgotar cada casa', ['cidades', 'ibge']),
         ],
-        'veredito': (f"Em {anc0['cidade']} a conta fecha em {n(anc0['publico_min'])} a {n(anc0['publico_max'])} pessoas por data"
-                     + (f", e a praça recebe {anc0['datas_ano']} datas próprias por ano." if anc0['datas_ano'] > 1 else '.')),
-        'explicacao': (f"Ouvinte mensal não é fã: para cada 100 ouvintes, {d['kpis']['lealdade']:.0f} seguem a banda, e quem compra ingresso "
-                       f"inclui o fã que já não ouve toda semana. A conta parte da base de fãs da praça e aplica a fatia que a própria "
-                       f"bilheteria da banda mostra — {br(pp['conv_ref_pct'])}% numa praça de {n(pp['base_ref'])} fãs, caindo quando a praça "
-                       f"cresce ({ancg['cidade']} converte {br(anc0['conv_pct']/ancg['conv_pct'])}x menos que {anc0['cidade']}) "
-                       f"e subindo com a afinidade local."),
-        'numeros': ([{'valor': f"{n(c['publico_min'])}–{n(c['publico_max'])}", 'rotulo': c['cidade']}
-                     for c in ancoradas[:2]] or ([{'valor': f"{n(sp['publico_min'])}–{n(sp['publico_max'])}", 'rotulo': 'São Paulo'}] if sp else [])),
+        'veredito': (f"Em {melhor['cidade']}, {n(melhor['publico'])} pessoas é o cenário mais provável — "
+                     + (f"{melhor['chance_esgotar']}% de chance de esgotar a casa que a banda usou lá."
+                        if melhor.get('chance_esgotar') is not None else 'veja a faixa por praça.')),
+        'explicacao': (f"A conta não é uma taxa de conversão escolhida a dedo. É uma regressão sobre os shows próprios da banda: "
+                       f"o público cresce com a base de fãs da praça elevada a {br(mod['beta'][1],2)} — menor que 1, ou seja, praça "
+                       f"grande converte uma fatia menor — e com a afinidade local elevada a {br(mod['beta'][2],2)}. "
+                       f"O ajuste explica {br((mod['r2'] or 0)*100,0)}% da variação dos {mod['n_shows']} shows medidos, com desvio de "
+                       f"{br(mod['sigma']*100,0)}% em escala log. Show esgotado entra como piso, não como teto: ele diz que a banda "
+                       f"venderia pelo menos aquilo."),
+        'numeros': [{'valor': f"{n(c['publico'])}", 'rotulo': f"{c['cidade']} · {c['chance_esgotar']}% de esgotar"} for c in com_casa[:3]],
         'blocos': [{'tipo': 'simulador', 'simulador': 'ingressos', 'dados': 'cidades'},
-                   {'tipo': 'tabela', 'dados': 'cidades', 'colunas': ['cidade', 'base_fa', 'conv_pct', 'publico', 'confianca'],
+                   {'tipo': 'tabela', 'dados': 'cidades',
+                    'colunas': ['cidade', 'base_fa', 'publico_min', 'publico', 'publico_max', 'confianca', 'veredito_casa'],
                     'titulo': 'Público provável por praça'}],
-        'acoes': ['Prefira a casa que lota no limite de baixo da faixa: casa cheia vira conteúdo e escassez.',
-                  'Depois de cada show, anote capacidade e ocupação em config.json → calibracao.ancoras: a estimativa toda se recalibra.'],
-        'confianca': {'nivel': 'alta' if pp['ancoras_calibradas'] >= 2 else 'média',
-                      'motivo': (f"Taxa calibrada na bilheteria real de {pp['ancoras_calibradas']} shows"
-                                 + (f" (resíduo médio de {br(pp['residuo_pct'],0)}%)" if pp['residuo_pct'] else '')
-                                 + '. Praça sem show próprio no histórico aparece com faixa mais larga.')},
+        'acoes': ([f"Em {', '.join(c['cidade'] for c in crescer[:3])}, a previsão passa da casa usada: peça casa maior ou uma segunda data."]
+                  if crescer else []) +
+                 ['Prefira a casa que lota no limite de baixo da faixa: casa cheia vira conteúdo e escassez.',
+                  'Depois de cada show, anote capacidade e ocupação em config.json → calibracao.ancoras: a regressão se refaz sozinha.'],
+        'confianca': {'nivel': 'alta' if mod['n_shows'] >= 6 and (mod['r2'] or 0) >= 0.7 else 'média',
+                      'motivo': (f"Regressão sobre {mod['n_shows']} shows próprios com capacidade conhecida "
+                                 f"(R² {br(mod['r2'] or 0, 2)}). Casa de configuração variável fica fora do ajuste, porque a "
+                                 f"capacidade da arena não diz quanta gente foi.")},
         'seguintes': ['onde-cobrar-mais', 'proxima-cidade'],
     })
 

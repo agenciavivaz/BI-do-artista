@@ -102,7 +102,7 @@
   },
   "qualidade_dados": [
     "Ouvintes por cidade no Spotify vêm do último snapshot disponível na Chartmetric (ago–dez/2024). A versão com API atualiza isso diariamente.",
-    "O público provável por praça é calibrado na bilheteria de 2 shows com ocupação conhecida (Espaço Unimed 18/04/2026, lotado; Auditório Araújo Vianna 20/11/2026, ~95%). Cada show novo com capacidade e ocupação anotadas em config.json → calibracao.ancoras recalibra a estimativa de todas as 44 praças.",
+    "O público provável por praça vem de uma regressão sobre a agenda pública da banda (setlist.fm, imprensa e Chartmetric). Capacidade de casa quase nunca é publicada: só 6 shows próprios têm capacidade conhecida, e a ocupação é presumida em 85% quando a fonte não diz. Arena de configuração variável fica fora do ajuste. Cada bilheteria real anotada em config.json → calibracao.ancoras melhora a previsão de todas as 44 praças.",
     "A lista de shows da Chartmetric tem 60+ eventos desde 2018, não a agenda completa. Os efeitos de show são uma amostra.",
     "O export 'Popularidade do Spotify' por faixa veio idêntico ao de streams (bug do export) e foi descartado.",
     "Comparação por faixa cobre 5 músicas escolhidas no export; Shazam só tem 1 faixa.",
@@ -118,13 +118,31 @@
   },
   "calibracao": {
     "expoente_demanda": 0.3,
-    "bonus_cidade_casa": 1.0,
-    "datas_por_ano": {
-      "Porto Alegre": 2,
-      "São Paulo": 2,
-      "Rio de Janeiro": 2
-    },
+    "ocupacao_presumida": 0.85,
     "ancoras": [
+      {
+        "cidade": "São Paulo",
+        "local": "Espaço Unimed",
+        "data": "2024-10-18",
+        "capacidade": 8000,
+        "ocupacao": 0.9,
+        "peso": 0.8,
+        "fonte": "Tô na Grade: pista premium e mezanino esgotados antes do show, casa de ~8.000"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Terra SP",
+        "data": "2025-01-18",
+        "capacidade": 3000,
+        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Clube Atlético Juventus",
+        "data": "2025-02-14",
+        "capacidade": 4400,
+        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
+      },
       {
         "cidade": "São Paulo",
         "local": "Espaço Unimed",
@@ -134,52 +152,227 @@
         "fonte": "Billboard Brasil: estreia da turnê Carta de Adeus com Espaço Unimed lotado"
       },
       {
+        "cidade": "São Paulo",
+        "local": "Clube Atlético Juventus",
+        "data": "2026-10-03",
+        "capacidade": 4400,
+        "fonte": "setlist.fm (data) + Chartmetric (capacidade da casa); ocupação não publicada"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Sala São Paulo",
+        "data": "2026-12-02",
+        "capacidade": 1498,
+        "ocupacao": 1.0,
+        "fonte": "Billboard Brasil / Revista Business: esgotou em minutos e motivou data extra"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Vibra São Paulo",
+        "data": "2026-12-04",
+        "capacidade": 7000,
+        "fonte": "Rolling Stone Brasil: data extra da Sinfonia'26, aberta por esgotamento da Sala São Paulo"
+      },
+      {
+        "cidade": "Porto Alegre",
+        "local": "Auditório Araújo Vianna",
+        "data": "2024-11-17",
+        "capacidade": 3628,
+        "ocupacao": 1.0,
+        "fonte": "Insanity Records: primeira data com ingressos esgotados (remarcada das enchentes)"
+      },
+      {
+        "cidade": "Porto Alegre",
+        "local": "Auditório Araújo Vianna",
+        "data": "2024-11-15",
+        "capacidade": 3628,
+        "ocupacao": 0.9,
+        "peso": 0.6,
+        "fonte": "Insanity Records: data extra aberta por grande procura"
+      },
+      {
         "cidade": "Porto Alegre",
         "local": "Auditório Araújo Vianna",
         "data": "2026-11-20",
         "capacidade": 3628,
         "ocupacao": 0.95,
-        "fonte": "Equipe da banda: quase esgotado na semana do show; a casa recebe 2 datas próprias por ano"
+        "fonte": "Equipe da banda: quase esgotado na semana do show"
+      },
+      {
+        "cidade": "Curitiba",
+        "local": "Teatro Positivo",
+        "data": "2024-11-14",
+        "capacidade": 2400,
+        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
+      },
+      {
+        "cidade": "Curitiba",
+        "local": "Cine Lido",
+        "data": "2026-08-29",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Santo André",
+        "local": "Clube Atlético Aramaçan",
+        "data": "2025-04-30",
+        "capacidade": 287,
+        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada",
+        "fora_do_ajuste": true,
+        "motivo": "casa de 287 lugares numa praça de 6 mil fãs: mede o formato do show, não o tamanho do mercado"
       },
       {
         "cidade": "Rio de Janeiro",
         "local": "Qualistage",
         "data": "2024-07-05",
         "capacidade": 9500,
-        "ocupacao": null,
-        "fonte": "Chartmetric (live_events) — capacidade da casa, ocupação não informada"
-      },
-      {
-        "cidade": "Curitiba",
-        "local": "Live Curitiba",
-        "data": "2023-10-14",
-        "capacidade": 5000,
-        "ocupacao": null,
-        "fonte": "Chartmetric (live_events) — capacidade da casa, ocupação não informada"
+        "escalavel": true,
+        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
       },
       {
         "cidade": "Belo Horizonte",
         "local": "BeFly Hall",
         "data": "2025-05-24",
         "capacidade": 5000,
-        "ocupacao": null,
-        "fonte": "Chartmetric (live_events) — capacidade da casa, ocupação não informada"
+        "escalavel": true,
+        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
+      },
+      {
+        "cidade": "Joinville",
+        "local": "Joinville Square Garden",
+        "data": "2025-05-16",
+        "capacidade": 5300,
+        "escalavel": true,
+        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
       },
       {
         "cidade": "Florianópolis",
-        "local": "Hard Rock Live Florianópolis",
+        "local": "Arena Opus (São José/SC)",
+        "data": "2026-11-06",
+        "capacidade": 17000,
+        "escalavel": true,
+        "fonte": "Under Floripa: ingressos ainda disponíveis no fim de outubro, com 40% de desconto para sócios"
+      },
+      {
+        "cidade": "Florianópolis",
+        "local": "Arena Opus (São José/SC)",
         "data": "2025-03-28",
+        "capacidade": 17000,
+        "escalavel": true,
+        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
+      },
+      {
+        "cidade": "Rio de Janeiro",
+        "local": "Fundição Progresso",
+        "data": "2025-04-26",
         "capacidade": null,
-        "ocupacao": null,
-        "fonte": "Chartmetric (live_events) — capacidade do export é inconsistente, não usada"
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Rio de Janeiro",
+        "local": "Fundição Progresso",
+        "data": "2026-05-23",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Rio de Janeiro",
+        "local": "Fundição Progresso",
+        "data": "2026-11-28",
+        "capacidade": null,
+        "fonte": "Rolling Stone Brasil: Sinfonia'26 com a Nova Orquestra"
+      },
+      {
+        "cidade": "Campinas",
+        "local": "Multi Arena",
+        "data": "2024-05-10",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Campinas",
+        "local": "Multi Arena (Iguatemi)",
+        "data": "2025-05-23",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
       },
       {
         "cidade": "Campinas",
         "local": "Multi Arena",
         "data": "2026-07-25",
         "capacidade": null,
-        "ocupacao": null,
-        "fonte": "Chartmetric (live_events) + turnê Carta de Adeus — capacidade não informada"
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Brasília",
+        "local": "Clube AABB",
+        "data": "2026-04-25",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Ribeirão Preto",
+        "local": "Alcans Hall",
+        "data": "2025-03-14",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Caxias do Sul",
+        "local": "All Need Master Hall",
+        "data": "2025-09-06",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Jundiaí",
+        "local": "Sesc Jundiaí",
+        "data": "2025-04-11",
+        "capacidade": null,
+        "ocupacao": 1.0,
+        "fonte": "Jornal de Jundiaí: primeira vez no Sesc Jundiaí, ingressos esgotados"
+      },
+      {
+        "cidade": "São José dos Campos",
+        "local": "Palácio Sunset",
+        "data": "2024-08-17",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "São José dos Campos",
+        "local": "SESI",
+        "data": "2025-10-04",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Santos",
+        "local": "Arena Club",
+        "data": "2024-11-08",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Osasco",
+        "local": "Concha Acústica da Faculdade Fito",
+        "data": "2024-10-13",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "São José do Rio Preto",
+        "local": "Recinto de Exposições",
+        "data": "2024-11-23",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Vitória",
+        "local": "Oásis Beach Club",
+        "data": "2024-12-07",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
       }
     ]
   }
