@@ -30,7 +30,7 @@
 .hbarra { display: grid; grid-template-columns: minmax(96px, 30%) minmax(0, 1fr) auto; align-items: center; gap: 4px 12px; min-height: 30px; }
 .hb-rotulo { font-size: var(--t-15); line-height: 1.25; display: flex; flex-direction: column; }
 .hb-rotulo small { font-size: var(--t-13); color: var(--fumaca); }
-.hb-trilho { position: relative; height: 16px; background: color-mix(in srgb, var(--ferragem) 55%, transparent); border-radius: 3px; overflow: hidden; }
+.hb-trilho { position: relative; height: 16px; background: var(--coxia-2); border-radius: 3px; overflow: hidden; }
 .hb-barra { position: absolute; top: 0; bottom: 0; border-radius: 3px; transition: width 400ms ease-out; }
 .hb-zero { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--fumaca); z-index: 1; }
 .hb-valor { min-width: 4.5em; text-align: right; font-size: var(--t-15); font-weight: 600; }
@@ -40,7 +40,7 @@
 .tabela { width: 100%; font-size: var(--t-15); }
 .tabela th, .tabela td { padding: 10px 14px; text-align: left; white-space: nowrap; border-bottom: 1px solid var(--ferragem); }
 .tabela tr:last-child td { border-bottom: 0; }
-.tabela th { font-weight: 500; color: var(--fumaca); background: color-mix(in srgb, var(--palco) 40%, transparent); font-size: var(--t-13); }
+.tabela th { font-weight: 500; color: var(--fumaca); background: var(--coxia-2); font-size: var(--t-13); }
 .tabela th button { background: none; border: 0; padding: 0; min-height: var(--alvo); min-width: var(--alvo); color: inherit; font: inherit; }
 .tabela th button:hover { color: var(--luz); }
 .tabela .n { text-align: right; }
@@ -88,23 +88,23 @@
 .campo { display: flex; flex-direction: column; gap: 8px; border: 0; padding: 0; margin: 0; min-width: 0; }
 .campo-rotulo { font-size: var(--t-15); color: var(--fumaca); padding: 0; }
 .campo-rotulo strong { color: var(--luz); }
-.campo-input { min-height: 48px; padding: 0 14px; background: var(--palco); border: 1px solid var(--ferragem); border-radius: var(--r-controle); font-size: var(--t-17); width: 100%; max-width: 420px; }
+.campo-input { min-height: 48px; padding: 0 14px; background: var(--coxia); border: 1px solid var(--ferragem); border-radius: var(--r-controle); font-size: var(--t-17); width: 100%; max-width: 420px; }
 .campo-input:hover { border-color: var(--fumaca); }
 .cidade-opcoes .chip.sel { border-color: var(--refletor); background: color-mix(in srgb, var(--refletor) 14%, var(--coxia)); }
 .sliders { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px 28px; }
 .slider { width: 100%; height: var(--alvo); background: transparent; accent-color: var(--refletor); cursor: pointer; }
-.sim-saida { padding: 20px 24px; display: flex; flex-direction: column; gap: 10px; background: var(--palco); }
+.sim-saida { padding: 22px 24px; display: flex; flex-direction: column; gap: 10px; background: var(--coxia-2); border: 1px solid var(--ferragem); border-radius: var(--r-painel); }
 .sim-selo { font-size: var(--t-15); font-weight: 600; color: var(--refletor); }
 .sim-numero { font: 700 var(--t-52)/1 var(--font-display); font-stretch: 90%; letter-spacing: -0.02em; }
 .sim-numero span { font: 400 var(--t-21) var(--font-ui); color: var(--fumaca); letter-spacing: 0; }
 .sim-frase { max-width: 60ch; }
 .casas { display: grid; grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); gap: 6px; margin-top: 4px; }
 .casas li { padding: 8px 6px; text-align: center; font-size: var(--t-13); color: var(--fumaca); border: 1px solid var(--ferragem); border-radius: var(--r-controle); }
-.casas li.sel { color: var(--palco); background: var(--refletor); border-color: var(--refletor); font-weight: 600; }
+.casas li.sel { color: #fff; background: var(--refletor); border-color: var(--refletor); font-weight: 600; }
 .meses { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
-.mes { min-height: var(--alvo); background: var(--palco); border: 1px solid var(--ferragem); border-radius: var(--r-controle); font-size: var(--t-15); text-transform: capitalize; }
+.mes { min-height: var(--alvo); background: var(--coxia); border: 1px solid var(--ferragem); border-radius: var(--r-controle); font-size: var(--t-15); text-transform: capitalize; }
 .mes:hover { border-color: var(--fumaca); }
-.mes.sel { background: var(--refletor); border-color: var(--refletor); color: var(--palco); font-weight: 600; }
+.mes.sel { background: var(--luz); border-color: var(--luz); color: var(--coxia); font-weight: 600; }
 
 @media (max-width: 899px) {
   .bloco { padding: 16px 16px 18px; }
@@ -128,6 +128,7 @@
 .ancora { max-width: 70ch; border-left: 2px solid var(--refletor); padding-left: 12px; }
 .btn-reset { align-self: flex-start; min-height: var(--alvo); }
 .conta { border: 1px solid var(--ferragem); border-radius: var(--r-painel); background: var(--coxia); }
+.conta[open] { box-shadow: var(--sombra); }
 .conta > summary { min-height: var(--alvo); display: flex; align-items: center; padding: 0 16px; font-size: var(--t-15); color: var(--luz); cursor: pointer; }
 .conta > summary:hover { color: var(--refletor); }
 .conta-passos { margin: 0; padding: 0 16px 16px; display: flex; flex-direction: column; gap: 12px; list-style: none; counter-reset: passo; }
@@ -141,7 +142,7 @@
 
 /* chance de esgotar */
 .chance { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
-.chance-trilho { height: 10px; border-radius: var(--r-pill); background: var(--coxia); border: 1px solid var(--ferragem); overflow: hidden; }
+.chance-trilho { height: 10px; border-radius: var(--r-pill); background: var(--coxia-2); border: 1px solid var(--ferragem); overflow: hidden; }
 .chance-trilho i { display: block; height: 100%; background: var(--refletor); transition: width 120ms linear; }
 @media (prefers-reduced-motion: reduce) { .chance-trilho i { transition: none; } }
 .chance-valor { font-size: var(--t-15); color: var(--fumaca); }

@@ -3,6 +3,7 @@ import { useArtist } from '../../data/ArtistContext';
 import { useMesa } from '../../data/MesaContext';
 import type { Passo } from '../../types';
 import { IcCheck } from '../shell/Icones';
+import { MesaDeCruzamento } from '../shell/MesaDeCruzamento';
 
 const MIN_TOTAL = 2400;
 const MAX_TOTAL = 4500;
@@ -14,10 +15,10 @@ export function nomesDasFontes(passo: Passo, fontes: Record<string, { curto: str
 
 interface Props { passos: Passo[]; onFim: () => void; onPular: () => void }
 
-/** Fase A (PRD §5.3 e §9): digita cada etapa, acende os canais usados e liga o cabo de luz. */
+/** Fase A (PRD §5.3 e §9): digita cada etapa e acende, ao lado, a fonte que ela usa. */
 export function Raciocinio({ passos, onFim, onPular }: Props) {
   const { respostas } = useArtist();
-  const { definir, ancora } = useMesa();
+  const { definir } = useMesa();
   const botao = useRef<HTMLButtonElement>(null);
   const [t, setT] = useState(0);
 
@@ -52,8 +53,6 @@ export function Raciocinio({ passos, onFim, onPular }: Props) {
     definir(ativos, Array.from(new Set(usados)));
   }, [idx, acabou, passos, definir]);
 
-  useEffect(() => () => { ancora.current = null; }, [ancora]);
-
   const visiveis = passos.slice(0, idx + 1);
   const atual = passos[idx];
   const local = t - tempos.lista[idx].ini;
@@ -61,16 +60,17 @@ export function Raciocinio({ passos, onFim, onPular }: Props) {
   const chars = Math.min(atual.texto.length, Math.ceil((local / janelaDigitacao) * atual.texto.length));
 
   return (
-    <section className="pensando" aria-label="Raciocínio do sistema">
+    <section className="pensando noite" aria-label="Raciocínio do sistema">
       <header className="pensando-topo">
         <span className="pensando-rotulo"><span className="pulso" aria-hidden="true" />Pensando</span>
         <button ref={botao} type="button" className="btn btn-leve" onClick={onPular}>Pular</button>
       </header>
+      <MesaDeCruzamento />
       <ol className="passos">
         {visiveis.map((p, i) => {
           const corrente = i === idx && !acabou;
           return (
-            <li key={i} className={'passo' + (corrente ? ' corrente' : ' feito')} ref={corrente ? (el) => { ancora.current = el; } : undefined}>
+            <li key={i} className={'passo' + (corrente ? ' corrente' : ' feito')}>
               <span className="passo-marca" aria-hidden="true">{corrente ? <i className="girando" /> : <IcCheck />}</span>
               <span className="passo-texto" aria-hidden="true">
                 {corrente ? atual.texto.slice(0, chars) : p.texto}

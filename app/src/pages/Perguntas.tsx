@@ -30,6 +30,15 @@ export default function Perguntas() {
   return (
     <div className="perguntas">
       <h1 className="titulo-pagina">Perguntar</h1>
+      <p className="apoio intro">
+        {respostas.perguntas.length} perguntas prontas, com a conta aberta em cada resposta. Escreva na barra acima com
+        suas palavras — o sistema encontra a pergunta mais próxima.
+      </p>
+      <nav className="chips indice-temas" aria-label="Ir para um tema">
+        {respostas.temas.map((t) => (
+          <a key={t.id} className="chip" href={`#${t.id}`}>{t.nome}</a>
+        ))}
+      </nav>
 
       {r?.tipo === 'empate' && (
         <section className="painel aviso-busca" aria-labelledby="h-empate">

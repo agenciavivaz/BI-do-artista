@@ -1,18 +1,32 @@
-/* Tokens do Camarim — PRD v2 §6.2. Cor do sistema é fixa; só a "capa" muda por artista. */
+/* Tokens do Camarim.
+   Direção: dossiê impresso — papel quente, tinta preta, uma cor de sinal.
+   Nasceu das fotos da banda (preto sobre fundo creme). Os nomes continuam os do
+   PRD (§6.2): palco = fundo, coxia = superfície, ferragem = fio, luz = texto,
+   fumaça = texto de apoio, refletor = cor de sinal. Só a "capa" muda por artista. */
 :root {
-  --palco: #16141d;
-  --coxia: #1f1c28;
-  --ferragem: #2e2a3a;
-  --luz: #ede9f2;
-  --fumaca: #9c95ab;
-  --refletor: #f2b33d;
-  --capa: #ff4d3d; /* sobrescrito por config.json */
+  --palco: #ebe6db;          /* papel */
+  --coxia: #f6f3ec;          /* papel levantado (cartões) */
+  --coxia-2: #e2dccf;        /* papel rebaixado (trilhos, cabeçalho de tabela) */
+  --ferragem: #d3cbba;       /* fio */
+  --ferragem-forte: #b8ae99;
+  --luz: #15120d;            /* tinta */
+  --fumaca: #6a6256;         /* tinta fraca — 4,9:1 no papel */
+  --refletor: #b22f18;       /* sinal — 5,2:1 no papel */
+  --refletor-fraco: #f1dcd5;
+  --capa: #ff4d3d;           /* sobrescrito por config.json */
 
-  --dado-1: #e5533f;
-  --dado-2: #3a8fd6;
-  --dado-pos: #2e9e8f;
-  --dado-neg: #e5533f;
-  --dado-neutro: #4a4250;
+  /* palco de verdade: blocos escuros (capa, convite, "pensando") */
+  --noite: #15120d;
+  --noite-2: #241f17;
+  --noite-fio: #3b3326;
+  --noite-luz: #f3efe5;
+  --noite-fumaca: #a79c88;
+
+  --dado-1: #b22f18;
+  --dado-2: #2a6396;
+  --dado-pos: #1c6f55;
+  --dado-neg: #b22f18;
+  --dado-neutro: #a79c88;
 
   --font-display: 'Bricolage Grotesque', 'Arial Narrow', system-ui, sans-serif;
   --font-ui: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -27,11 +41,31 @@
   --t-41: 2.5625rem;
   --t-52: 3.25rem;
 
-  --r-controle: 6px;
-  --r-painel: 12px;
+  --r-controle: 4px;
+  --r-painel: 10px;
   --r-pill: 999px;
+
+  --sombra: 0 1px 2px rgb(21 18 13 / 0.05), 0 8px 24px -16px rgb(21 18 13 / 0.35);
 
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   --dur: 200ms;
   --alvo: 44px;
+
+  /* largura da coluna de leitura */
+  --coluna: 920px;
+}
+
+/* bloco escuro: inverte os tokens para o conteúdo de dentro */
+.noite {
+  --palco: var(--noite);
+  --coxia: var(--noite-2);
+  --coxia-2: var(--noite-2);
+  --ferragem: var(--noite-fio);
+  --ferragem-forte: var(--noite-fumaca);
+  --luz: var(--noite-luz);
+  --fumaca: var(--noite-fumaca);
+  --refletor: #ff6a4d;
+  --refletor-fraco: #3a241c;
+  background: var(--noite);
+  color: var(--noite-luz);
 }

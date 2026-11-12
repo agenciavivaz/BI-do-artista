@@ -118,7 +118,7 @@ export function Acoes({ q }: { q: Pergunta }) {
 export function CtaVivo() {
   const { abrirConversao } = useUi();
   return (
-    <aside className="cta-vivo painel">
+    <aside className="cta-vivo noite">
       <div>
         <strong>Gostou? Isso funciona com qualquer pergunta.</strong>
         <p className="apoio">A versão viva atualiza toda semana e responde com a IA, com os dados ao vivo.</p>

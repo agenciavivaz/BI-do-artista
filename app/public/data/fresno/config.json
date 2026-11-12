@@ -25,6 +25,12 @@
     "fonte_titulo": "Archivo Black",
     "fonte_texto": "Inter"
   },
+  "fotos": {
+    "capa": "/fresno/banda.jpg",
+    "capa_alt": "Fresno: os três integrantes de terno preto sobre fundo claro",
+    "bastidores": "/fresno/bastidores.jpg",
+    "bastidores_alt": "Fresno nos bastidores, ao lado da mesa de som"
+  },
   "calibracao": {
     "expoente_demanda": 0.3,
     "ocupacao_presumida": 0.85,

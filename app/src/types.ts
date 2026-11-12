@@ -122,6 +122,8 @@ export interface Config {
   carta: string;
   contato: { nome: string; email: string; whatsapp: string; instagram: string; texto_cta: string };
   tema: { destaque: string; [k: string]: string };
+  /** fotos do artista (artists/<slug>/fotos, copiadas para app/public/<slug>) */
+  fotos?: { capa?: string; capa_alt?: string; bastidores?: string; bastidores_alt?: string };
 }
 
 export const FAIXAS: Record<Cidade['faixa'], { rotulo: string; curto: string; opacidade: number; neutro?: boolean }> = {

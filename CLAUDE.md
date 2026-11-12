@@ -8,7 +8,18 @@ Raio-X de carreira para artistas a partir de exports da Chartmetric. Duas entreg
 ## Regras
 1. **Nenhum número digitado na interface.** Tudo vem de `app/public/data/<slug>/data.json` e `respostas.json`. Se faltar um número, adicione o cálculo em `scripts/analytics.py` ou `scripts/answers.py`, rode `python3 scripts/sync_app.py <slug>` e use o campo novo.
 2. Textos em português do Brasil, frases curtas, linguagem de quem não é de dados ("para cada 100 ouvintes, 128 seguem a banda").
-3. Design: siga `docs/PRD-v2-sistema.md §6` (tokens, tipografia, componentes). Antes de desenhar, instale e siga as skills:
+3. Design: **dossiê impresso** — papel quente (`--palco #ebe6db`), tinta preta, uma cor de sinal
+   (`--refletor #b22f18`) e blocos escuros (`.noite`) só para capa, convite e o momento "pensando".
+   Substitui a paleta escura do `docs/PRD-v2-sistema.md §6`; os nomes dos tokens continuam os de lá, então
+   trocar `tokens.css` troca o app inteiro. Regras da direção:
+   - **uma navegação só**: cabeçalho com as 5 seções (barra inferior no celular). Sem rail, sem painel lateral.
+   - **a mesa de cruzamento vive dentro do raciocínio**, que é quando ela quer dizer algo; fora dali as fontes
+     aparecem em texto no pé da resposta.
+   - **a home é capa de dossiê**: foto, nome, uma frase, quatro números e seis *decisões* (as perguntas em
+     destaque, cada uma já mostrando o veredito e o número-chave) — não uma lista de listas.
+   - **fotos do artista** em `artists/<slug>/fotos/`, declaradas em `config.json → fotos` e copiadas por
+     `sync_app.py`. A da capa entra com `mix-blend-mode: multiply` para o fundo claro dela fundir no papel.
+   Antes de desenhar, instale e siga as skills:
    ```bash
    npx claude-code-templates@latest --skill creative-design/frontend-design
    npx claude-code-templates@latest --skill creative-design/ui-ux-pro-max

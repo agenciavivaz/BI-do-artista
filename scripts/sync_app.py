@@ -17,7 +17,7 @@ import answers  # noqa: E402
 import build as build_v1  # noqa: E402
 from analytics import ROOT  # noqa: E402
 
-PUBLIC_CFG = ('nome', 'subtitulo', 'cidade_origem', 'desde', 'carta', 'contato', 'tema', 'calibracao')
+PUBLIC_CFG = ('nome', 'subtitulo', 'cidade_origem', 'desde', 'carta', 'contato', 'tema', 'fotos', 'calibracao')
 
 
 def main(slug):
@@ -29,6 +29,13 @@ def main(slug):
     shutil.copy(ROOT / 'artists' / slug / 'respostas.json', dst / 'respostas.json')
     cfg = json.loads((ROOT / 'artists' / slug / 'config.json').read_text(encoding='utf-8'))
     (dst / 'config.json').write_text(json.dumps({k: cfg[k] for k in PUBLIC_CFG if k in cfg}, ensure_ascii=False, indent=2), encoding='utf-8')
+    fotos = ROOT / 'artists' / slug / 'fotos'
+    if fotos.is_dir():
+        destino = ROOT / 'app' / 'public' / slug
+        destino.mkdir(parents=True, exist_ok=True)
+        for f in sorted(fotos.iterdir()):
+            if f.is_file() and not f.name.startswith('.'):
+                shutil.copy(f, destino / f.name)
     rel = ROOT / 'app' / 'public' / slug / 'relatorio'
     rel.mkdir(parents=True, exist_ok=True)
     shutil.copy(ROOT / 'public' / slug / 'index.html', rel / 'index.html')
