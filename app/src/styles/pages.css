@@ -128,6 +128,7 @@
 @media (max-width: 1099px) {
   .capa { grid-template-columns: 1fr; gap: 28px; }
   .capa-foto { order: -1; }
+  .capa-foto img { max-height: 36vh; width: auto; margin-inline: auto; }
   .convite { grid-template-columns: 1fr; }
   .convite-foto { min-height: 200px; max-height: 280px; }
 }
