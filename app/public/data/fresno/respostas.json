@@ -1,0 +1,1483 @@
+{
+  "artista": "Fresno",
+  "gerado_em": "2026-11-12",
+  "fontes": {
+    "ouvintes": {
+      "nome": "Ouvintes mensais (Spotify)",
+      "curto": "Ouvint."
+    },
+    "seguidores": {
+      "nome": "Seguidores (8 plataformas)",
+      "curto": "Seguid."
+    },
+    "cidades": {
+      "nome": "Ouvintes por cidade",
+      "curto": "Cidades"
+    },
+    "ibge": {
+      "nome": "População IBGE 2022",
+      "curto": "IBGE"
+    },
+    "cidade_diaria": {
+      "nome": "Ouvintes por cidade, dia a dia",
+      "curto": "Cid/dia"
+    },
+    "youtube_cidades": {
+      "nome": "YouTube por cidade",
+      "curto": "YT cid."
+    },
+    "shows": {
+      "nome": "Agenda de shows",
+      "curto": "Shows"
+    },
+    "lancamentos": {
+      "nome": "Histórico de lançamentos",
+      "curto": "Lançam."
+    },
+    "faixas": {
+      "nome": "Desempenho por faixa",
+      "curto": "Faixas"
+    },
+    "albuns": {
+      "nome": "Discografia",
+      "curto": "Discos"
+    },
+    "sons": {
+      "nome": "Sons no TikTok e Reels",
+      "curto": "Sons"
+    },
+    "playlists": {
+      "nome": "Playlists do Spotify",
+      "curto": "Playlist"
+    },
+    "demografia": {
+      "nome": "Idade e gênero por plataforma",
+      "curto": "Público"
+    },
+    "comentarios": {
+      "nome": "Comentários do YouTube",
+      "curto": "Coment."
+    },
+    "marcas": {
+      "nome": "Afinidade de marcas",
+      "curto": "Marcas"
+    },
+    "pares": {
+      "nome": "Artistas semelhantes",
+      "curto": "Pares"
+    },
+    "co_palco": {
+      "nome": "Artistas que dividiram palco",
+      "curto": "Palco"
+    },
+    "imprensa": {
+      "nome": "Notícias de 2026",
+      "curto": "Imprensa"
+    }
+  },
+  "temas": [
+    {
+      "id": "cache",
+      "nome": "Cachê e turnê",
+      "descricao": "Onde tocar, quanto cobrar, tamanho de casa"
+    },
+    {
+      "id": "shows",
+      "nome": "Shows",
+      "descricao": "O que cada show faz pelo streaming"
+    },
+    {
+      "id": "lancamentos",
+      "nome": "Lançamentos",
+      "descricao": "Quando e em que formato lançar"
+    },
+    {
+      "id": "catalogo",
+      "nome": "Catálogo e setlist",
+      "descricao": "O que o público quer ouvir agora"
+    },
+    {
+      "id": "publico",
+      "nome": "Público e conteúdo",
+      "descricao": "Quem ouve, quem assiste, onde postar"
+    },
+    {
+      "id": "playlists",
+      "nome": "Playlists",
+      "descricao": "Quem coloca a banda para tocar"
+    },
+    {
+      "id": "parcerias",
+      "nome": "Parcerias",
+      "descricao": "Marcas e artistas com o mesmo público"
+    }
+  ],
+  "alertas": [
+    {
+      "tipo": "oportunidade",
+      "titulo": "Porto Alegre: YouTube +82% em 12 meses",
+      "pergunta": "proxima-cidade"
+    },
+    {
+      "tipo": "investigar",
+      "titulo": "Itabuna (BA) disparou +164% em outubro",
+      "pergunta": null,
+      "texto": "Show, vídeo viral ou erro de coleta? Na versão com API, o sistema avisa no dia."
+    },
+    {
+      "tipo": "atencao",
+      "titulo": "Playlists editoriais paradas em 29",
+      "pergunta": "playlists-editoriais"
+    },
+    {
+      "tipo": "atencao",
+      "titulo": "X −20% em 12 meses",
+      "pergunta": "onde-investir-conteudo"
+    },
+    {
+      "tipo": "previsao",
+      "titulo": "Janeiro: queda sazonal para ~399 mil ouvintes",
+      "pergunta": "proximos-meses"
+    }
+  ],
+  "perguntas": [
+    {
+      "id": "onde-cobrar-mais",
+      "tema": "cache",
+      "destaque": true,
+      "pergunta": "Onde eu posso cobrar mais cachê?",
+      "variacoes": [
+        "cachê",
+        "cobrar mais",
+        "preço do show",
+        "valor do show",
+        "onde cobrar",
+        "aumentar cachê"
+      ],
+      "pensando": [
+        {
+          "texto": "Lendo ouvintes de 44 cidades",
+          "fontes": [
+            "cidades"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Dividindo pela população de cada cidade (IBGE)",
+          "fontes": [
+            "cidades",
+            "ibge"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Comparando com a mediana: 457 fãs por 100 mil habitantes",
+          "fontes": [
+            "cidades",
+            "ibge"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Separando as praças em 4 faixas de cachê",
+          "fontes": [
+            "cidades"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "Peça de 15% a 25% acima da tabela em Campinas, Porto Alegre, Florianópolis.",
+      "explicacao": "Em Campinas há 1.954 ouvintes a cada 100 mil habitantes, 4,3x a mediana das praças e 2,1x São Paulo. Muita gente fã por habitante significa ingresso vendido com menos mídia, e isso é argumento de negociação.",
+      "numeros": [
+        {
+          "valor": "4,3x",
+          "rotulo": "Campinas vs mediana"
+        },
+        {
+          "valor": "3,9x",
+          "rotulo": "Porto Alegre vs mediana"
+        },
+        {
+          "valor": "3,0x",
+          "rotulo": "Florianópolis vs mediana"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "mapa",
+          "dados": "cidades",
+          "titulo": "Fãs por habitante"
+        },
+        {
+          "tipo": "tabela",
+          "dados": "cidades",
+          "colunas": [
+            "cidade",
+            "por100k",
+            "demanda_rel",
+            "faixa",
+            "ingressos_min",
+            "ingressos_max"
+          ],
+          "filtro": {
+            "faixa": [
+              "premium"
+            ]
+          },
+          "titulo": "Praças com prêmio de cachê"
+        }
+      ],
+      "acoes": [
+        "Anexe o card da cidade na proposta para o contratante.",
+        "Peça casa maior antes de pedir cachê maior: lotar vale mais que preço.",
+        "Use a calculadora de ingressos para dimensionar a casa."
+      ],
+      "confianca": {
+        "nivel": "média",
+        "motivo": "Ouvintes por cidade são de um snapshot de 2024; a ordem das praças muda pouco, os números exatos mudam."
+      },
+      "seguintes": [
+        "proxima-cidade",
+        "quantos-ingressos",
+        "show-da-retorno"
+      ]
+    },
+    {
+      "id": "proxima-cidade",
+      "tema": "cache",
+      "pergunta": "Qual a próxima cidade para tocar?",
+      "variacoes": [
+        "próxima cidade",
+        "onde tocar",
+        "turnê",
+        "roteiro",
+        "nova praça",
+        "cidade nova"
+      ],
+      "pensando": [
+        {
+          "texto": "Procurando cidades com público crescendo agora",
+          "fontes": [
+            "youtube_cidades"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Cruzando com fãs por habitante",
+          "fontes": [
+            "cidades",
+            "ibge"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Separando praça para show próprio de praça para festival",
+          "fontes": [
+            "cidades",
+            "shows"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "Florianópolis para show próprio; Rio de Janeiro, Brasília, Fortaleza via festival.",
+      "explicacao": "Florianópolis é a única grande praça com visualizações no YouTube subindo nos últimos 3 meses (+22%) e tem 3,0x a densidade de fãs da mediana. Rio de Janeiro, Brasília, Fortaleza têm muito ouvinte em número absoluto, mas pouco por habitante: entrar por festival ou line-up dividido reduz o risco.",
+      "numeros": [
+        {
+          "valor": "+22%",
+          "rotulo": "YouTube em Florianópolis (3 meses)"
+        },
+        {
+          "valor": "3,0x",
+          "rotulo": "densidade vs mediana"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "barras",
+          "dados": "cidades",
+          "campo": "yt_3m",
+          "titulo": "Variação de views no YouTube em 3 meses, por cidade"
+        },
+        {
+          "tipo": "mapa",
+          "dados": "cidades",
+          "destacar": [
+            "Florianópolis",
+            "Rio de Janeiro",
+            "Brasília",
+            "Fortaleza"
+          ]
+        }
+      ],
+      "acoes": [
+        "Teste demanda em Florianópolis com anúncio local de \"show em breve\" antes de fechar casa.",
+        "Monte rota regional para dividir o custo de viagem."
+      ],
+      "confianca": {
+        "nivel": "média",
+        "motivo": "Tendência de YouTube é de 3 meses; confirmar com venda de ingresso anterior na cidade."
+      },
+      "seguintes": [
+        "quantos-ingressos",
+        "festival-ou-proprio"
+      ]
+    },
+    {
+      "id": "quantos-ingressos",
+      "tema": "cache",
+      "simulador": "ingressos",
+      "pergunta": "Quantos ingressos dá pra vender numa cidade?",
+      "variacoes": [
+        "ingressos",
+        "lotar",
+        "tamanho da casa",
+        "capacidade",
+        "vender ingresso",
+        "casa de show"
+      ],
+      "pensando": [
+        {
+          "texto": "Pegando os ouvintes da cidade",
+          "fontes": [
+            "cidades"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Aplicando a taxa de conversão de uma base fiel (3% a 5%)",
+          "fontes": [
+            "cidades",
+            "seguidores"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Sugerindo o tamanho de casa",
+          "fontes": [
+            "cidades"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "Escolha a cidade e veja a faixa de ingressos e o tamanho de casa recomendado.",
+      "explicacao": "Para cada 100 ouvintes, 128 seguem a banda: é base fiel. Por isso usamos 3% a 5% dos ouvintes da cidade como público pagante provável (fã casual converte 0,5% a 1%).",
+      "numeros": [
+        {
+          "valor": "3.160–5.270",
+          "rotulo": "São Paulo"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "simulador",
+          "simulador": "ingressos",
+          "dados": "cidades"
+        }
+      ],
+      "acoes": [
+        "Prefira a casa que lota no limite de baixo da faixa: casa cheia vira conteúdo e escassez."
+      ],
+      "confianca": {
+        "nivel": "média",
+        "motivo": "Taxa de conversão é referência de mercado; calibrar com bilheteria real."
+      },
+      "seguintes": [
+        "onde-cobrar-mais",
+        "proxima-cidade"
+      ]
+    },
+    {
+      "id": "show-da-retorno",
+      "tema": "shows",
+      "destaque": true,
+      "pergunta": "Show grande dá retorno no streaming?",
+      "variacoes": [
+        "show aumenta",
+        "show grande",
+        "depois do show",
+        "efeito do show",
+        "show gratuito",
+        "aumento no spotify"
+      ],
+      "pensando": [
+        {
+          "texto": "Abrindo a série diária de ouvintes de 5 cidades",
+          "fontes": [
+            "cidade_diaria"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Marcando as datas dos shows de 2026",
+          "fontes": [
+            "shows",
+            "imprensa"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Medindo antes × 30 dias depois de cada show",
+          "fontes": [
+            "cidade_diaria",
+            "shows"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "Sim: Porto Alegre ganhou 30% de ouvintes depois do show na Redenção.",
+      "explicacao": "Após o show gratuito na Redenção (cerca de 70 mil pessoas, 16/05/2026), os ouvintes em Porto Alegre foram de +27% para +66% em relação a nov/2025. Show grande na cidade certa funciona como campanha de mídia.",
+      "numeros": [
+        {
+          "valor": "+30%",
+          "rotulo": "Redenção, Porto Alegre"
+        },
+        {
+          "valor": "+14%",
+          "rotulo": "Espaço Unimed, São Paulo"
+        },
+        {
+          "valor": "+11%",
+          "rotulo": "Multi Arena, Campinas"
+        },
+        {
+          "valor": "+2%",
+          "rotulo": "Fundição Progresso, Rio"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "casos_show",
+          "dados": "shows.casos_cidade"
+        }
+      ],
+      "acoes": [
+        "Faça 1 show de grande porte por ano numa praça-chave com marca pagando a conta.",
+        "Publique conteúdo do show na semana seguinte: é quando a cidade está ouvindo."
+      ],
+      "confianca": {
+        "nivel": "alta",
+        "motivo": "Série diária da cidade com o salto exatamente na semana do show."
+      },
+      "seguintes": [
+        "festival-ou-proprio",
+        "marca-certa"
+      ]
+    },
+    {
+      "id": "festival-ou-proprio",
+      "tema": "shows",
+      "pergunta": "Vale mais tocar em festival ou fazer show próprio?",
+      "variacoes": [
+        "festival",
+        "show próprio",
+        "line-up",
+        "abrir show",
+        "turnê coletiva"
+      ],
+      "pensando": [
+        {
+          "texto": "Separando 55 eventos desde 2019 em dois tipos",
+          "fontes": [
+            "shows"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Descontando o efeito do mês (dezembro sempre cai)",
+          "fontes": [
+            "shows",
+            "ouvintes"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Comparando a mediana de cada grupo",
+          "fontes": [
+            "shows",
+            "ouvintes"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "Festival traz público novo; show próprio monetiza quem já é fã.",
+      "explicacao": "Depois de festival ou turnê coletiva os ouvintes mudam +1,8% na mediana (68% dos casos com alta), contra −0,2% em show próprio. Palco dividido coloca a banda na frente de quem ainda não ouve.",
+      "numeros": [
+        {
+          "valor": "+1,8%",
+          "rotulo": "festival / coletivo"
+        },
+        {
+          "valor": "−0,2%",
+          "rotulo": "show próprio"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "pontos_eventos",
+          "dados": "shows.eventos"
+        }
+      ],
+      "acoes": [
+        "2 a 3 festivais ou line-ups de nostalgia por semestre.",
+        "Shows próprios nas praças de prêmio de cachê."
+      ],
+      "confianca": {
+        "nivel": "média",
+        "motivo": "55 eventos: amostra pequena, direção consistente."
+      },
+      "seguintes": [
+        "com-quem-dividir-palco",
+        "onde-cobrar-mais"
+      ]
+    },
+    {
+      "id": "quando-lancar",
+      "tema": "lancamentos",
+      "destaque": true,
+      "simulador": "janela",
+      "pergunta": "Quando devo lançar o próximo trabalho?",
+      "variacoes": [
+        "quando lançar",
+        "mês de lançamento",
+        "data de lançamento",
+        "próximo single",
+        "próximo álbum",
+        "lançamento"
+      ],
+      "pensando": [
+        {
+          "texto": "Lendo ouvintes diários desde 2018",
+          "fontes": [
+            "ouvintes"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Calculando o padrão de cada mês (2019–2025)",
+          "fontes": [
+            "ouvintes"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Medindo o efeito real de cada lançamento, sem o efeito do mês",
+          "fontes": [
+            "lancamentos",
+            "ouvintes"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "Entre o fim de julho e agosto. Segure inéditas de dezembro a março.",
+      "explicacao": "ago, set, out são os meses mais fortes da banda (agosto +6%) e jan, mar, fev os mais fracos (janeiro −7%). Lançar em julho/agosto pega a subida natural. O melhor resultado recente foi 'Eu Nunca Fui Embora - PARTE 1': +23% em 1 mês, já sem o efeito do mês.",
+      "numeros": [
+        {
+          "valor": "+6%",
+          "rotulo": "agosto"
+        },
+        {
+          "valor": "−7%",
+          "rotulo": "janeiro"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "sazonalidade",
+          "dados": "sazonalidade"
+        },
+        {
+          "tipo": "simulador",
+          "simulador": "janela",
+          "dados": "sazonalidade"
+        }
+      ],
+      "acoes": [
+        "De dezembro a março: ao vivo, bastidor e catálogo.",
+        "Primeiro single em julho; álbum em agosto/setembro."
+      ],
+      "confianca": {
+        "nivel": "alta",
+        "motivo": "Padrão se repete em 7 anos completos de dados."
+      },
+      "seguintes": [
+        "album-ou-partes",
+        "proximos-meses"
+      ]
+    },
+    {
+      "id": "album-ou-partes",
+      "tema": "lancamentos",
+      "pergunta": "Lanço o álbum inteiro ou em partes?",
+      "variacoes": [
+        "partes",
+        "capítulos",
+        "álbum inteiro",
+        "singles",
+        "formato de lançamento",
+        "deluxe"
+      ],
+      "pensando": [
+        {
+          "texto": "Separando o projeto de 14 singles semanais de 2021",
+          "fontes": [
+            "lancamentos"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Medindo o efeito de cada capítulo",
+          "fontes": [
+            "lancamentos",
+            "ouvintes"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Comparando com o álbum em 2 partes de 2024",
+          "fontes": [
+            "lancamentos",
+            "ouvintes"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "Em partes, mas no máximo 2 ou 3, com 6 a 10 semanas entre elas.",
+      "explicacao": "Nos 14 singles semanais de 2021 o efeito caiu de +12% no primeiro para +2% no último: o público cansa do mesmo gatilho. O álbum de 2024 em 2 partes manteve picos de dois dígitos.",
+      "numeros": [
+        {
+          "valor": "+12%",
+          "rotulo": "1º capítulo"
+        },
+        {
+          "valor": "+2%",
+          "rotulo": "14º capítulo"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "barras_divergentes",
+          "dados": "serie_inv.lista",
+          "titulo": "Efeito de cada capítulo (2021)"
+        }
+      ],
+      "acoes": [
+        "Parte 1 com o single mais forte; parte 2 com o feat."
+      ],
+      "confianca": {
+        "nivel": "média",
+        "motivo": "Um único projeto em série; padrão claro, mas é um caso."
+      },
+      "seguintes": [
+        "quando-lancar",
+        "qual-lancamento-funcionou"
+      ]
+    },
+    {
+      "id": "qual-lancamento-funcionou",
+      "tema": "lancamentos",
+      "pergunta": "Qual lançamento mais funcionou?",
+      "variacoes": [
+        "melhor lançamento",
+        "o que funcionou",
+        "qual single",
+        "mais funcionou"
+      ],
+      "pensando": [
+        {
+          "texto": "Listando lançamentos desde 2022",
+          "fontes": [
+            "lancamentos"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Comparando ouvintes 1 mês depois com a semana anterior",
+          "fontes": [
+            "lancamentos",
+            "ouvintes"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Tirando o efeito do mês",
+          "fontes": [
+            "ouvintes"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "'Eu Nunca Fui Embora - PARTE 1' (2024): +23% em 1 mês.",
+      "explicacao": "Os melhores resultados vieram de álbum dividido em partes, de feat com artista de fora e do disco novo. Single solto em novembro ou janeiro quase não mexe.",
+      "numeros": [
+        {
+          "valor": "+23%",
+          "rotulo": "Eu Nunca Fui Embora - PARTE 1"
+        },
+        {
+          "valor": "+17%",
+          "rotulo": "Broken By You (feat. Fresno)"
+        },
+        {
+          "valor": "+16%",
+          "rotulo": "Camadas"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "barras_divergentes",
+          "dados": "lancamentos",
+          "titulo": "Efeito de cada lançamento (sem efeito do mês)"
+        }
+      ],
+      "acoes": [
+        "Repita o formato vencedor: parte de álbum ou feat, lançado entre julho e setembro."
+      ],
+      "confianca": {
+        "nivel": "média",
+        "motivo": "Efeito de 1 mês também carrega shows e playlists da época."
+      },
+      "seguintes": [
+        "quando-lancar",
+        "com-quem-dividir-palco"
+      ]
+    },
+    {
+      "id": "proximos-meses",
+      "tema": "lancamentos",
+      "pergunta": "O que esperar dos próximos 6 meses?",
+      "variacoes": [
+        "previsão",
+        "próximos meses",
+        "vai cair",
+        "vai crescer",
+        "projeção",
+        "futuro"
+      ],
+      "pensando": [
+        {
+          "texto": "Calculando o nível real, sem efeito do mês, dos últimos 12 meses",
+          "fontes": [
+            "ouvintes"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Aplicando o padrão de cada mês",
+          "fontes": [
+            "ouvintes"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Desenhando a faixa provável (80%)",
+          "fontes": [
+            "ouvintes"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "Janeiro deve ficar perto de 399 mil ouvintes. É a queda de todo ano, não perda de público.",
+      "explicacao": "A base sem efeito sazonal está em 429 mil. A faixa provável para janeiro vai de 371 mil a 426 mil; a recuperação vem a partir de abril.",
+      "numeros": [
+        {
+          "valor": "427 mil",
+          "rotulo": "dez/26"
+        },
+        {
+          "valor": "399 mil",
+          "rotulo": "jan/27"
+        },
+        {
+          "valor": "408 mil",
+          "rotulo": "fev/27"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "previsao",
+          "dados": "historico+previsao"
+        }
+      ],
+      "acoes": [
+        "Não leia a queda de janeiro como crise; planeje o conteúdo de catálogo para esse período."
+      ],
+      "confianca": {
+        "nivel": "média",
+        "motivo": "Projeção estatística simples; um lançamento ou show grande muda a curva."
+      },
+      "seguintes": [
+        "quando-lancar"
+      ]
+    },
+    {
+      "id": "setlist",
+      "tema": "catalogo",
+      "destaque": true,
+      "pergunta": "Quais músicas não podem faltar no setlist?",
+      "variacoes": [
+        "setlist",
+        "repertório",
+        "músicas do show",
+        "tocar no show",
+        "hits"
+      ],
+      "pensando": [
+        {
+          "texto": "Lendo streams dos últimos 90 dias por faixa",
+          "fontes": [
+            "faixas"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Somando views no YouTube e presença em playlists",
+          "fontes": [
+            "faixas",
+            "playlists"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Cruzando com os sons que mais viralizam em vídeo",
+          "fontes": [
+            "sons"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "Desde Quando Você Se Foi, Quebre As Correntes e Diga, parte 2 são obrigatórias; Tentar de Novo e de Novo, Tudo Que Você Quer entram como as novas que o público usa em vídeo.",
+      "explicacao": "Desde Quando Você Se Foi fez 833 mil streams só nos últimos 90 dias, sendo uma música de 19 anos. E os sons mais usados no Reels em 2026 incluem faixas do disco novo: o setlist pode equilibrar hino e presente.",
+      "numeros": [
+        {
+          "valor": "100",
+          "rotulo": "Desde Quando Você Se Foi"
+        },
+        {
+          "valor": "64",
+          "rotulo": "Quebre As Correntes"
+        },
+        {
+          "valor": "59",
+          "rotulo": "Diga, parte 2"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "tabela",
+          "dados": "faixas",
+          "colunas": [
+            "faixa",
+            "forca",
+            "streams_90d",
+            "youtube",
+            "playlists"
+          ]
+        },
+        {
+          "tipo": "barras",
+          "dados": "sons.instagram",
+          "campo": "views",
+          "titulo": "Sons mais usados no Reels"
+        }
+      ],
+      "acoes": [
+        "Abra ou feche com o hino; coloque a faixa nova que viraliza no meio, quando o celular sobe.",
+        "Grave a faixa nova ao vivo em vertical para alimentar o som no Reels."
+      ],
+      "confianca": {
+        "nivel": "média",
+        "motivo": "O export cobre 5 faixas monitoradas; a API cobre o catálogo inteiro."
+      },
+      "seguintes": [
+        "viralizando",
+        "edicao-comemorativa"
+      ]
+    },
+    {
+      "id": "viralizando",
+      "tema": "catalogo",
+      "pergunta": "Que músicas estão viralizando em vídeo?",
+      "variacoes": [
+        "viralizando",
+        "tiktok",
+        "reels",
+        "viral",
+        "trend",
+        "som"
+      ],
+      "pensando": [
+        {
+          "texto": "Lendo os sons mais usados no TikTok",
+          "fontes": [
+            "sons"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Lendo os sons mais usados no Reels",
+          "fontes": [
+            "sons"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Separando hino antigo de faixa nova",
+          "fontes": [
+            "sons",
+            "albuns"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "Se Eu For Eu Vou Com Você lidera no Reels; Eu Nunca Fui Embora lidera no TikTok.",
+      "explicacao": "Se Eu For Eu Vou Com Você soma 2,0 mi de views nos principais vídeos do Reels. No TikTok, Eu Nunca Fui Embora tem 895 mil em 368 vídeos. Vídeos usando o som cresceram muito em 12 meses.",
+      "numeros": [
+        {
+          "valor": "2,0 mi",
+          "rotulo": "Se Eu For Eu Vou Com Você"
+        },
+        {
+          "valor": "895 mil",
+          "rotulo": "Eu Nunca Fui Embora"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "barras",
+          "dados": "sons.instagram",
+          "campo": "views"
+        },
+        {
+          "tipo": "barras",
+          "dados": "sons.tiktok",
+          "campo": "views"
+        }
+      ],
+      "acoes": [
+        "Libere o trecho de 15 segundos mais cantado como som oficial.",
+        "Repost dos melhores vídeos de fãs no perfil da banda."
+      ],
+      "confianca": {
+        "nivel": "alta",
+        "motivo": "Contagem direta das plataformas."
+      },
+      "seguintes": [
+        "publico-de-verdade",
+        "onde-investir-conteudo"
+      ]
+    },
+    {
+      "id": "edicao-comemorativa",
+      "tema": "catalogo",
+      "pergunta": "Qual disco merece edição comemorativa?",
+      "variacoes": [
+        "aniversário",
+        "vinil",
+        "edição especial",
+        "comemorativa",
+        "disco antigo",
+        "relançamento"
+      ],
+      "pensando": [
+        {
+          "texto": "Medindo a popularidade atual de cada disco",
+          "fontes": [
+            "albuns"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Cruzando com os aniversários dos próximos anos",
+          "fontes": [
+            "albuns",
+            "imprensa"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Lendo o que os fãs comentam nos clipes antigos",
+          "fontes": [
+            "comentarios"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "20 anos de Redenção (o disco mais ouvido do catálogo) em 2028.",
+      "explicacao": "Redenção (2008) segue com popularidade 56 no Spotify, quase igual ao disco novo. Em julho de 2026 a 'Jaqueta Fresno 1999', de R$ 950, esgotou na pré-venda mesmo com polêmica de preço: o fã de 25–34 anos paga por memória.",
+      "numeros": [
+        {
+          "valor": "56",
+          "rotulo": "Redenção (2008)"
+        },
+        {
+          "valor": "52",
+          "rotulo": "Revanche (2010)"
+        },
+        {
+          "valor": "52",
+          "rotulo": "Ciano (2006)"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "linha_do_tempo",
+          "dados": "contexto.aniversarios"
+        },
+        {
+          "tipo": "barras",
+          "dados": "albuns",
+          "campo": "popularidade"
+        }
+      ],
+      "acoes": [
+        "Anuncie a turnê de aniversário com 12 meses de antecedência.",
+        "Vinil e coleção cápsula em pré-venda para medir demanda."
+      ],
+      "confianca": {
+        "nivel": "alta",
+        "motivo": "Popularidade atual + prova de compra (jaqueta esgotada)."
+      },
+      "seguintes": [
+        "marca-certa",
+        "setlist"
+      ]
+    },
+    {
+      "id": "publico-de-verdade",
+      "tema": "publico",
+      "destaque": true,
+      "pergunta": "Quem é o meu público de verdade?",
+      "variacoes": [
+        "público",
+        "quem me ouve",
+        "idade",
+        "homem ou mulher",
+        "gênero",
+        "perfil do fã",
+        "fãs"
+      ],
+      "pensando": [
+        {
+          "texto": "Lendo idade e gênero do streaming",
+          "fontes": [
+            "demografia"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Lendo idade e gênero do TikTok e do Instagram",
+          "fontes": [
+            "demografia"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Comparando quem ouve com quem assiste",
+          "fontes": [
+            "demografia",
+            "seguidores"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "Existem duas Fresnos: quem ouve tem 25–34 anos; quem assiste tem 18–24.",
+      "explicacao": "No streaming o público é 56% masculino e concentrado em 25-34 anos. No TikTok, 53% são mulheres de 18-24. A geração nova chega pelo vídeo e ainda não virou ouvinte recorrente.",
+      "numeros": [
+        {
+          "valor": "56%",
+          "rotulo": "homens no streaming"
+        },
+        {
+          "valor": "75%",
+          "rotulo": "mulheres no TikTok"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "piramides",
+          "dados": "publico",
+          "plataformas": [
+            "streaming",
+            "tiktok",
+            "instagram"
+          ]
+        }
+      ],
+      "acoes": [
+        "Vídeo curto: faixas novas e bastidor, para 18–24.",
+        "Ingresso VIP, vinil e merch premium: para 25–34."
+      ],
+      "confianca": {
+        "nivel": "alta",
+        "motivo": "Dados demográficos das próprias plataformas."
+      },
+      "seguintes": [
+        "onde-investir-conteudo",
+        "o-que-fas-falam"
+      ]
+    },
+    {
+      "id": "onde-investir-conteudo",
+      "tema": "publico",
+      "pergunta": "Em qual rede eu devo investir conteúdo?",
+      "variacoes": [
+        "rede social",
+        "instagram",
+        "x",
+        "twitter",
+        "onde postar",
+        "conteúdo"
+      ],
+      "pensando": [
+        {
+          "texto": "Comparando 12 meses de seguidores em 8 plataformas",
+          "fontes": [
+            "seguidores"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Somando os vídeos que usam as músicas",
+          "fontes": [
+            "sons"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Vendo onde está o público que ainda não ouve",
+          "fontes": [
+            "demografia"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "TikTok e Instagram. O X vira canal de aviso.",
+      "explicacao": "TikTok cresceu +14% e Instagram +9% em 12 meses; o X perdeu 20% dos seguidores no mesmo período.",
+      "numeros": [
+        {
+          "valor": "+14%",
+          "rotulo": "TikTok"
+        },
+        {
+          "valor": "+10%",
+          "rotulo": "Last.fm"
+        },
+        {
+          "valor": "−20%",
+          "rotulo": "X / Twitter"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "tabela",
+          "dados": "plataformas",
+          "colunas": [
+            "plataforma",
+            "total",
+            "g12",
+            "spark"
+          ]
+        }
+      ],
+      "acoes": [
+        "3 vídeos curtos por semana (palco, estúdio, fã).",
+        "X só para aviso de show e lançamento."
+      ],
+      "confianca": {
+        "nivel": "alta",
+        "motivo": "Séries diárias de seguidores de cada plataforma."
+      },
+      "seguintes": [
+        "viralizando",
+        "publico-de-verdade"
+      ]
+    },
+    {
+      "id": "o-que-fas-falam",
+      "tema": "publico",
+      "pergunta": "O que os fãs mais falam sobre a banda?",
+      "variacoes": [
+        "comentários",
+        "o que falam",
+        "fãs falam",
+        "sentimento",
+        "nostalgia"
+      ],
+      "pensando": [
+        {
+          "texto": "Lendo 1.000 comentários mais curtidos do YouTube",
+          "fontes": [
+            "comentarios"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Agrupando por tema",
+          "fontes": [
+            "comentarios"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "Saudade. 42% dos comentários falam de nostalgia.",
+      "explicacao": "Depois da nostalgia vem \"quem ainda ouve em 20XX?\" (37%): o fã volta todo ano e avisa que voltou. É o combustível de produto comemorativo e de turnê de aniversário.",
+      "numeros": [
+        {
+          "valor": "42%",
+          "rotulo": "Nostalgia / \"que saudade dessa época\""
+        },
+        {
+          "valor": "37%",
+          "rotulo": "\"Quem ainda ouve em 20XX?\""
+        },
+        {
+          "valor": "9%",
+          "rotulo": "Cena emo / identidade"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "barras",
+          "dados": "comentarios.temas",
+          "campo": "pct"
+        },
+        {
+          "tipo": "citacoes",
+          "dados": "comentarios.destaques"
+        }
+      ],
+      "acoes": [
+        "Responda e fixe o comentário \"quem ainda ouve em 2026?\" todo começo de ano."
+      ],
+      "confianca": {
+        "nivel": "média",
+        "motivo": "Classificação por palavras-chave; a versão com IA lê o sentido."
+      },
+      "seguintes": [
+        "edicao-comemorativa"
+      ]
+    },
+    {
+      "id": "playlists-editoriais",
+      "tema": "playlists",
+      "pergunta": "Por que não entro em mais playlists editoriais?",
+      "variacoes": [
+        "playlist",
+        "editorial",
+        "spotify",
+        "curadoria",
+        "pitch"
+      ],
+      "pensando": [
+        {
+          "texto": "Lendo a evolução diária de playlists desde 2022",
+          "fontes": [
+            "playlists"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Separando editorial, algorítmica e de fã",
+          "fontes": [
+            "playlists"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Calculando quanto do alcance depende de editorial",
+          "fontes": [
+            "playlists"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "As editoriais pararam em 29 desde out/2024; os fãs continuam colocando a banda nas deles.",
+      "explicacao": "Mesmo com disco novo, o número de editoriais não mudou. Já as playlists de fãs cresceram +6% em 12 meses (15.734). Só 22% do alcance vem de editorial: base sólida, teto baixo. O melhor sinal recente: 1º lugar na Pátria Rock com \"Tentar de Novo e de Novo\".",
+      "numeros": [
+        {
+          "valor": "29",
+          "rotulo": "editoriais"
+        },
+        {
+          "valor": "15,7 mil",
+          "rotulo": "playlists de fãs"
+        },
+        {
+          "valor": "22%",
+          "rotulo": "do alcance é editorial"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "linha",
+          "dados": "playlists.evolucao",
+          "campo": "usuarios"
+        },
+        {
+          "tipo": "lista",
+          "dados": "playlists.recomendadas"
+        }
+      ],
+      "acoes": [
+        "Pitch editorial 4 semanas antes de cada lançamento, com o recorte \"rock nostalgia\".",
+        "Contate os 10 curadores-fãs com mais seguidores."
+      ],
+      "confianca": {
+        "nivel": "alta",
+        "motivo": "Série diária de playlists do Spotify."
+      },
+      "seguintes": [
+        "quando-lancar"
+      ]
+    },
+    {
+      "id": "marca-certa",
+      "tema": "parcerias",
+      "destaque": true,
+      "pergunta": "Que marca combina com o meu público?",
+      "variacoes": [
+        "marca",
+        "patrocínio",
+        "patrocinador",
+        "publi",
+        "parceria comercial"
+      ],
+      "pensando": [
+        {
+          "texto": "Lendo as marcas que o público segue no Instagram",
+          "fontes": [
+            "marcas"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Calculando quantas vezes acima da média",
+          "fontes": [
+            "marcas"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Cruzando com idade e cidades do público",
+          "fontes": [
+            "demografia",
+            "cidades"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "Pepsi® Brasil, Schweppes Brasil, Dolly Refrigerantes Oficial: bebida tem o fit mais forte.",
+      "explicacao": "O público segue Pepsi® Brasil 3,5x mais que a média do Instagram, com 77% de correspondência de perfil. É argumento pronto para patrocínio de turnê ou de show gratuito como o da Redenção.",
+      "numeros": [
+        {
+          "valor": "3,5x",
+          "rotulo": "Pepsi® Brasil"
+        },
+        {
+          "valor": "3,4x",
+          "rotulo": "Schweppes Brasil"
+        },
+        {
+          "valor": "3,2x",
+          "rotulo": "Dolly Refrigerantes Oficial"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "barras",
+          "dados": "marcas",
+          "campo": "afinidade"
+        }
+      ],
+      "acoes": [
+        "Leve à marca: idade, gênero, cidades de prêmio e o caso da Redenção."
+      ],
+      "confianca": {
+        "nivel": "média",
+        "motivo": "Afinidade mede quem segue, não quem compra."
+      },
+      "seguintes": [
+        "show-da-retorno",
+        "com-quem-dividir-palco"
+      ]
+    },
+    {
+      "id": "com-quem-dividir-palco",
+      "tema": "parcerias",
+      "pergunta": "Com quem vale dividir palco ou fazer feat?",
+      "variacoes": [
+        "feat",
+        "parceria",
+        "dividir palco",
+        "colaboração",
+        "artista parecido",
+        "abrir show"
+      ],
+      "pensando": [
+        {
+          "texto": "Listando quem mais dividiu palco com a banda",
+          "fontes": [
+            "co_palco"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Lendo os 30 artistas com público mais parecido",
+          "fontes": [
+            "pares"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Procurando quem traz o público que falta",
+          "fontes": [
+            "pares",
+            "demografia"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "NX Zero e Pitty para palco; Ariah, Bea Duarte para feat.",
+      "explicacao": "NX Zero (18 palcos juntos) e Pitty (14) são a dobradinha que já funciona ao vivo. Para feat, Ariah e Bea Duarte têm base ainda mais fiel e muito mais força no TikTok (2,7 mi e 1,7 mi de seguidores), onde está a geração que hoje só assiste.",
+      "numeros": [
+        {
+          "valor": "18",
+          "rotulo": "palcos com NX Zero"
+        },
+        {
+          "valor": "14",
+          "rotulo": "palcos com Pitty"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "lista",
+          "dados": "co_palco"
+        },
+        {
+          "tipo": "barras",
+          "dados": "pares",
+          "campo": "lealdade",
+          "destacar": [
+            "Fresno"
+          ]
+        }
+      ],
+      "acoes": [
+        "Feat lançado em julho/agosto, antes da turnê."
+      ],
+      "confianca": {
+        "nivel": "média",
+        "motivo": "Similaridade de público medida pela Chartmetric; validar afinidade artística."
+      },
+      "seguintes": [
+        "qual-lancamento-funcionou",
+        "festival-ou-proprio"
+      ]
+    }
+  ],
+  "fallback": {
+    "titulo": "Essa pergunta precisa da versão com IA",
+    "texto": "Na demo, o sistema responde as perguntas mais comuns de carreira. Na versão completa, ele cruza todos os dados ao vivo para qualquer pergunta."
+  }
+}

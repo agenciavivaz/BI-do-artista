@@ -4,6 +4,9 @@ Painel público, sem login, que transforma exports da Chartmetric em decisões d
 
 Primeiro artista: **Fresno** → `/fresno`
 
+- **v1 (no ar):** relatório estático — `public/fresno/index.html`
+- **v2 (a construir):** sistema "Camarim" com perguntas, raciocínio visível e simuladores — ver [PRD v2](docs/PRD-v2-sistema.md) e `CLAUDE.md`
+
 ## Como funciona
 
 ```
@@ -12,6 +15,8 @@ artists/<slug>/config.json   tema (cores/fontes), carta, contexto, casos de show
 scripts/ingest.py            exports originais -> nomes canônicos
 scripts/analytics.py         motor: KPIs, índices, cruzamentos, previsão, recomendações
 scripts/build.py             gera public/<slug>/index.html (autocontido) + data.json
+scripts/answers.py           gera artists/<slug>/respostas.json (perguntas prontas do v2)
+scripts/sync_app.py          roda tudo e copia os dados para app/public/ (v2)
 template/dashboard.html      template único (HTML/CSS/JS + SVG à mão, zero dependência)
 public/                      o que a Vercel publica
 docs/                        brainstorm, PRD, design system, perfil dos dados, pesquisa
@@ -43,7 +48,8 @@ Importar o repositório na Vercel → Framework: *Other* → sem build. O `verce
 ## Documentos
 
 - [Brainstorm](docs/brainstorm.md)
-- [PRD](docs/PRD.md)
+- [PRD v1](docs/PRD.md)
+- [PRD v2 — sistema Camarim](docs/PRD-v2-sistema.md)
 - [Design system](docs/design-system.md)
 - [Perfil e qualidade dos dados](docs/dados-e-qualidade.md)
 - [Pesquisa pública — Fresno](docs/pesquisa-fresno.md)

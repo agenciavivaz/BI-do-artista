@@ -1,0 +1,28 @@
+{
+  "nome": "Fresno",
+  "subtitulo": "Raio-X de carreira com dados",
+  "cidade_origem": "Porto Alegre",
+  "desde": 1999,
+  "carta": "Uma base que segue a banda mais do que ouve playlist, um catálogo de 20 anos que não envelhece e uma geração nova chegando pelo TikTok. Este raio-x cruza {arquivos} relatórios da Chartmetric, de 2018 até hoje, para responder cinco perguntas: onde tocar, quanto cobrar, quando lançar, o que postar e com quem se juntar.",
+  "contato": {
+    "nome": "",
+    "email": "",
+    "whatsapp": "",
+    "instagram": "",
+    "texto_cta": "Este é um retrato de novembro de 2026. A versão viva atualiza toda semana, avisa quando uma cidade dispara e responde perguntas da equipe direto nos dados."
+  },
+  "tema": {
+    "fundo": "#0E0C0F",
+    "superficie": "#17141A",
+    "superficie_2": "#211C24",
+    "linha": "#2E2832",
+    "texto": "#F4EEE6",
+    "texto_suave": "#A99FA6",
+    "destaque": "#FF4D3D",
+    "destaque_2": "#F6C177",
+    "positivo": "#5ED3A0",
+    "negativo": "#FF7A6B",
+    "fonte_titulo": "Archivo Black",
+    "fonte_texto": "Inter"
+  }
+}
