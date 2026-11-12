@@ -175,10 +175,13 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
               <h5>O quanto esse modelo erra</h5>
               <p className="apoio">
                 Tiramos um show de cada vez do ajuste e pedimos ao modelo que previsse justamente ele. Nos{' '}
-                {m.validacao.n} shows medidos, o erro foi de <strong className="num">{m.validacao.erro_mediano_pct}%</strong> na
-                mediana e <strong className="num">{m.validacao.erro_medio_pct}%</strong> na média, com um pior caso de{' '}
-                {m.validacao.erro_maximo_pct}%. A faixa original pegava o número real em {m.validacao.cobertura_pct}% das vezes,
-                menos que os 80% prometidos, então ela foi alargada {dec(m.fator_faixa, 2)}x — a faixa que você vê já está corrigida.
+                <strong className="num">{m.validacao.n_medidos}</strong> shows com número de público, o erro foi de{' '}
+                <strong className="num">{m.validacao.erro_mediano_pct}%</strong> na mediana e{' '}
+                <strong className="num">{m.validacao.erro_medio_pct}%</strong> na média, com um pior caso de {m.validacao.erro_maximo_pct}%.
+                Os outros {m.validacao.n_pisos} esgotaram, então só dizem um piso: o modelo respeitou{' '}
+                <strong className="num">{m.validacao.pisos_respeitados}</strong> deles.
+                {m.fator_faixa > 1.01 && <> A faixa original pegava o número real em {m.validacao.cobertura_pct}% das vezes,
+                  menos que os 80% prometidos, então foi alargada {dec(m.fator_faixa, 2)}x — a que você vê já está corrigida.</>}
               </p>
               <table className="t-val">
                 <thead><tr><th>Show</th><th>Real</th><th>Previsto</th><th>Erro</th></tr></thead>
@@ -188,7 +191,7 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
                       <td>{l.cidade}, {dataBr(l.data)}<small className="apoio">{l.local}</small></td>
                       <td className="num">{int(l.real)}</td>
                       <td className="num">{int(l.previsto)}</td>
-                      <td className="num">{l.erro_pct > 0 ? '+' : ''}{l.erro_pct}%</td>
+                      <td className="num">{l.esgotou && l.erro_pct === 0 ? 'piso ok' : `${l.erro_pct > 0 ? '+' : ''}${l.erro_pct}%`}</td>
                     </tr>
                   ))}
                 </tbody>

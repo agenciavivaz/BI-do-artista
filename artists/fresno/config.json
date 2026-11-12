@@ -102,7 +102,7 @@
   },
   "qualidade_dados": [
     "Ouvintes por cidade no Spotify vêm do último snapshot disponível na Chartmetric (ago–dez/2024). A versão com API atualiza isso diariamente.",
-    "O público provável por praça é uma regressão sobre a agenda própria da banda (setlist.fm, imprensa, bilheterias e Chartmetric): 34 shows levantados, 10 com capacidade de casa conhecida. Testado show a show, erra 21% na mediana e 31% na média. Capacidade de casa quase nunca é publicada no Brasil, e quando a fonte não diz a ocupação, presumimos 85%. Show de bill dividido (com CPM 22, com a Pitty) e casa de configuração variável ficam fora do ajuste. Com a bilheteria oficial do artista, essa margem cai.",
+    "O público provável por praça é uma regressão sobre a agenda própria da banda (setlist.fm, imprensa, bilheterias e Chartmetric): 34 shows próprios levantados, 10 com capacidade de casa conhecida, dos quais só 5 têm um número de público que não é piso. Nesses, o erro mediano é de 13%; nos 5 que esgotaram, o modelo respeitou o piso em 4. A fórmula foi escolhida entre 8 candidatas pela validação — sombra de praça maior, festivais na praça, cidade natal e base regional foram testadas e não melhoraram a previsão. Capacidade de casa quase nunca é publicada no Brasil, e a ocupação é presumida em 85% quando a fonte não diz. Com a bilheteria oficial do artista, essa margem cai.",
     "A lista de shows da Chartmetric tem 60+ eventos desde 2018, não a agenda completa. Os efeitos de show são uma amostra.",
     "O export 'Popularidade do Spotify' por faixa veio idêntico ao de streams (bug do export) e foi descartado.",
     "Comparação por faixa cobre 5 músicas escolhidas no export; Shazam só tem 1 faixa.",
@@ -120,6 +120,14 @@
     "expoente_demanda": 0.3,
     "ocupacao_presumida": 0.85,
     "ancoras": [
+      {
+        "cidade": "Manaus",
+        "local": "Centro Cultural dos Povos da Amazônia (Manaus Pop)",
+        "data": "2026-12-07",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
       {
         "cidade": "São Paulo",
         "local": "Vibra São Paulo",
@@ -146,6 +154,14 @@
         "escalavel": true
       },
       {
+        "cidade": "São Paulo",
+        "local": "Expo Center Norte (Tattoo Week)",
+        "data": "2026-11-21",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
         "cidade": "Porto Alegre",
         "local": "Auditório Araújo Vianna",
         "data": "2026-11-20",
@@ -161,9 +177,9 @@
         "data": "2026-11-06",
         "capacidade": 3050,
         "escalavel": false,
-        "fonte": "Uhuu: 3.050 ingressos no total à venda — é a configuração real do show, não os 17.000 da arena. Página 3: últimos ingressos em 05/11; Under Floripa, três semanas antes: ainda disponíveis, com 40% de desconto para sócios. Ocupação de 75% é premissa nossa, com peso baixo",
-        "ocupacao": 0.75,
-        "peso": 0.4,
+        "fonte": "Uhuu: 3.050 ingressos no total à venda — é a configuração real do show, não os 17.000 da arena. Página 3, 05/11: últimos ingressos. Under Floripa, três semanas antes: ainda disponíveis, com 40% de desconto para sócios. Os dois sinais se contradizem, então a ocupação de 85% é premissa nossa, com peso baixo",
+        "ocupacao": 0.85,
+        "peso": 0.5,
         "preco_inteira": 108
       },
       {
@@ -181,7 +197,19 @@
         "local": "Cine Lido",
         "data": "2026-08-29",
         "capacidade": 2500,
-        "fonte": "Tribuna do Paraná / Band: casa reformada, 2.500 lugares. Nenhuma fonte publicou bilheteria"
+        "fonte": "Clique Paraná, 23/08/2026: ingressos nas últimas unidades. Bandab: a partir de R$160 conforme o setor; Bora Curitiba: a partir de R$120 no Ticketmaster. Casa de 2.500 (Tribuna do Paraná). Entra como piso",
+        "ocupacao": 0.95,
+        "peso": 0.8,
+        "censurado": true,
+        "preco_inteira": 200
+      },
+      {
+        "cidade": "Rio de Janeiro",
+        "local": "Jockey (Doce Maravilha)",
+        "data": "2026-08-07",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
       },
       {
         "cidade": "Campinas",
@@ -202,6 +230,14 @@
         "preco_inteira": 140
       },
       {
+        "cidade": "Porto Alegre",
+        "local": "Parque da Redenção (Semana S, gratuito)",
+        "data": "2026-05-16",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
         "cidade": "Brasília",
         "local": "Clube AABB",
         "data": "2026-04-25",
@@ -219,6 +255,38 @@
         "preco_inteira": 250
       },
       {
+        "cidade": "São Paulo",
+        "local": "São Paulo Expo (CCXP25)",
+        "data": "2025-12-07",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "Fortaleza",
+        "local": "Estacionamento do RioMar (Eu Quero Rock)",
+        "data": "2025-11-30",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Expo Center Norte",
+        "data": "2025-11-15",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "Porto Alegre",
+        "local": "Anfiteatro Pôr do Sol (Festival Turá)",
+        "data": "2025-10-25",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
         "cidade": "São José dos Campos",
         "local": "SESI",
         "data": "2025-10-04",
@@ -231,6 +299,54 @@
         "data": "2025-09-06",
         "capacidade": null,
         "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Allianz Parque (I Wanna Be)",
+        "data": "2025-08-30",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "Curitiba",
+        "local": "Pedreira Paulo Leminski (I Wanna Be)",
+        "data": "2025-08-23",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Audio (Emo Vive)",
+        "data": "2025-06-07",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "Rio de Janeiro",
+        "local": "Fundição Progresso (Emo Vive)",
+        "data": "2025-06-06",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "Porto Alegre",
+        "local": "Auditório Araújo Vianna (Emo Vive)",
+        "data": "2025-06-04",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Virada Cultural",
+        "data": "2025-05-25",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
       },
       {
         "cidade": "Belo Horizonte",
@@ -248,6 +364,14 @@
         "capacidade": 5000,
         "fonte": "Jornal do Brás: 5.000 por dia, estrutura temporária no estacionamento do Iguatemi",
         "escalavel": true
+      },
+      {
+        "cidade": "Curitiba",
+        "local": "Pedreira Paulo Leminski (Coolritiba)",
+        "data": "2025-05-17",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
       },
       {
         "cidade": "Joinville",
@@ -273,7 +397,8 @@
         "capacidade": 5000,
         "fonte": "Wikipédia: galpão de ~5.000 no máximo. Ocupação de 70% é premissa nossa (casa de configuração variável), com peso baixo no ajuste",
         "ocupacao": 0.7,
-        "peso": 0.3
+        "peso": 0.3,
+        "escalavel": true
       },
       {
         "cidade": "Jundiaí",
@@ -285,6 +410,14 @@
         "peso": 0.3,
         "fora_do_ajuste": true,
         "motivo": "o Sesc tem teatro de 220 e ginásio de 700; a fonte do esgotamento não diz qual espaço foi usado"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Autódromo de Interlagos (Lollapalooza)",
+        "data": "2025-03-29",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
       },
       {
         "cidade": "Florianópolis",
@@ -359,8 +492,19 @@
         "local": "Teatro Positivo",
         "data": "2024-11-14",
         "capacidade": 2400,
-        "fonte": "Popster: 5 setores de R$200 a R$380 (média R$284). O título da matéria fala em últimos ingressos, mas o texto não confirma",
-        "preco_inteira": 284
+        "fonte": "Curitiba Cult e Massa News: setores amarelo e azul, os mais próximos do palco, esgotados; \"últimos ingressos\" na semana do show. 5 setores de R$200 a R$380 (média R$284). Ocupação de 95% é leitura nossa desses sinais, e o ponto entra como piso",
+        "preco_inteira": 284,
+        "ocupacao": 0.95,
+        "peso": 0.9,
+        "censurado": true
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Estádio do Canindé (Encontro das Tribos)",
+        "data": "2024-11-10",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
       },
       {
         "cidade": "Santos",
@@ -386,11 +530,43 @@
         "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
       },
       {
+        "cidade": "Belo Horizonte",
+        "local": "Esplanada do Mineirão (2000 Rock Fest)",
+        "data": "2024-09-28",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "Goiânia",
+        "local": "Goiânia Arena (PiriBier)",
+        "data": "2024-09-14",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Avenida Paulista",
+        "data": "2024-08-25",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
         "cidade": "São José dos Campos",
         "local": "Palácio Sunset",
         "data": "2024-08-17",
         "capacidade": null,
         "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Brasília",
+        "local": "Na Praia Parque (Na Praia Festival)",
+        "data": "2024-08-09",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
       },
       {
         "cidade": "Rio de Janeiro",
@@ -402,6 +578,14 @@
         "preco_inteira": 180
       },
       {
+        "cidade": "São Paulo",
+        "local": "Parque do Ibirapuera (Festival Turá)",
+        "data": "2024-06-29",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
         "cidade": "Campinas",
         "local": "Multi Arena",
         "data": "2024-05-10",
@@ -409,7 +593,48 @@
         "fonte": "Multi Arena Campinas, em material da casa: o show de maio/2024 reuniu mais de dois mil fãs",
         "escalavel": true,
         "publico": 2000,
-        "peso": 0.6
+        "peso": 0.6,
+        "censurado": true
+      },
+      {
+        "cidade": "Belo Horizonte",
+        "local": "Estádio Independência (I Wanna Be)",
+        "data": "2024-03-10",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "Rio de Janeiro",
+        "local": "Riocentro (I Wanna Be)",
+        "data": "2024-03-09",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "Curitiba",
+        "local": "Estádio Couto Pereira (I Wanna Be)",
+        "data": "2024-03-03",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Allianz Parque (I Wanna Be)",
+        "data": "2024-03-02",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "Porto Alegre",
+        "local": "Anfiteatro Pôr do Sol (Festival Turá)",
+        "data": "2023-11-18",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
       },
       {
         "cidade": "Curitiba",
@@ -418,6 +643,46 @@
         "capacidade": 5000,
         "escalavel": true,
         "fonte": "Opus Entretenimento: 5.000, adaptável a qualquer formato"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Distrito Anhembi (Somos Rock)",
+        "data": "2023-09-23",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "Curitiba",
+        "local": "Pedreira Paulo Leminski (Coolritiba)",
+        "data": "2023-05-20",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "Belo Horizonte",
+        "local": "Esplanada do Mineirão (2000 Rock Fest)",
+        "data": "2023-04-15",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "Campinas",
+        "local": "Campinas Hall (Brasuca Rock)",
+        "data": "2023-03-04",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Vale do Anhangabaú (aniversário de SP)",
+        "data": "2023-01-25",
+        "tipo": "festival",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda)"
       }
     ],
     "cidade_casa": "Porto Alegre"

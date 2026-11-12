@@ -374,7 +374,7 @@
           "ms": 700
         },
         {
-          "texto": "Testando o modelo: tira um show, tenta prever ele — erro mediano de 21%",
+          "texto": "Testando: tira um show, tenta prever ele — erro mediano de 13% nos 5 com número de público",
           "fontes": [
             "shows",
             "imprensa"
@@ -390,20 +390,20 @@
           "ms": 700
         }
       ],
-      "veredito": "São Paulo: 8.000 pessoas é o cenário mais provável, 63% de chance de esgotar a casa que a banda usou lá. Em Curitiba, a previsão já passa da casa usada.",
-      "explicacao": "A conta não é uma taxa de conversão escolhida a dedo nem uma média. É uma regressão sobre os shows próprios da banda, com o público crescendo com a base de fãs da praça elevada a 0,53 — menor que 1, ou seja, praça grande converte uma fatia menor. Show esgotado entra como piso e não como teto, porque lotar diz que a banda venderia pelo menos aquilo. Testado show a show, o modelo erra 21% na mediana e 31% na média — é a margem com que esses números devem ser lidos.",
+      "veredito": "São Paulo: 8.000 pessoas é o cenário mais provável, 77% de chance de esgotar a casa que a banda usou lá. Em Curitiba, a previsão já passa da casa usada.",
+      "explicacao": "A conta não é uma taxa de conversão escolhida a dedo nem uma média. É uma regressão sobre os shows próprios da banda, com o público crescendo com a base de fãs da praça elevada a 0,51 — menor que 1, ou seja, praça grande converte uma fatia menor. Show esgotado entra como piso e não como teto, porque lotar diz que a banda venderia pelo menos aquilo. Testado show a show, o modelo erra 13% na mediana nos 5 shows com número de público, e respeita o piso em 4 dos 5 que esgotaram — é a margem com que esses números devem ser lidos.",
       "numeros": [
         {
           "valor": "8.000",
-          "rotulo": "São Paulo · 63% de esgotar"
+          "rotulo": "São Paulo · 77% de esgotar"
         },
         {
-          "valor": "3.700",
-          "rotulo": "Rio de Janeiro · 21% de esgotar"
+          "valor": "3.900",
+          "rotulo": "Porto Alegre · 69% de esgotar"
         },
         {
-          "valor": "3.600",
-          "rotulo": "Porto Alegre · 50% de esgotar"
+          "valor": "3.500",
+          "rotulo": "Curitiba · 98% de esgotar"
         }
       ],
       "blocos": [
@@ -448,7 +448,7 @@
       ],
       "confianca": {
         "nivel": "média",
-        "motivo": "Regressão sobre 10 shows próprios com capacidade de casa conhecida, de 34 na agenda. Na validação show a show o erro mediano é de 21% e o pior caso foi 75%. Capacidade de casa quase nunca é publicada no Brasil e a ocupação é presumida quando a fonte não diz: com bilheteria oficial, a margem cai."
+        "motivo": "Regressão sobre 10 shows próprios com capacidade de casa conhecida, de 34 na agenda, com a fórmula escolhida entre 8 candidatas pela validação. O erro mediano é de 13% e o pior caso foi 30%. Capacidade de casa quase nunca é publicada no Brasil e a ocupação é presumida quando a fonte não diz: com bilheteria oficial, a margem cai."
       },
       "seguintes": [
         "onde-cobrar-mais",

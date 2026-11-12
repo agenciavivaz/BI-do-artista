@@ -77,10 +77,63 @@ PADRAO = {
     'peso_arena': 0.0,            # casa de configuração variável: capacidade não diz lotação, fica fora do ajuste
     # bilheteria: no Brasil metade do público costuma pagar meia-entrada, então o
     # ticket médio fica perto de 75% da inteira. É uma premissa, e aparece como tal.
+    # A ocupação presumida (85%) e a capacidade divulgada já carregam erro. Sem
+    # este piso, a regressão com muitos pontos censurados declara uma precisão
+    # que ela não tem: o resíduo do ponto imputado é zero por construção.
+    'sigma_minimo': 0.15,
+    # Esgotar uma casa de 2.400 prova demanda de pelo menos 2.400 — não prova
+    # 5.000. Sem um teto, a imputação do ponto censurado vira profecia: ela sobe
+    # até onde a curva quiser e depois reforça a própria curva.
+    'teto_imputacao': 1.5,
     'fator_meia': 0.75,
     'crescer': 1.15,              # P50 >= 1,15x a casa -> casa maior ou outra data
     'encolher': 0.70,             # P50 <= 0,70x a casa -> casa menor ou festival
 }
+
+
+def _km(a, b) -> float:
+    """Distância em km entre dois pares (lon, lat)."""
+    (lo1, la1), (lo2, la2) = a, b
+    g = math.pi / 180
+    h = (0.5 - math.cos((la2 - la1) * g) / 2
+         + math.cos(la1 * g) * math.cos(la2 * g) * (1 - math.cos((lo2 - lo1) * g)) / 2)
+    return 2 * 6371 * math.asin(math.sqrt(max(h, 0.0)))
+
+
+def _sombra(cidade: dict, cidades: list[dict], alcance=150.0) -> float:
+    """Quanto uma praça maior e perto puxa o público desta.
+
+    Campinas fica a 84 km de São Paulo e tem um quinto da base paulistana: o fã
+    de Campinas vai ao show de São Paulo. Santo André, Guarulhos, Santos e
+    Sorocaba são casos ainda mais extremos. A medida é a maior razão
+    base_vizinha/base_local decaindo com a distância.
+    """
+    if not cidade.get('coord'):
+        return 0.0
+    melhor = 0.0
+    for o in cidades:
+        if o is cidade or not o.get('coord') or o['ouvintes'] <= cidade['ouvintes']:
+            continue
+        melhor = max(melhor, (o['ouvintes'] / cidade['ouvintes'])
+                     * math.exp(-_km(cidade['coord'], o['coord']) / alcance))
+    return melhor
+
+
+def _base_regiao(cidade: dict, cidades: list[dict], base_de, alcance=120.0) -> float:
+    """Base da praça somada à das cidades menores ao redor.
+
+    Quem mora em São José vai ao show em Florianópolis; quem mora em Canoas vai
+    a Porto Alegre. A contagem por município subestima a praça-polo e é a outra
+    metade da mesma moeda da sombra.
+    """
+    total = base_de(cidade)
+    if not cidade.get('coord'):
+        return total
+    for o in cidades:
+        if o is cidade or not o.get('coord') or o['ouvintes'] >= cidade['ouvintes']:
+            continue
+        total += base_de(o) * math.exp(-_km(cidade['coord'], o['coord']) / alcance)
+    return total
 
 
 def _dezena(x: float) -> int:
@@ -126,7 +179,7 @@ def _phi(z: float) -> float:
     return math.exp(-0.5 * z * z) / math.sqrt(2 * math.pi)
 
 
-def _wls_censurado(X, y, w, censurado, voltas=8):
+def _wls_censurado(X, y, w, censurado, voltas=8, piso_sigma=0.0, teto=1.5):
     """Regressão com observações censuradas à esquerda (shows esgotados).
 
     Um show esgotado não mede a demanda: mede o tamanho da casa. O que se sabe é
@@ -155,7 +208,7 @@ def _wls_censurado(X, y, w, censurado, voltas=8):
             a = (y[i] - mu) / sigma
             cauda = 1 - _norm_cdf(a)
             esperado = mu + sigma * (_phi(a) / cauda if cauda > 1e-6 else a + 1 / max(a, 1e-3))
-            novo[i] = max(y[i], esperado)
+            novo[i] = min(max(y[i], esperado), y[i] + math.log(teto))
         if max(abs(novo[i] - atual[i]) for i in range(len(y))) < 1e-4:
             atual = novo
             break
@@ -165,7 +218,25 @@ def _wls_censurado(X, y, w, censurado, voltas=8):
             break
         ajuste = proximo
     beta, inv, sigma, r2, gl = ajuste
-    return beta, inv, sigma, r2, gl
+
+    # O valor imputado cai em cima da reta, então o resíduo dele é zero por
+    # construção e o sigma despenca — o modelo pareceria muito mais preciso do
+    # que é. Para o ponto censurado, a variância certa é a da normal truncada
+    # acima da capacidade, não zero.
+    soma, peso_total = 0.0, 0.0
+    for i, c in enumerate(censurado):
+        mu = sum(b * xv for b, xv in zip(beta, X[i]))
+        if not c:
+            soma += w[i] * (y[i] - mu) ** 2
+        else:
+            a = (y[i] - mu) / max(sigma, 1e-6)
+            cauda = 1 - _norm_cdf(a)
+            lam = _phi(a) / cauda if cauda > 1e-6 else a + 1 / max(a, 1e-3)
+            soma += w[i] * (sigma ** 2) * max(1 + a * lam - lam * lam, 0.05)
+        peso_total += w[i]
+    gl_efetivo = max(len(y) - len(beta), 1)
+    sigma = math.sqrt(soma / peso_total * len(y) / gl_efetivo) if peso_total else sigma
+    return beta, inv, max(sigma, piso_sigma), r2, gl
 
 
 def _wls(X: list[list[float]], y: list[float], w: list[float]):
@@ -187,7 +258,7 @@ def _wls(X: list[list[float]], y: list[float], w: list[float]):
     return beta, inv, sigma, r2, gl
 
 
-def _loocv(X, y, w, censurado=None, z=Z90):
+def _loocv(X, y, w, censurado=None, desloc=None, piso=0.0, teto=1.5, z=Z90):
     """Validação leave-one-out: tira um show, ajusta nos outros, tenta prever ele.
 
     É a única medida honesta de erro de um modelo com poucos pontos — o R² do
@@ -199,20 +270,22 @@ def _loocv(X, y, w, censurado=None, z=Z90):
     if n < 4:
         return None
     censurado = censurado or [False] * n
+    desloc = desloc or [0.0] * n
     linhas, dentro, razao = [], 0, []
     for i in range(n):
         Xi = [X[j] for j in range(n) if j != i]
         yi = [y[j] for j in range(n) if j != i]
         wi = [w[j] for j in range(n) if j != i]
         ci = [censurado[j] for j in range(n) if j != i]
-        fora = _wls_censurado(Xi, yi, wi, ci)
+        di = [desloc[j] for j in range(n) if j != i]
+        fora = _wls_censurado(Xi, yi, wi, ci, piso_sigma=piso, teto=teto)
         if not fora:
             continue
         beta, inv, sigma, _, _ = fora
         mu = sum(b * xv for b, xv in zip(beta, X[i]))
         lev = sum(X[i][a] * inv[a][b] * X[i][b] for a in range(len(beta)) for b in range(len(beta)))
         ep = sigma * math.sqrt(1.0 + max(lev, 0.0))
-        real, prev = math.exp(y[i]), math.exp(mu)
+        real, prev = math.exp(y[i] + desloc[i]), math.exp(mu + desloc[i])
         razao.append(abs(y[i] - mu) / ep if ep else 0.0)
         if abs(y[i] - mu) <= z * ep:
             dentro += 1
@@ -221,13 +294,19 @@ def _loocv(X, y, w, censurado=None, z=Z90):
                        'erro_pct': 0 if (censurado[i] and prev >= real) else round((prev / real - 1) * 100)})
     if not linhas:
         return None
-    erros = sorted(abs(l['erro_pct']) for l in linhas)
+    medidos = [l for l in linhas if not l['esgotou']]
+    pisos = [l for l in linhas if l['esgotou']]
+    furados = [l for l in pisos if l['previsto'] < l['real']]
+    erros = sorted(abs(l['erro_pct']) for l in medidos + furados) or [0]
     meio = len(erros) // 2
-    razoes = sorted(r for r in razao if r > 0)
+    razoes = sorted(razao[i] for i, l in enumerate(linhas) if not l['esgotou'] and razao[i] > 0) or [z]
     alvo = razoes[min(int(math.ceil(0.8 * len(razoes))) - 1, len(razoes) - 1)] if razoes else z
     return {
         'fator_faixa': round(max(alvo / z, 1.0), 3),
         'n': len(linhas),
+        'n_medidos': len(medidos),
+        'n_pisos': len(pisos),
+        'pisos_respeitados': sum(1 for l in pisos if l['previsto'] >= l['real']),
         'erro_mediano_pct': erros[meio] if len(erros) % 2 else round((erros[meio - 1] + erros[meio]) / 2),
         'erro_medio_pct': round(sum(erros) / len(erros)),
         'erro_maximo_pct': erros[-1],
@@ -301,6 +380,12 @@ TERMOS = {
     'casa': lambda u: 1.0 if u.get('e_casa') else 0.0,
     # momentum local: variação de views no YouTube em 3 meses, em escala log
     'momentum': lambda u: math.log(max(1 + (u.get('yt_3m') or 0) / 100.0, 0.2)),
+    # sombra de uma praça maior e perto (São Paulo sobre Campinas, por exemplo)
+    'sombra': lambda u: math.log(1 + (u.get('sombra') or 0.0)),
+    # base da praça somada à das cidades menores ao redor (a praça-polo)
+    'ln_base_regiao': lambda u: math.log(max(u.get('base_regiao') or u['base'], 1.0)),
+    # quantos festivais a banda já fez nessa praça nos 24 meses anteriores
+    'festivais': lambda u: math.log(1 + (u.get('festivais') or 0)),
 }
 
 # fórmulas candidatas, da mais simples para a mais complexa. A escolhida é a que
@@ -310,7 +395,9 @@ TERMOS = {
 # base, ou afinidade pesando mais que o tamanho da praça) que acerta os shows
 # medidos e manda uma praça pequena para perto de zero. Estes limites são a
 # parte de teoria: mercado satura, então o expoente da base fica abaixo de 1.
-LIMITES = {'ln_base': (0.30, 1.00), 'ln_demanda': (0.0, 1.00), 'casa': (-0.3, 1.0), 'momentum': (-0.5, 1.5)}
+LIMITES = {'ln_base': (0.30, 1.00), 'ln_demanda': (0.0, 1.00), 'casa': (-0.3, 1.0),
+           'momentum': (-0.3, 0.6), 'sombra': (-1.0, 0.0), 'festivais': (-1.0, 0.5),
+           'ln_base_regiao': (0.30, 1.00)}
 
 ESPECIFICACOES = [
     ('só escala', ['const', 'ln_base'], None),
@@ -319,6 +406,11 @@ ESPECIFICACOES = [
     ('escala + cidade natal', ['const', 'ln_base', 'casa'], None),
     ('escala + afinidade + cidade natal', ['const', 'ln_base', 'ln_demanda', 'casa'], None),
     ('escala + afinidade + momentum', ['const', 'ln_base', 'ln_demanda', 'momentum'], None),
+    ('escala regional', ['const', 'ln_base_regiao'], 'afinidade'),
+    ('escala regional sem afinidade', ['const', 'ln_base_regiao'], None),
+    ('escala + sombra de praça maior', ['const', 'ln_base', 'sombra'], None),
+    ('escala + festivais na praça', ['const', 'ln_base', 'festivais'], None),
+    ('escala + sombra + festivais', ['const', 'ln_base', 'sombra', 'festivais'], None),
 ]
 
 
@@ -341,9 +433,21 @@ def calibrar(cidades: list[dict], kpis: dict, cal: dict, historico: list[dict] |
     base_de = lambda c: c['ouvintes'] * f_atualiza * f_fa
     no_tempo = _fator_tempo(historico)
 
+    ancoras = list((cal or {}).get('ancoras') or [])
+    festivais = {}
+    for a in ancoras:
+        if a.get('tipo') == 'festival':
+            festivais.setdefault(a['cidade'], []).append(a['data'])
+
+    def meses(d1, d2):
+        return abs((int(d1[:4]) * 12 + int(d1[5:7])) - (int(d2[:4]) * 12 + int(d2[5:7])))
+
+    def festivais_ate(cidade_nome, data, janela=24):
+        return sum(1 for f in festivais.get(cidade_nome, []) if f <= data and meses(f, data) <= janela)
+
     provas = []
-    for a in ((cal or {}).get('ancoras') or []):
-        if a.get('tipo', 'proprio') == 'festival':
+    for a in ancoras:
+        if a.get('tipo') == 'festival':
             continue
         c = por_nome.get(a['cidade'])
         if not c:
@@ -354,7 +458,11 @@ def calibrar(cidades: list[dict], kpis: dict, cal: dict, historico: list[dict] |
         ft = no_tempo(a['data'])
         if ft <= 0:   # show anterior à série de ouvintes: não entra
             continue
-        provas.append({**a, 'publico_show': pub_show, 'peso': peso, 'esgotou': esgotou,
+        provas.append({**a, 'publico_show': pub_show, 'peso': peso,
+                       'esgotou': esgotou or bool(a.get('censurado')),
+                       'sombra': _sombra(c, cidades),
+                       'base_regiao': _base_regiao(c, cidades, base_de) * ft,
+                       'festivais': festivais_ate(a['cidade'], a['data']),
                        'fator_tempo': round(ft, 3), 'base': base_de(c) * ft, 'yt_3m': c.get('yt_3m'),
                        'sem_bilheteria': not pub_show,
                        'demanda_rel': max(c.get('demanda_rel') or 1.0, 0.05)})
@@ -395,20 +503,25 @@ def calibrar(cidades: list[dict], kpis: dict, cal: dict, historico: list[dict] |
     # escolhe a fórmula pela validação: a que erra menos ao prever um show que
     # ficou de fora do ajuste. Empate -> a mais simples (menos coeficientes).
     prior = p['expoente_demanda']
+    n_medidos = sum(1 for u in usadas if not u['esgotou'])
     candidatas = []
     for nome, termos, fixo in ESPECIFICACOES:
         k = len(termos) + (1 if fixo else 0)
         if len(usadas) < k + 3:          # menos de 3 graus de liberdade: não testa
             continue
+        if n_medidos < k + 2:            # coeficientes demais para os shows com número
+            continue
         X, y, w = _monta(usadas, termos, fixo, prior)
         cen = [bool(u['esgotou']) for u in usadas]
-        ajuste = _wls_censurado(X, y, w, cen)
+        desl = ([prior * math.log(u['demanda_rel']) for u in usadas]
+                if fixo == 'afinidade' else [0.0] * len(usadas))
+        ajuste = _wls_censurado(X, y, w, cen, piso_sigma=p['sigma_minimo'], teto=p['teto_imputacao'])
         if not ajuste:
             continue
         if any(not (LIMITES[t][0] <= ajuste[0][i] <= LIMITES[t][1])
                for i, t in enumerate(termos) if t in LIMITES):
             continue   # coeficiente fora do plausível: a fórmula é descartada
-        val = _loocv(X, y, w, cen)
+        val = _loocv(X, y, w, cen, desl, p['sigma_minimo'], p['teto_imputacao'])
         if not val:
             continue
         candidatas.append({'nome': nome, 'termos': termos, 'fixo': fixo, 'ajuste': ajuste, 'val': val, 'k': k})
@@ -464,8 +577,12 @@ def calibrar(cidades: list[dict], kpis: dict, cal: dict, historico: list[dict] |
         modelo['faixa_demanda'] = [round(min(u['demanda_rel'] for u in usadas), 2),
                                    round(max(u['demanda_rel'] for u in usadas), 2)]
     modelo['prior_demanda'] = p['expoente_demanda']
+    if usadas:
+        modelo['faixa_sombra'] = [round(min(u['sombra'] for u in usadas), 2),
+                                  round(max(u['sombra'] for u in usadas), 2)]
 
     # quantas datas próprias cada praça recebeu nos últimos 12 meses (observado na agenda)
+    hoje_ref = max([pr['data'] for pr in provas] + [f for lista in festivais.values() for f in lista] or ['2000-01'])
     datas = dict((cal or {}).get('datas_por_ano') or {})
     if provas:
         fim = max(pr['data'] for pr in provas)
@@ -493,6 +610,10 @@ def calibrar(cidades: list[dict], kpis: dict, cal: dict, historico: list[dict] |
         'fator_atualizacao': round(f_atualiza, 4), 'fator_fa': round(f_fa, 3),
         'ouvintes_snapshot': soma, 'ouvintes_atuais': atuais,
         'modelo': modelo, 'provas': provas, 'no_ajuste': no_ajuste, 'cidade_casa': casa_natal,
+        'sombra': {c['cidade']: round(_sombra(c, cidades), 3) for c in cidades},
+        'base_regiao': {c['cidade']: round(_base_regiao(c, cidades, base_de)) for c in cidades},
+        'festivais': {nome: len(datas) for nome, datas in festivais.items()},
+        'festivais_recentes': {c['cidade']: festivais_ate(c['cidade'], hoje_ref) for c in cidades},
         'limiares': {'crescer': p['crescer'], 'encolher': p['encolher']},
         'datas_por_ano': datas,
     }
@@ -504,7 +625,10 @@ def estimar(cidade: dict, ctx: dict) -> dict:
     m = ctx['modelo']
     base = cidade['ouvintes'] * ctx['fator_atualizacao'] * ctx['fator_fa']
     u = {'base': base, 'demanda_rel': max(cidade.get('demanda_rel') or 1.0, 0.05),
-         'e_casa': cidade['cidade'] == ctx.get('cidade_casa'), 'yt_3m': cidade.get('yt_3m')}
+         'e_casa': cidade['cidade'] == ctx.get('cidade_casa'), 'yt_3m': cidade.get('yt_3m'),
+         'sombra': (ctx.get('sombra') or {}).get(cidade['cidade'], 0.0),
+         'base_regiao': (ctx.get('base_regiao') or {}).get(cidade['cidade'], base),
+         'festivais': (ctx.get('festivais_recentes') or {}).get(cidade['cidade'], 0)}
     mu = sum(b * TERMOS[t](u) for b, t in zip(m['beta'], m['termos']))
 
     # Guarda de extrapolação. A validação só mede acerto nas praças onde a banda
@@ -589,6 +713,9 @@ def estimar(cidade: dict, ctx: dict) -> dict:
         'chance_esgotar': chance,
         'folga': round(folga, 2) if folga else None,
         'veredito_casa': veredito,
+        'sombra': round(u['sombra'], 2),
+        'base_regiao': int(u['base_regiao']),
+        'festivais_24m': u['festivais'],
         'provas': [prova(pr) for pr in provas[:4]],
         'ancora': prova(ultima) if ultima else None,
     }

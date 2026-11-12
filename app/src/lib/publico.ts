@@ -46,11 +46,14 @@ export interface PublicoPraca {
     cidades: string[];
     validacao: {
       n: number;
+      n_medidos: number;
+      n_pisos: number;
+      pisos_respeitados: number;
       erro_mediano_pct: number;
       erro_medio_pct: number;
       erro_maximo_pct: number;
       cobertura_pct: number;
-      linhas: { cidade: string; local: string; data: string; real: number; previsto: number; erro_pct: number }[];
+      linhas: { cidade: string; local: string; data: string; real: number; previsto: number; erro_pct: number; esgotou: boolean }[];
     } | null;
     fator_faixa: number;
     faixa_base: [number, number] | null;
@@ -104,7 +107,8 @@ export function fraseProva(p: Prova): string {
   const partes = [`${p.local}, ${dataBr(p.data)}`];
   if (p.capacidade) partes.push(`${int(p.capacidade)} lugares`);
   if (p.tipo === 'dividido') partes.push('bill dividido');
-  if (p.esgotou) partes.push('esgotado');
+  if (p.esgotou && (p.ocupacao ?? 1) >= 1) partes.push('esgotado');
+  else if (p.esgotou) partes.push(`quase esgotado, ${pct((p.ocupacao ?? 0) * 100)} da casa`);
   else if (p.ocupacao) partes.push(`${pct(p.ocupacao * 100)} da casa`);
   else if (p.capacidade) partes.push('ocupação não publicada');
   return partes.join(' — ');

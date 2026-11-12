@@ -147,8 +147,8 @@ def build_answers(d):
             step(f"Virando base de fãs: {d['kpis']['lealdade']:.0f} seguidores a cada 100 ouvintes", ['cidades', 'seguidores']),
             step(f"Lendo a agenda própria da banda: {mod['n_provas']} shows desde 2024", ['shows', 'imprensa']),
             step(f"Ajustando a regressão nos {mod['n_shows']} shows com capacidade de casa conhecida", ['shows', 'cidades']),
-            step(f"Testando o modelo: tira um show, tenta prever ele — erro mediano de {val.get('erro_mediano_pct','–')}%",
-                 ['shows', 'imprensa']),
+            step(f"Testando: tira um show, tenta prever ele — erro mediano de {val.get('erro_mediano_pct','–')}% "
+                 f"nos {val.get('n_medidos','–')} com número de público", ['shows', 'imprensa']),
             step('Projetando público, chance de esgotar e bilheteria', ['cidades', 'ibge']),
         ],
         'veredito': (f"{melhor['cidade']}: {n(melhor['publico'])} pessoas é o cenário mais provável, "
@@ -158,8 +158,10 @@ def build_answers(d):
                        f"próprios da banda, com o público crescendo com a base de fãs da praça elevada a "
                        f"{br(mod['beta'][1],2)} — menor que 1, ou seja, praça grande converte uma fatia menor. "
                        f"Show esgotado entra como piso e não como teto, porque lotar diz que a banda venderia pelo menos "
-                       f"aquilo. Testado show a show, o modelo erra {val.get('erro_mediano_pct','–')}% na mediana e "
-                       f"{val.get('erro_medio_pct','–')}% na média — é a margem com que esses números devem ser lidos."),
+                       f"aquilo. Testado show a show, o modelo erra {val.get('erro_mediano_pct','–')}% na mediana nos "
+                       f"{val.get('n_medidos','–')} shows com número de público, e respeita o piso em "
+                       f"{val.get('pisos_respeitados','–')} dos {val.get('n_pisos','–')} que esgotaram — é a margem com que "
+                       f"esses números devem ser lidos."),
         'numeros': [{'valor': n(c['publico']), 'rotulo': f"{c['cidade']} · {c['chance_esgotar']}% de esgotar"} for c in com_casa[:3]],
         'blocos': [{'tipo': 'simulador', 'simulador': 'ingressos', 'dados': 'cidades'},
                    {'tipo': 'tabela', 'dados': 'cidades',
@@ -174,7 +176,8 @@ def build_answers(d):
                   'Anote capacidade e ocupação de cada show em config.json → calibracao.ancoras: a regressão se refaz sozinha.'],
         'confianca': {'nivel': 'média',
                       'motivo': (f"Regressão sobre {mod['n_shows']} shows próprios com capacidade de casa conhecida, de "
-                                 f"{mod['n_provas']} na agenda. Na validação show a show o erro mediano é de "
+                                 f"{mod['n_provas']} na agenda, com a fórmula escolhida entre "
+                                 f"{len(mod.get('comparacao') or [])} candidatas pela validação. O erro mediano é de "
                                  f"{val.get('erro_mediano_pct','–')}% e o pior caso foi {val.get('erro_maximo_pct','–')}%. "
                                  f"Capacidade de casa quase nunca é publicada no Brasil e a ocupação é presumida quando a "
                                  f"fonte não diz: com bilheteria oficial, a margem cai.")},
