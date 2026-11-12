@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>__TITLE__</title>
+<meta name="description" content="__DESC__">
+<meta property="og:title" content="__TITLE__">
+<meta property="og:description" content="__DESC__">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:__C_fundo__; --surface:__C_superficie__; --surface-2:__C_superficie_2__; --line:__C_linha__;
+  --ink:__C_texto__; --ink-2:__C_texto_suave__; --accent:__C_destaque__; --accent-2:__C_destaque_2__;
+  --pos-text:#5ED3A0; --neg-text:#FF7A6B;
+  --data-1:#E5533F; --data-2:#3A8FD6; --data-pos:#2E9E8F; --data-neg:#E5533F; --data-muted:#4A4250;
+  --font-display:'__F_titulo__', Impact, 'Arial Black', system-ui, sans-serif;
+  --font-text:'__F_texto__', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --radius:14px; --maxw:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-text);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+b,strong{font-weight:700;color:var(--ink)}
+.muted{color:var(--ink-2)}
+.pos{color:var(--pos-text)} .neg{color:var(--neg-text)}
+
+/* NAV */
+nav.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;gap:20px;height:60px}
+nav.top .brand{font-family:var(--font-display);font-size:18px;letter-spacing:.5px;white-space:nowrap}
+nav.top .brand span{color:var(--accent)}
+nav.top .links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1}
+nav.top .links::-webkit-scrollbar{display:none}
+nav.top .links a{text-decoration:none;font-size:13px;font-weight:600;color:var(--ink-2);padding:6px 10px;border-radius:999px;white-space:nowrap;transition:all .16s}
+nav.top .links a:hover,nav.top .links a.on{color:var(--ink);background:var(--surface-2)}
+
+/* HERO */
+.hero{padding:72px 0 40px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:-40% -10% auto auto;width:70vw;height:70vw;max-width:900px;max-height:900px;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 22%,transparent),transparent 60%);pointer-events:none}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-family:var(--font-display);font-size:clamp(64px,13vw,168px);line-height:.88;letter-spacing:-2px;margin:14px 0 18px;text-transform:uppercase}
+.hero .lead{font-size:clamp(17px,2vw,21px);max-width:760px;color:var(--ink)}
+.hero .meta{margin-top:14px;font-size:13px;color:var(--ink-2)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:40px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+.kpi .v{font-size:32px;font-weight:800;letter-spacing:-.5px;line-height:1.1}
+.kpi .l{font-size:13px;color:var(--ink-2);margin-top:4px}
+.kpi .d{font-size:13px;font-weight:600;margin-top:6px}
+
+/* SECTIONS */
+section.s{padding:72px 0 24px;border-top:1px solid var(--line)}
+.s-head{display:grid;grid-template-columns:220px 1fr;gap:32px;margin-bottom:32px}
+.s-head .num{font-family:var(--font-display);font-size:14px;color:var(--accent);letter-spacing:1px;text-transform:uppercase}
+.s-head h2{font-family:var(--font-display);font-size:clamp(28px,4vw,44px);line-height:1.02;text-transform:uppercase;letter-spacing:-.5px}
+.verdict{font-size:clamp(18px,2.2vw,24px);line-height:1.35;font-weight:600;margin-top:14px;max-width:820px}
+.verdict em{font-style:normal;color:var(--accent)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:1fr 1fr} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+.g-57{grid-template-columns:5fr 7fr} .g-21{grid-template-columns:2fr 1fr} .g-12{grid-template-columns:1fr 2fr} .g-11{grid-template-columns:1fr 1fr}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;min-width:0}
+.card h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.card .sub{font-size:13px;color:var(--ink-2);margin-bottom:16px}
+.card.hl{background:var(--surface-2)}
+.note{font-size:12.5px;color:var(--ink-2);margin-top:12px;line-height:1.5}
+.big{font-size:44px;font-weight:800;letter-spacing:-1px;line-height:1}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+.tag.alt{background:color-mix(in srgb,var(--accent-2) 16%,transparent);color:var(--accent-2)}
+.tag.ghost{background:var(--surface-2);color:var(--ink-2)}
+
+/* INDICES */
+.idx{display:flex;flex-direction:column;gap:6px}
+.idx svg{width:100%;max-width:170px;height:auto;display:block;margin:0 auto 4px}
+.idx .name{font-size:15px;font-weight:700;text-align:center}
+.idx .lvl{text-align:center}
+.idx .fr{font-size:13px;color:var(--ink-2);text-align:center;min-height:40px}
+details.how{margin-top:6px;font-size:12.5px;color:var(--ink-2)}
+details.how summary{cursor:pointer;color:var(--ink-2);font-weight:600;list-style:none;text-align:center}
+details.how summary::-webkit-details-marker{display:none}
+details.how summary:before{content:"＋ "}
+details.how[open] summary:before{content:"－ "}
+details.how p{margin-top:8px}
+
+/* DECISIONS */
+.recs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rec{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;display:flex;flex-direction:column;gap:10px;position:relative}
+.rec .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.rec .n{font-family:var(--font-display);font-size:28px;color:var(--line)}
+.rec h3{font-size:20px;line-height:1.25;font-weight:800;letter-spacing:-.2px}
+.rec p{font-size:14.5px;color:var(--ink-2)}
+.rec .act{font-size:14px;border-left:3px solid var(--accent);padding:4px 0 4px 12px;color:var(--ink)}
+.rec .imp{font-size:12px;color:var(--ink-2);margin-top:auto}
+.rec .imp b{color:var(--accent-2)}
+
+/* CHARTS */
+.chart{width:100%;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.axis text,.lbl{font-size:11px;fill:var(--ink-2);font-family:var(--font-text)}
+.lbl-strong{font-size:12px;fill:var(--ink);font-weight:600}
+.grid-line{stroke:var(--line);stroke-width:1}
+.zero{stroke:var(--ink-2);stroke-width:1;opacity:.6}
+.bar{transition:opacity .16s}
+.hit:hover + .bar,.bar:hover{opacity:.82}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin-bottom:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+#tip{position:fixed;z-index:50;pointer-events:none;background:#000c;border:1px solid var(--line);color:var(--ink);font-size:12.5px;line-height:1.45;padding:9px 11px;border-radius:10px;max-width:280px;opacity:0;transition:opacity .12s;backdrop-filter:blur(6px)}
+#tip b{color:var(--ink)}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto}
+table.t{width:100%;border-collapse:collapse;font-size:13.5px}
+table.t th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--ink-2);padding:10px 10px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer;user-select:none}
+table.t th:hover{color:var(--ink)}
+table.t td{padding:10px 10px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap}
+table.t tr:hover td{background:var(--surface-2)}
+table.t td.r,table.t th.r{text-align:right}
+.mini-bar{display:inline-block;height:6px;border-radius:3px;background:var(--data-1);vertical-align:middle;margin-right:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600}
+.chip i{width:9px;height:9px;border-radius:50%}
+
+/* LISTS */
+.rows{display:flex;flex-direction:column}
+.row{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
+.row:last-child{border-bottom:0}
+.row .k{color:var(--ink)} .row .vv{color:var(--ink-2);text-align:right;white-space:nowrap}
+.quote{font-size:15px;line-height:1.5;padding:14px 16px;border-left:3px solid var(--accent-2);background:var(--surface-2);border-radius:0 10px 10px 0;margin-top:10px}
+.quote small{display:block;color:var(--ink-2);font-size:12px;margin-top:6px}
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl{display:grid;grid-template-columns:70px 1fr;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.tl:last-child{border-bottom:0}
+.tl .y{font-family:var(--font-display);font-size:22px;color:var(--accent)}
+.tl .t{font-size:14.5px;font-weight:600}
+.tl .st{font-size:12.5px;color:var(--ink-2)}
+.case{display:flex;flex-direction:column;gap:6px}
+.case .big{color:var(--pos-text)}
+
+/* CTA */
+.cta{margin:72px 0 40px;padding:48px;border-radius:24px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 30%,var(--surface)),var(--surface));border:1px solid var(--line)}
+.cta h2{font-family:var(--font-display);font-size:clamp(28px,4vw,48px);line-height:1;text-transform:uppercase;margin-bottom:14px}
+.cta p{max-width:700px;font-size:17px}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.btn{display:inline-block;text-decoration:none;font-weight:700;font-size:15px;padding:13px 22px;border-radius:999px;background:var(--accent);color:#fff}
+.btn.sec{background:transparent;border:1px solid var(--ink-2);color:var(--ink)}
+footer{padding:32px 0 60px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--line)}
+footer ul{margin:10px 0 0 18px}
+footer li{margin:4px 0}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease-out,transform .5s ease-out}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+/* RESPONSIVE */
+@media (max-width:960px){
+  .kpis{grid-template-columns:1fr 1fr}
+  .g4{grid-template-columns:1fr 1fr}
+  .g3,.g2,.g-21,.g-12,.g-11,.g-57,.recs{grid-template-columns:1fr}
+  .s-head{grid-template-columns:1fr;gap:6px}
+  .cta{padding:28px}
+}
+@media (max-width:520px){
+  .wrap{padding:0 16px}
+  .kpi .v{font-size:26px}
+  .hero{padding-top:48px}
+  section.s{padding-top:52px}
+}
+@media print{
+  nav.top,#tip{display:none}
+  .reveal{opacity:1;transform:none}
+  body{background:#fff;color:#111}
+}
+</style>
+</head>
+<body>
+<nav class="top"><div class="wrap">
+  <div class="brand" id="brand"></div>
+  <div class="links" id="navlinks">
+    <a href="#decisoes">Decisões</a><a href="#pracas">Cachê & turnê</a><a href="#shows">Shows</a>
+    <a href="#lancamentos">Lançamentos</a><a href="#catalogo">Catálogo & setlist</a><a href="#playlists">Playlists</a>
+    <a href="#publico">Público & conteúdo</a><a href="#parcerias">Parcerias</a><a href="#metodo">Metodologia</a>
+  </div>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow" id="eyebrow"></div>
+  <h1 id="artist"></h1>
+  <p class="lead" id="lead"></p>
+  <p class="meta" id="meta"></p>
+  <div class="kpis" id="kpis"></div>
+</div></header>
+
+<main class="wrap">
+  <section class="s" id="indices">
+    <div class="s-head"><div class="num">Os 4 números</div><div><h2>Índices de carreira</h2>
+      <p class="verdict" id="v-indices"></p></div></div>
+    <div class="grid g4" id="idx"></div>
+  </section>
+
+  <section class="s" id="decisoes">
+    <div class="s-head"><div class="num">01 · Agora</div><div><h2>O que fazer agora</h2>
+      <p class="verdict">Cada decisão abaixo vem com a prova. Nenhum número foi digitado à mão: todos saem dos relatórios.</p></div></div>
+    <div class="recs" id="recs"></div>
+  </section>
+
+  <section class="s" id="pracas">
+    <div class="s-head"><div class="num">02 · Cachê & turnê</div><div><h2>Onde tocar e quanto cobrar</h2>
+      <p class="verdict" id="v-cidades"></p></div></div>
+    <div class="grid g-57">
+      <div class="card"><h3>Densidade de fãs</h3><div class="sub">Tamanho = ouvintes no Spotify · cor = faixa de cachê</div><div class="chart" id="map"></div><div class="legend" id="map-legend" style="margin-top:10px"></div></div>
+      <div class="card"><h3>Praças por demanda</h3><div class="sub">Ouvintes a cada 100 mil habitantes, comparado com a mediana das praças. Clique no cabeçalho para ordenar.</div>
+        <div class="tbl-wrap" id="cities-table"></div>
+        <p class="note" id="cities-note"></p></div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card"><h3>Onde o YouTube mais cresceu em 12 meses</h3><div class="sub">Variação das visualizações nas 5 maiores cidades</div><div class="chart" id="yt-cities"></div></div>
+      <div class="card"><h3>Com quem dividir palco</h3><div class="sub">Artistas que mais dividiram line-up com a banda</div><div class="rows" id="copalco"></div></div>
+    </div>
+  </section>
+
+  <section class="s" id="shows">
+    <div class="s-head"><div class="num">03 · Shows</div><div><h2>Quanto um show mexe no streaming</h2>
+      <p class="verdict" id="v-shows"></p></div></div>
+    <div class="grid g4" id="cases"></div>
+    <div class="grid g-12" style="margin-top:16px">
+      <div class="card"><h3>Festival × show próprio</h3><div class="sub">Variação de ouvintes no mês seguinte, já descontada a sazonalidade (mediana)</div><div id="show-types"></div></div>
+      <div class="card"><h3>Cada show, um ponto</h3><div class="sub">Variação de ouvintes depois do evento (ajustada) · 2019–2026</div><div class="legend"><span><i style="background:var(--data-1)"></i>Festival / turnê coletiva</span><span><i style="background:var(--data-muted)"></i>Show próprio</span></div><div class="chart" id="show-dots"></div></div>
+    </div>
+  </section>
+
+  <section class="s" id="lancamentos">
+    <div class="s-head"><div class="num">04 · Lançamentos</div><div><h2>Quando lançar e em que formato</h2>
+      <p class="verdict" id="v-lanc"></p></div></div>
+    <div class="grid g2">
+      <div class="card"><h3>O ano da banda</h3><div class="sub" id="season-sub"></div><div class="chart" id="season"></div></div>
+      <div class="card"><h3>Efeito de cada lançamento</h3><div class="sub">Ouvintes 1 mês depois × semana anterior, sem efeito sazonal</div><div class="chart" id="lifts"></div></div>
+    </div>
+    <div class="grid g-21" style="margin-top:16px">
+      <div class="card"><h3>Próximos 6 meses</h3><div class="sub">Ouvintes mensais: histórico de 3 anos e projeção com faixa provável (80%)</div><div class="legend"><span><i style="background:var(--data-1)"></i>Histórico</span><span><i style="background:var(--accent-2)"></i>Projeção</span></div><div class="chart" id="forecast"></div><p class="note" id="forecast-note"></p></div>
+      <div class="card"><h3>Calendário da nostalgia</h3><div class="sub">Aniversários que viram turnê, vinil e coleção</div><div class="timeline" id="anniv"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px"><h3>Lançar em capítulos: até onde funciona</h3><div class="sub" id="inv-sub"></div><div class="chart" id="inv"></div></div>
+  </section>
+
+  <section class="s" id="catalogo">
+    <div class="s-head"><div class="num">05 · Catálogo & setlist</div><div><h2>O que o público quer ouvir agora</h2>
+      <p class="verdict" id="v-cat"></p></div></div>
+    <div class="card"><h3>Força ao vivo das faixas monitoradas</h3><div class="sub">50% streams dos últimos 90 dias · 30% views no YouTube · 20% playlists</div><div class="tbl-wrap" id="tracks"></div></div>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card"><h3>Sons que viralizam no Reels</h3><div class="sub">Views dos principais vídeos usando cada música</div><div class="chart" id="ig-sounds"></div></div>
+      <div class="card"><h3>Sons que viralizam no TikTok</h3><div class="sub">Views dos principais vídeos usando cada som</div><div class="chart" id="tt-sounds"></div></div>
+      <div class="card"><h3>Discos que seguem vivos</h3><div class="sub">Popularidade no Spotify hoje (0–100)</div><div class="chart" id="albums"></div></div>
+    </div>
+  </section>
+
+  <section class="s" id="playlists">
+    <div class="s-head"><div class="num">06 · Playlists</div><div><h2>Quem coloca a banda pra tocar</h2>
+      <p class="verdict" id="v-pl"></p></div></div>
+    <div class="grid g4" id="pl-tiles"></div>
+    <div class="grid g-21" style="margin-top:16px">
+      <div class="card"><h3>Playlists criadas por fãs</h3><div class="sub">Quantidade de playlists de usuários com a banda, mês a mês</div><div class="chart" id="pl-users"></div></div>
+      <div class="card"><h3>Para o próximo pitch</h3><div class="sub">Playlists recomendadas pela Chartmetric, por seguidores</div><div class="rows" id="pl-recs"></div></div>
+    </div>
+  </section>
+
+  <section class="s" id="publico">
+    <div class="s-head"><div class="num">07 · Público & conteúdo</div><div><h2>Quem ouve, quem assiste</h2>
+      <p class="verdict" id="v-pub"></p></div></div>
+    <div class="legend"><span><i style="background:var(--data-2)"></i>Masculino</span><span><i style="background:var(--data-1)"></i>Feminino</span></div>
+    <div class="grid g3" id="pyramids"></div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card"><h3>Do que falam os fãs</h3><div class="sub" id="com-sub"></div><div class="chart" id="themes"></div><div id="quotes"></div></div>
+      <div class="card"><h3>Onde a base cresce (e onde encolhe)</h3><div class="sub">Seguidores hoje e variação em 12 meses</div><div class="tbl-wrap" id="plats"></div></div>
+    </div>
+  </section>
+
+  <section class="s" id="parcerias">
+    <div class="s-head"><div class="num">08 · Parcerias</div><div><h2>Marcas e artistas com o mesmo público</h2>
+      <p class="verdict" id="v-parc"></p></div></div>
+    <div class="grid g2">
+      <div class="card"><h3>Marcas com afinidade</h3><div class="sub">Quantas vezes o público segue a marca acima da média (Instagram)</div><div class="chart" id="brands"></div></div>
+      <div class="card"><h3>Lealdade entre os pares</h3><div class="sub">Seguidores no Spotify para cada 100 ouvintes mensais · artistas mais parecidos</div><div class="chart" id="peers"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px"><h3>2026 em manchetes</h3><div class="sub">Contexto público usado nas leituras</div><div class="rows" id="news"></div></div>
+  </section>
+
+  <div class="cta reveal" id="cta"></div>
+</main>
+
+<footer><div class="wrap" id="metodo"></div></footer>
+<div id="tip"></div>
+
+<script>
+const DATA = __DATA__;
+const CFG = __CFG__;
+
+/* ---------- utils ---------- */
+const $ = s => document.querySelector(s);
+const nf = new Intl.NumberFormat('pt-BR');
+const fmt = n => n == null ? '–' : nf.format(Math.round(n));
+const fmt1 = n => n == null ? '–' : n.toLocaleString('pt-BR', {minimumFractionDigits:1, maximumFractionDigits:1});
+const short = n => { if (n == null) return '–'; const a = Math.abs(n);
+  if (a >= 1e6) return (n/1e6).toLocaleString('pt-BR',{maximumFractionDigits:1})+' mi';
+  if (a >= 1e3) return (n/1e3).toLocaleString('pt-BR',{maximumFractionDigits: a>=1e5?0:1})+' mil';
+  return fmt(n); };
+const sign = (n, d=0) => { if (n == null) return '–'; const a = Math.abs(n).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d}); if (Number(Math.abs(n).toFixed(d)) === 0) return '0%'; return (n > 0 ? '+' : '−') + a + '%'; };
+const cls = n => n > 0 ? 'pos' : n < 0 ? 'neg' : 'muted';
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const NS = 'http://www.w3.org/2000/svg';
+const cw = (target, fallback) => { const el = document.querySelector(target); const w = el ? el.clientWidth : 0; return w > 120 ? Math.round(w) : fallback; };
+function svg(w, h){ const s = document.createElementNS(NS,'svg'); s.setAttribute('viewBox',`0 0 ${w} ${h}`); s.setAttribute('role','img'); return s; }
+function node(tag, attrs={}, parent){ const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+function text(parent, x, y, str, attrs={}){ const t = node('text', {x, y, ...attrs}, parent); t.textContent = str; return t; }
+// barra com cantos arredondados só na ponta (4px)
+function barPath(x, y, w, h, r=4, dir='right'){
+  r = Math.min(r, Math.abs(w)/2, h/2);
+  if (dir === 'right') return `M${x},${y}h${w-r}a${r},${r} 0 0 1 ${r},${r}v${h-2*r}a${r},${r} 0 0 1 -${r},${r}h-${w-r}z`;
+  if (dir === 'left') return `M${x},${y}h${w}v${h}h-${w-r}a${r},${r} 0 0 1 -${r},-${r}v-${h-2*r}a${r},${r} 0 0 1 ${r},-${r}z`;
+  return '';
+}
+function vbarPath(x, y, w, h, r=4, up=true){
+  r = Math.min(r, w/2, Math.abs(h)/2);
+  if (up) return `M${x},${y+h}v-${h-r}a${r},${r} 0 0 1 ${r},-${r}h${w-2*r}a${r},${r} 0 0 1 ${r},${r}v${h-r}z`;
+  return `M${x},${y}v${h-r}a${r},${r} 0 0 0 ${r},${r}h${w-2*r}a${r},${r} 0 0 0 ${r},-${r}v-${h-r}z`;
+}
+
+/* ---------- tooltip ---------- */
+const tip = $('#tip');
+function showTip(e, html){ tip.innerHTML = html; tip.style.opacity = 1; moveTip(e); }
+function moveTip(e){ const x = (e.touches ? e.touches[0].clientX : e.clientX), y = (e.touches ? e.touches[0].clientY : e.clientY);
+  const w = tip.offsetWidth, h = tip.offsetHeight; let L = x + 14, T = y + 14;
+  if (L + w > innerWidth - 8) L = x - w - 14; if (T + h > innerHeight - 8) T = y - h - 14; tip.style.left = L+'px'; tip.style.top = T+'px'; }
+function hideTip(){ tip.style.opacity = 0; }
+function hover(el, html){ el.style.cursor='default'; el.addEventListener('mousemove', e => showTip(e, typeof html==='function'?html():html));
+  el.addEventListener('mouseleave', hideTip); el.addEventListener('touchstart', e => showTip(e, typeof html==='function'?html():html), {passive:true});
+  el.setAttribute('tabindex','0'); el.addEventListener('focus', e => { const r = el.getBoundingClientRect(); showTip({clientX:r.right, clientY:r.top}, typeof html==='function'?html():html); }); el.addEventListener('blur', hideTip); }
+
+/* ---------- chart: barras horizontais ranqueadas ---------- */
+function hbars(target, rows, o={}){
+  const W = cw(target, o.W || 520), rowH = o.rowH || 30, labelW = Math.min(o.labelW || 190, W*0.44), valW = o.valW || 70, padT = 4;
+  o.maxChars = Math.min(o.maxChars || 28, Math.floor(labelW / 6.3));
+  const H = rows.length * rowH + padT;
+  const s = svg(W, H); const max = o.max || Math.max(...rows.map(r => r.value)) || 1;
+  const bw = W - labelW - valW - 8;
+  rows.forEach((r, i) => {
+    const y = padT + i*rowH; const w = Math.max(2, (r.value / max) * bw);
+    const g = node('g', {}, s);
+    let lab = r.label; if (lab.length > (o.maxChars||28)) lab = lab.slice(0, (o.maxChars||28)-1) + '…';
+    text(g, 0, y + rowH/2 + 4, lab, {class: r.strong ? 'lbl-strong' : 'lbl', style: r.strong ? '' : 'fill:var(--ink)'});
+    node('path', {d: barPath(labelW, y + rowH*0.22, w, rowH*0.56), fill: r.color || o.color || 'var(--data-1)', class:'bar'}, g);
+    text(g, labelW + w + 8, y + rowH/2 + 4, r.display ?? fmt(r.value), {class:'lbl', style:'fill:var(--ink);font-weight:600'});
+    const hit = node('rect', {x:0, y, width:W, height:rowH, fill:'transparent'}, g);
+    if (r.tip) hover(hit, r.tip);
+  });
+  $(target).appendChild(s);
+}
+
+/* ---------- chart: barras divergentes (verticais) ---------- */
+function vdiverge(target, items, o={}){
+  const W = cw(target, o.W || 560), H = Math.min(o.h || 230, Math.max(200, W*0.7)), padL = 38, padB = 26, padT = 18;
+  const s = svg(W, H); const vals = items.map(d => d.value);
+  const ext = Math.max(Math.abs(Math.min(...vals,0)), Math.abs(Math.max(...vals,0))) * 1.15 || 1;
+  const y = v => padT + (H - padT - padB) * (1 - (v + ext) / (2*ext));
+  const n = items.length; const slot = (W - padL) / n; const bw = Math.min(30, slot - 6);
+  [-ext*0.5, ext*0.5].forEach(t => { node('line',{x1:padL,x2:W,y1:y(t),y2:y(t),class:'grid-line'},s); text(s, padL-6, y(t)+4, sign(t,0), {class:'lbl','text-anchor':'end'}); });
+  node('line', {x1:padL, x2:W, y1:y(0), y2:y(0), class:'zero'}, s);
+  items.forEach((d, i) => {
+    const x = padL + i*slot + (slot-bw)/2; const up = d.value >= 0; const h = Math.abs(y(d.value) - y(0));
+    const p = node('path', {d: up ? vbarPath(x, y(d.value), bw, h, 4, true) : vbarPath(x, y(0), bw, h, 4, false),
+      fill: d.color || (up ? 'var(--data-pos)' : 'var(--data-neg)'), class:'bar'}, s);
+    text(s, x + bw/2, H - 8, d.label, {class:'lbl', 'text-anchor':'middle', style: d.highlight ? 'fill:var(--ink);font-weight:700' : ''});
+    if (d.labelValue) text(s, x + bw/2, up ? y(d.value) - 6 : y(d.value) + 14, sign(d.value,0), {class:'lbl','text-anchor':'middle', style:'fill:var(--ink);font-weight:600'});
+    const hit = node('rect', {x: padL + i*slot, y: padT, width: slot, height: H-padT-padB, fill:'transparent'}, s);
+    hover(hit, d.tip || `<b>${esc(d.label)}</b><br>${sign(d.value,1)}`);
+  });
+  $(target).appendChild(s);
+}
+
+/* ---------- chart: barras divergentes horizontais ---------- */
+function hdiverge(target, items, o={}){
+  const W = cw(target, 560), rowH = 26, labelW = Math.min(200, W*0.42), padT = 4; const H = items.length*rowH + padT + 18;
+  const maxC = Math.floor(labelW/6);
+  const s = svg(W, H); const vals = items.map(d => d.value);
+  const ext = Math.max(Math.abs(Math.min(...vals,0)), Math.abs(Math.max(...vals,0))) * 1.25 || 1;
+  const cx = labelW + (W - labelW)/2; const half = (W - labelW)/2 - 4;
+  const x = v => cx + v/ext*half;
+  node('line', {x1:cx, x2:cx, y1:0, y2:H-18, class:'zero'}, s);
+  text(s, x(-ext*0.6), H-4, sign(-ext*0.6,0), {class:'lbl','text-anchor':'middle'}); text(s, x(ext*0.6), H-4, sign(ext*0.6,0), {class:'lbl','text-anchor':'middle'});
+  items.forEach((d, i) => {
+    const yy = padT + i*rowH; const w = Math.abs(x(d.value) - cx);
+    let lab = d.label; if (lab.length > maxC) lab = lab.slice(0,maxC-1)+'…';
+    text(s, 0, yy + rowH/2 + 4, lab, {class:'lbl', style:'fill:var(--ink)'});
+    if (d.value >= 0) node('path', {d: barPath(cx, yy+5, Math.max(w,2), rowH-10), fill:'var(--data-pos)', class:'bar'}, s);
+    else node('path', {d: barPath(cx - w, yy+5, Math.max(w,2), rowH-10, 4, 'left'), fill:'var(--data-neg)', class:'bar'}, s);
+    text(s, d.value >= 0 ? x(d.value) + 6 : x(d.value) - 6, yy + rowH/2 + 4, sign(d.value,0), {class:'lbl', 'text-anchor': d.value>=0?'start':'end', style:'fill:var(--ink);font-weight:600'});
+    const hit = node('rect', {x:0, y:yy, width:W, height:rowH, fill:'transparent'}, s);
+    hover(hit, d.tip || `<b>${esc(d.label)}</b><br>${sign(d.value,1)}`);
+  });
+  $(target).appendChild(s);
+}
+
+/* ---------- chart: linha com crosshair ---------- */
+function line(target, series, o={}){
+  const W = cw(target, 640), H = o.h || 260, padL = 52, padR = 16, padT = 14, padB = 28;
+  const s = svg(W, H); const labels = o.labels; const n = labels.length;
+  let lo = Infinity, hi = -Infinity;
+  series.forEach(se => se.points.forEach(p => { if (p == null) return; const a = p.min ?? p.v, b = p.max ?? p.v; lo = Math.min(lo, a); hi = Math.max(hi, b); }));
+  const span = hi - lo; lo -= span*0.08; hi += span*0.08; if (o.zero) lo = 0;
+  const X = i => padL + (W - padL - padR) * (n === 1 ? 0.5 : i/(n-1));
+  const Y = v => padT + (H - padT - padB) * (1 - (v - lo)/(hi - lo));
+  for (let k = 0; k <= 3; k++){ const v = lo + (hi-lo)*k/3; node('line',{x1:padL,x2:W-padR,y1:Y(v),y2:Y(v),class:'grid-line'},s); text(s, padL-8, Y(v)+4, short(v), {class:'lbl','text-anchor':'end'}); }
+  const every = Math.ceil(n / Math.min(o.ticks || 7, Math.floor(W/70)));
+  labels.forEach((l, i) => { if (i % every === 0 || i === n-1) text(s, X(i), H-8, l, {class:'lbl','text-anchor':'middle'}); });
+  series.forEach(se => {
+    if (se.band){ let d = ''; const pts = se.points.map((p,i)=>p&&[i,p]).filter(Boolean);
+      pts.forEach(([i,p],k) => d += (k?'L':'M') + X(i) + ',' + Y(p.max)); pts.slice().reverse().forEach(([i,p]) => d += 'L' + X(i) + ',' + Y(p.min));
+      node('path', {d: d+'Z', fill: se.color, opacity: .15}, s); }
+    let d = ''; let started = false;
+    se.points.forEach((p, i) => { if (p == null){ started = false; return; } d += (started ? 'L' : 'M') + X(i) + ',' + Y(p.v); started = true; });
+    node('path', {d, fill:'none', stroke: se.color, 'stroke-width': 2, 'stroke-dasharray': se.dash ? '5 4' : null, 'stroke-linejoin':'round', 'stroke-linecap':'round'}, s);
+  });
+  (o.marks || []).forEach(m => { const xx = X(m.i); node('line', {x1:xx, x2:xx, y1:padT, y2:H-padB, stroke:'var(--accent-2)', 'stroke-width':1}, s); text(s, xx+4, padT+10, m.label, {class:'lbl', style:'fill:var(--accent-2);font-weight:600'}); });
+  const cross = node('line', {x1:0,x2:0,y1:padT,y2:H-padB,stroke:'var(--ink-2)','stroke-width':1,opacity:0}, s);
+  const dots = series.map(se => node('circle', {r:4.5, fill: se.color, stroke:'var(--surface)', 'stroke-width':2, opacity:0}, s));
+  const hit = node('rect', {x:padL, y:padT, width:W-padL-padR, height:H-padT-padB, fill:'transparent'}, s);
+  const onMove = e => { const r = s.getBoundingClientRect(); const cx = ((e.touches?e.touches[0].clientX:e.clientX) - r.left) * (W / r.width);
+    let i = Math.round((cx - padL) / (W - padL - padR) * (n-1)); i = Math.max(0, Math.min(n-1, i));
+    cross.setAttribute('x1', X(i)); cross.setAttribute('x2', X(i)); cross.setAttribute('opacity', .5);
+    let html = `<b>${esc(labels[i])}</b>`;
+    series.forEach((se, k) => { const p = se.points[i]; if (p == null){ dots[k].setAttribute('opacity',0); return; }
+      dots[k].setAttribute('cx', X(i)); dots[k].setAttribute('cy', Y(p.v)); dots[k].setAttribute('opacity', 1);
+      html += `<br>${esc(se.name)}: <b>${o.fmt ? o.fmt(p.v) : fmt(p.v)}</b>` + (p.min != null ? ` <span class="muted">(${short(p.min)}–${short(p.max)})</span>` : ''); });
+    showTip(e, html); };
+  hit.addEventListener('mousemove', onMove); hit.addEventListener('touchmove', onMove, {passive:true});
+  hit.addEventListener('mouseleave', () => { hideTip(); cross.setAttribute('opacity',0); dots.forEach(d=>d.setAttribute('opacity',0)); });
+  $(target).appendChild(s);
+}
+
+/* ---------- chart: dial de índice ---------- */
+function level(v){ return v >= 80 ? ['Excepcional','tag'] : v >= 60 ? ['Forte','tag alt'] : v >= 40 ? ['Estável','tag ghost'] : ['Atenção','tag ghost']; }
+function dial(v){
+  const s = svg(200, 120); const cx = 100, cy = 104, r = 80;
+  const arc = (a0, a1) => { const p = a => [cx + r*Math.cos(Math.PI*(1-a)), cy - r*Math.sin(Math.PI*(1-a))]; const [x0,y0] = p(a0), [x1,y1] = p(a1);
+    return `M${x0},${y0}A${r},${r} 0 0 1 ${x1},${y1}`; };
+  node('path', {d: arc(0, 0.9999), stroke:'var(--line)', 'stroke-width':12, fill:'none', 'stroke-linecap':'round'}, s);
+  node('path', {d: arc(0, Math.max(0.01, v/100)), stroke:'var(--accent)', 'stroke-width':12, fill:'none', 'stroke-linecap':'round'}, s);
+  text(s, cx, cy - 12, Math.round(v), {'text-anchor':'middle', style:'font-size:44px;font-weight:800;fill:var(--ink);font-family:var(--font-text)'});
+  text(s, cx, cy + 10, 'de 100', {'text-anchor':'middle', class:'lbl'});
+  return s;
+}
+
+/* ---------- chart: pirâmide demográfica ---------- */
+function pyramid(target, demo, title){
+  const W = cw(target, 360), rowH = 24, padT = 26, labW = 52; const fx = demo.faixas.filter(f => f.faixa !== '65+');
+  const H = padT + fx.length*rowH + 6; const s = svg(W, H);
+  const max = Math.max(...fx.map(f => Math.max(f.M||0, f.F||0))) || 1; const half = (W - labW)/2 - 30; const cx = W/2;
+  text(s, cx - labW/2 - 4, 14, 'Masc. ' + fmt1(demo.masc) + '%', {class:'lbl','text-anchor':'end'});
+  text(s, cx + labW/2 + 4, 14, 'Fem. ' + fmt1(demo.fem) + '%', {class:'lbl'});
+  fx.forEach((f, i) => { const y = padT + i*rowH;
+    const wm = (f.M||0)/max*half, wf = (f.F||0)/max*half;
+    node('path', {d: barPath(cx - labW/2 - wm, y+4, Math.max(wm,1.5), rowH-8, 3, 'left'), fill:'var(--data-2)', class:'bar'}, s);
+    node('path', {d: barPath(cx + labW/2, y+4, Math.max(wf,1.5), rowH-8, 3, 'right'), fill:'var(--data-1)', class:'bar'}, s);
+    text(s, cx, y + rowH/2 + 4, f.faixa, {class:'lbl','text-anchor':'middle', style:'fill:var(--ink)'});
+    if ((f.M||0) >= max*0.25) text(s, cx - labW/2 - wm - 4, y + rowH/2 + 4, fmt1(f.M)+'%', {class:'lbl','text-anchor':'end'});
+    if ((f.F||0) >= max*0.25) text(s, cx + labW/2 + wf + 4, y + rowH/2 + 4, fmt1(f.F)+'%', {class:'lbl'});
+    const hit = node('rect', {x:0, y, width:W, height:rowH, fill:'transparent'}, s);
+    hover(hit, `<b>${esc(title)} · ${f.faixa} anos</b><br>Masculino: ${fmt1(f.M)}%<br>Feminino: ${fmt1(f.F)}%`);
+  });
+  $(target).appendChild(s);
+}
+
+/* ---------- mapa do Brasil (silhueta simplificada) ---------- */
+const BR = [[-51.6,4.4],[-50.0,1.8],[-49.2,0.3],[-48.5,-0.8],[-46.8,-0.9],[-45.3,-1.6],[-44.3,-2.5],[-42.5,-2.8],[-41.0,-2.9],[-39.5,-3.0],[-38.5,-3.7],[-37.3,-4.8],[-36.0,-5.1],[-35.2,-5.8],[-34.8,-7.1],[-34.9,-8.1],[-35.3,-9.0],[-35.7,-9.7],[-36.4,-10.5],[-37.1,-11.1],[-38.0,-12.4],[-38.5,-13.0],[-39.0,-14.8],[-39.1,-16.5],[-39.2,-17.7],[-39.7,-19.3],[-40.3,-20.3],[-41.0,-21.6],[-41.9,-22.4],[-42.0,-22.9],[-43.2,-23.0],[-44.6,-23.3],[-45.4,-23.8],[-46.3,-24.0],[-47.4,-24.7],[-48.0,-25.3],[-48.6,-26.5],[-48.5,-27.6],[-48.8,-28.6],[-49.7,-29.4],[-50.3,-30.4],[-51.0,-31.0],[-52.1,-32.2],[-52.7,-33.1],[-53.4,-33.7],[-53.5,-33.1],[-53.2,-32.6],[-53.8,-32.0],[-55.3,-31.0],[-56.0,-30.8],[-57.6,-30.2],[-56.8,-29.2],[-56.0,-28.2],[-55.0,-27.3],[-53.7,-26.2],[-54.6,-25.5],[-54.3,-24.0],[-55.6,-22.6],[-57.8,-22.1],[-58.0,-20.0],[-57.7,-19.0],[-58.4,-16.3],[-60.2,-16.2],[-60.4,-13.5],[-62.5,-13.0],[-64.4,-12.4],[-65.4,-10.8],[-66.6,-9.9],[-68.6,-11.0],[-70.6,-11.0],[-70.5,-9.5],[-72.2,-10.0],[-73.0,-9.4],[-73.9,-7.4],[-73.0,-5.0],[-70.0,-4.2],[-69.4,-1.2],[-69.6,0.6],[-70.0,1.5],[-67.3,2.0],[-66.9,1.2],[-65.5,0.8],[-64.2,1.9],[-63.4,2.3],[-64.0,4.0],[-62.8,4.0],[-61.0,4.5],[-60.7,5.2],[-60.0,4.5],[-59.6,4.0],[-59.8,2.4],[-59.0,1.3],[-56.6,1.9],[-55.0,2.4],[-54.0,2.2],[-52.9,2.2],[-51.6,4.4]];
+const FAIXA = {premium:{c:'#E5533F', l:'Prêmio de 15–25%', s:'+15–25%'}, cheia:{c:'#A9473A', l:'Tabela cheia', s:'Tabela cheia'}, construcao:{c:'#6B3D3A', l:'Em construção', s:'Construção'}, abrir:{c:'#4A4250', l:'Abrir mercado', s:'Abrir'}};
+function brmap(target, cities){
+  const W = 520, H = 540; const s = svg(W, H); const k = Math.cos(15*Math.PI/180);
+  const lon0 = -74.5, lon1 = -34, lat0 = 5.6, lat1 = -34.2; const sx = (W-20)/((lon1-lon0)*k), sy = (H-20)/(lat0-lat1); const sc = Math.min(sx, sy);
+  const P = ([lon, lat]) => [10 + (lon-lon0)*k*sc, 10 + (lat0-lat)*sc];
+  node('path', {d: 'M' + BR.map(p => P(p).join(',')).join('L') + 'Z', fill:'var(--surface-2)', stroke:'var(--line)', 'stroke-width':1.5}, s);
+  const max = Math.max(...cities.map(c => c.ouvintes));
+  cities.filter(c => c.coord).sort((a,b) => b.ouvintes - a.ouvintes).forEach((c, i) => {
+    const [x, y] = P(c.coord); const r = 4 + Math.sqrt(c.ouvintes/max) * 30;
+    const circ = node('circle', {cx:x, cy:y, r, fill: FAIXA[c.faixa].c, 'fill-opacity': .82, stroke:'var(--surface)', 'stroke-width':2}, s);
+    hover(circ, cityTip(c));
+    c._x = x; c._y = y; c._r = r;
+  });
+  // rótulos sem colisão: maiores primeiro
+  const placed = [];
+  cities.filter(c => c._x != null).sort((a,b) => b.ouvintes - a.ouvintes).forEach(c => {
+    const w = c.cidade.length * 6.2 + 4, h = 13; const box = {x: c._x + c._r + 3, y: c._y - 9, w, h};
+    if (box.x + w > W) { box.x = c._x - c._r - 3 - w; }
+    const hit = placed.some(p => !(box.x > p.x + p.w || box.x + box.w < p.x || box.y > p.y + p.h || box.y + box.h < p.y));
+    if (hit || placed.length >= 12) return; placed.push(box);
+    text(s, box.x, c._y + 4, c.cidade, {class:'lbl', style:'fill:var(--ink);font-weight:600;paint-order:stroke;stroke:var(--surface-2);stroke-width:3px'});
+  });
+  $(target).appendChild(s);
+  $('#map-legend').innerHTML = Object.values(FAIXA).map(f => `<span><i style="background:${f.c}"></i>${f.l}</span>`).join('');
+}
+function cityTip(c){ return `<b>${esc(c.cidade)}</b><br>${fmt(c.ouvintes)} ouvintes · ${fmt(c.por100k)} por 100 mil hab.<br>Demanda: <b>${fmt1(c.demanda_rel)}x</b> a mediana<br>${esc(c.acao)}<br>Ingressos potenciais: ${fmt(c.ingressos_min)}–${fmt(c.ingressos_max)}`; }
+
+/* ---------- tabela ordenável ---------- */
+function table(target, rows, cols, sortKey){
+  const el = $(target); let key = sortKey, dir = -1;
+  const draw = () => {
+    const data = rows.slice().sort((a,b) => { const va = a[key], vb = b[key]; if (va == null) return 1; if (vb == null) return -1; return (va > vb ? 1 : va < vb ? -1 : 0) * dir; });
+    el.innerHTML = `<table class="t"><thead><tr>${cols.map(c => `<th class="${c.r?'r':''}" data-k="${c.k}">${c.h}${key===c.k?(dir<0?' ▼':' ▲'):''}</th>`).join('')}</tr></thead><tbody>${
+      data.map(r => `<tr>${cols.map(c => `<td class="${c.r?'r':''}">${c.f ? c.f(r[c.k], r) : esc(r[c.k])}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+    el.querySelectorAll('th').forEach(th => th.onclick = () => { const k = th.dataset.k; if (k === key) dir *= -1; else { key = k; dir = -1; } draw(); });
+  };
+  draw();
+}
+
+/* ====================================================================== RENDER */
+const D = DATA, K = D.kpis;
+document.title = `${D.meta.artista} · Raio-X de carreira`;
+$('#brand').innerHTML = `${esc(D.meta.artista.toUpperCase())} <span>· raio-x</span>`;
+$('#eyebrow').textContent = `${CFG.subtitulo} · ${CFG.cidade_origem}, desde ${CFG.desde}`;
+$('#artist').textContent = D.meta.artista;
+$('#lead').textContent = (CFG.carta||'').replace('{arquivos}', D.meta.arquivos);
+const d0 = new Date(D.meta.desde+'T12:00'), d1 = new Date(D.meta.dados_ate+'T12:00');
+const dm = d => d.toLocaleDateString('pt-BR',{month:'short', year:'numeric'}).replace('.','');
+$('#meta').textContent = `Dados de ${dm(d0)} a ${dm(d1)} · ${D.meta.arquivos} relatórios da ${D.meta.fonte.split(' ')[0]} · atualizado em ${new Date(D.meta.gerado_em+'T12:00').toLocaleDateString('pt-BR')}`;
+
+$('#kpis').innerHTML = [
+  {v: fmt(K.ouvintes), l:'ouvintes mensais no Spotify', d:`<span class="${cls(K.ouvintes_g12)}">${sign(K.ouvintes_g12,1)}</span> <span class="muted">em 12 meses</span>`},
+  {v: short(K.seguidores_spotify), l:'seguidores no Spotify', d:`<span class="muted">mais seguidores que ouvintes</span>`},
+  {v: K.lealdade, l:'seguidores a cada 100 ouvintes', d:`<span class="muted">base que escolheu seguir</span>`},
+  {v: short(K.fas_total), l:'seguidores somados em 8 plataformas', d:`<span class="muted">Spotify, X, YouTube, Instagram…</span>`},
+].map(k => `<div class="kpi reveal"><div class="v">${k.v}</div><div class="l">${k.l}</div><div class="d">${k.d}</div></div>`).join('');
+
+/* índices */
+const idxSorted = D.indices.slice().sort((a,b)=>b.valor-a.valor);
+$('#v-indices').innerHTML = `Quatro notas de 0 a 100 que resumem a carreira hoje. A mais alta: <em>${esc(idxSorted[0].nome)} (${idxSorted[0].valor})</em>. A que mais pede trabalho: <em>${esc(idxSorted[idxSorted.length-1].nome)} (${idxSorted[idxSorted.length-1].valor})</em>.`;
+D.indices.forEach(ix => {
+  const c = document.createElement('div'); c.className = 'card idx reveal';
+  const [lv, lc] = level(ix.valor);
+  c.appendChild(dial(ix.valor));
+  c.insertAdjacentHTML('beforeend', `<div class="name">${esc(ix.nome)}</div><div class="lvl"><span class="${lc}">${lv}</span></div><div class="fr">${esc(ix.frase)}</div><details class="how"><summary>Como calculamos</summary><p>${esc(ix.explica)}</p></details>`);
+  $('#idx').appendChild(c);
+});
+
+/* decisões */
+$('#recs').innerHTML = D.recomendacoes.map((r, i) => `<article class="rec reveal">
+  <div class="top"><span class="tag">${esc(r.area)}</span><span class="n">${String(i+1).padStart(2,'0')}</span></div>
+  <h3>${esc(r.titulo)}</h3><p>${esc(r.porque)}</p><div class="act">${esc(r.acao)}</div>
+  <div class="imp">Mexe em: <b>${esc(r.impacto)}</b></div></article>`).join('');
+
+/* cidades */
+const C = D.cidades; const prem = C.filter(c => c.faixa === 'premium').sort((a,b)=>b.demanda_rel-a.demanda_rel);
+const sp = C.find(c => c.cidade === 'São Paulo');
+$('#v-cidades').innerHTML = `Em <em>${prem.slice(0,3).map(c=>c.cidade).join(', ')}</em> a banda tem de ${fmt1(prem[2]?.demanda_rel ?? prem[0].demanda_rel)}x a ${fmt1(prem[0].demanda_rel)}x mais fãs por habitante que a mediana das praças. É onde dá para pedir cachê acima da tabela e casa maior.`;
+brmap('#map', C);
+table('#cities-table', C.slice(0, 20), [
+  {k:'cidade', h:'Cidade'},
+  {k:'por100k', h:'Fãs/100 mil hab.', r:1, f:v=>fmt(v)},
+  {k:'demanda_rel', h:'Demanda', r:1, f:v=>`<b>${fmt1(v)}x</b>`},
+  {k:'faixa', h:'Cachê', f:(v)=>`<span class="chip"><i style="background:${FAIXA[v].c}"></i>${FAIXA[v].s}</span>`},
+  {k:'ingressos_max', h:'Ingressos*', r:1, f:(v,r)=>`${fmt(r.ingressos_min)}–${fmt(v)}`},
+], 'demanda_rel');
+$('#cities-note').innerHTML = `Mediana: ${fmt(D.cidades_mediana_100k)} ouvintes por 100 mil habitantes. *Ingressos potenciais = ouvintes × 3–5% (faixa para base fiel). Ouvintes por cidade: último snapshot da Chartmetric (${esc(C[0].atualizado)}); população: IBGE, Censo 2022.`;
+hbars('#yt-cities', D.youtube_cidades_12m.map(c => ({label:c.cidade, value:c.var_12m, display: sign(c.var_12m,0), color:'var(--data-pos)', tip:`<b>${esc(c.cidade)}</b><br>Visualizações no YouTube: ${sign(c.var_12m,1)} em 12 meses`})), {labelW:150, valW:60});
+$('#copalco').innerHTML = D.co_palco.slice(0,6).map(c => `<div class="row"><span class="k">${esc(c.artista)}</span><span class="vv">${c.eventos} palcos juntos</span></div>`).join('');
+
+/* shows */
+const cases = D.shows.casos_cidade.slice().sort((a,b)=>b.lift-a.lift);
+if (cases.length){
+  const c0 = cases[0];
+  $('#v-shows').innerHTML = `Show grande na cidade certa funciona como campanha de mídia: <em>${esc(c0.coluna==='Sao Paulo'?'São Paulo':c0.coluna)} ganhou ${fmt(c0.lift)}% de ouvintes</em> depois ${esc(c0.descricao.replace(/^o /,'do ').replace(/^a /,'da '))}.`;
+}
+cases.forEach(c => {
+  const el = document.createElement('div'); el.className = 'card case reveal';
+  el.innerHTML = `<span class="tag alt">${esc(c.titulo)}</span><div class="big ${cls(c.lift)}">${sign(c.lift,0)}</div><div class="muted" style="font-size:13px">ouvintes na cidade em até 30 dias</div><div class="chart"></div>`;
+  $('#cases').appendChild(el);
+  const pts = c.serie; const W = 260, H = 70; const s = svg(W, H);
+  const vs = pts.map(p => p.v); const lo = Math.min(...vs), hi = Math.max(...vs);
+  const X = i => 4 + (W-8)*i/(pts.length-1), Y = v => 6 + (H-12)*(1-(v-lo)/((hi-lo)||1));
+  const iShow = pts.findIndex(p => p.d >= c.data);
+  if (iShow >= 0) node('line', {x1:X(iShow), x2:X(iShow), y1:0, y2:H, stroke:'var(--accent-2)', 'stroke-width':1}, s);
+  node('path', {d: pts.map((p,i)=>(i?'L':'M')+X(i)+','+Y(p.v)).join(''), fill:'none', stroke:'var(--data-1)', 'stroke-width':2, 'stroke-linejoin':'round'}, s);
+  el.querySelector('.chart').appendChild(s);
+  hover(el, `<b>${esc(c.titulo)}</b><br>Antes do show: ${sign(c.antes,0)} vs nov/25<br>Pico em 30 dias: ${sign(c.pico,0)} vs nov/25<br>Linha amarela = dia do show`);
+});
+const bt = D.shows.por_tipo;
+$('#show-types').innerHTML = bt.map(b => `<div class="row" style="align-items:center"><div><div class="k" style="font-weight:700">${esc(b.tipo)}</div><div class="muted" style="font-size:12.5px">${b.n} eventos · ${b.positivos}% com alta</div></div><div class="big ${cls(b.mediana)}" style="font-size:34px">${sign(b.mediana,1)}</div></div>`).join('')
+  + `<p class="note">Sazonalidade descontada: um show em novembro "perde" ouvintes porque dezembro sempre cai. A comparação já tira esse efeito.</p>`;
+(function(){ // dot plot dos eventos no tempo
+  const ev = D.shows.eventos.slice().sort((a,b)=>a.data.localeCompare(b.data)); const W = cw('#show-dots', 640), H = 240, padL = 40, padB = 24, padT = 10;
+  const s = svg(W, H); const t0 = new Date(ev[0].data).getTime(), t1 = new Date(ev[ev.length-1].data).getTime();
+  const CAP = 25; const ext = CAP*1.08;
+  const X = t => padL + (W-padL-10)*(t-t0)/(t1-t0), Y = v => padT + (H-padT-padB)*(1-(v+ext)/(2*ext));
+  [-20,-10,10,20].filter(v=>Math.abs(v)<ext).forEach(v=>{ node('line',{x1:padL,x2:W,y1:Y(v),y2:Y(v),class:'grid-line'},s); text(s,padL-6,Y(v)+4,sign(v,0),{class:'lbl','text-anchor':'end'}); });
+  node('line',{x1:padL,x2:W,y1:Y(0),y2:Y(0),class:'zero'},s);
+  for (let y = new Date(ev[0].data).getFullYear(); y <= new Date(ev[ev.length-1].data).getFullYear(); y++){ const t = new Date(y+'-07-01').getTime(); if (t>=t0 && t<=t1) text(s, X(t), H-6, y, {class:'lbl','text-anchor':'middle'}); }
+  ev.forEach(e => { const fest = e.tipo.startsWith('Festival');
+    const vy = Math.max(-CAP, Math.min(CAP, e.ajustado));
+    const c = node('circle', {cx:X(new Date(e.data).getTime()), cy:Y(vy), r:fest?6:5, fill: fest?'var(--data-1)':'var(--data-muted)', stroke:'var(--surface)', 'stroke-width':2}, s);
+    hover(c, `<b>${esc(e.evento)}</b><br>${esc(e.local)} · ${new Date(e.data+'T12:00').toLocaleDateString('pt-BR')}${e.capacidade?`<br>Capacidade: ${fmt(e.capacidade)}`:''}<br>Ouvintes: ${sign(e.ajustado,1)} (ajustado)`); });
+  $('#show-dots').appendChild(s);
+})();
+
+/* lançamentos */
+const best = D.melhores_meses, worst = D.piores_meses;
+$('#v-lanc').innerHTML = `Lance o próximo trabalho grande <em>entre o fim de julho e agosto</em> e segure inéditas de dezembro a março: ${best.join(', ')} são os meses mais fortes da banda e ${worst.join(', ')} os mais fracos.`;
+$('#season-sub').textContent = `Ouvintes de cada mês comparados com a média do ano · ${D.sazonalidade_anos}`;
+vdiverge('#season', D.sazonalidade.map(s => ({label:s.mes, value:s.idx, highlight: best.includes(s.mes), labelValue: best.includes(s.mes) || worst.includes(s.mes), tip:`<b>${s.mes}</b><br>${sign(s.idx,1)} vs a média do ano`})), {h:400});
+const lifts = D.lancamentos.filter(l => l.data >= '2022-01-01').map(l => ({label:`${l.nome} (${l.data.slice(0,4)})`, value:l.ajustado,
+  tip:`<b>${esc(l.nome)}</b><br>${new Date(l.data+'T12:00').toLocaleDateString('pt-BR')}<br>Antes: ${fmt(l.antes)} ouvintes<br>1 mês depois: ${fmt(l.depois)}<br>Bruto ${sign(l.bruto,1)} · sem sazonalidade ${sign(l.ajustado,1)}`}));
+hdiverge('#lifts', lifts);
+const hist = D.historico, fc = D.previsao; const labels = hist.map(h=>h.mes).concat(fc.map(f=>f.mes));
+line('#forecast', [
+  {name:'Ouvintes', color:'var(--data-1)', points: hist.map(h=>({v:h.valor})).concat(fc.map(()=>null))},
+  {name:'Projeção', color:'var(--accent-2)', band:true, dash:true, points: hist.map((h,i)=> i===hist.length-1?{v:h.valor,min:h.valor,max:h.valor}:null).concat(fc.map(f=>({v:f.valor,min:f.min,max:f.max})))},
+], {labels, ticks:8});
+const jan = fc.find(f=>f.mes.startsWith('jan')); const lastH = hist[hist.length-1];
+$('#forecast-note').innerHTML = jan ? `Janeiro deve ficar perto de <b>${short(jan.valor)}</b> ouvintes (faixa ${short(jan.min)}–${short(jan.max)}). É a queda sazonal de todo ano, não perda de público: a base dessazonalizada está em ${short(D.base_dessazonalizada)}.` : '';
+$('#anniv').innerHTML = (D.contexto.aniversarios||[]).map(a => `<div class="tl"><div class="y">${a.ano}</div><div><div class="t">${esc(a.marco)}</div><div class="st">${esc(a.status)}</div></div></div>`).join('');
+const inv = D.serie_inv;
+if (inv.lista && inv.lista.length){
+  $('#inv-sub').textContent = `Projeto INVENTÁRIO (2021): ${inv.n} singles semanais. Variação de ouvintes 1 mês depois de cada um, sem sazonalidade.`;
+  vdiverge('#inv', inv.lista.map((x,i) => ({label:`${i+1}º`, value:x.ajustado, labelValue: true, tip:`<b>${i+1}º capítulo · ${esc(x.nome)}</b><br>${sign(x.ajustado,1)} em ouvintes (ajustado)`})), {h:230});
+}
+
+/* catálogo */
+const T = D.faixas;
+$('#v-cat').innerHTML = `<em>${esc(T[0].faixa)}</em> segue sendo a música mais forte ao vivo, com ${short(T[0].streams_90d)} streams só nos últimos 90 dias. E os sons que viralizam em vídeo incluem faixas novas: o setlist pode equilibrar hino e disco atual.`;
+table('#tracks', T, [
+  {k:'faixa', h:'Faixa'}, {k:'idade_anos', h:'Idade', r:1, f:v=>`${fmt(v)} anos`},
+  {k:'forca', h:'Força ao vivo', f:v=>`<span class="mini-bar" style="width:${v*0.9}px"></span><b>${fmt(v)}</b>`},
+  {k:'streams_90d', h:'Streams 90 dias', r:1, f:v=>fmt(v)}, {k:'streams', h:'Streams total', r:1, f:v=>short(v)},
+  {k:'youtube', h:'Views YouTube', r:1, f:v=>short(v)}, {k:'playlists', h:'Playlists', r:1, f:v=>fmt(v)},
+], 'forca');
+const NARROW = {W:340, labelW:156, valW:54, rowH:32, maxChars:22};
+hbars('#ig-sounds', D.sons.instagram.slice(0,8).map(s => ({label:s.som, value:s.views, display:short(s.views), tip:`<b>${esc(s.som)}</b><br>${fmt(s.views)} views · desde ${esc(s.desde)}`})), NARROW);
+hbars('#tt-sounds', D.sons.tiktok.slice(0,8).map(s => ({label:s.som, value:s.views, display:short(s.views), tip:`<b>${esc(s.som)}</b><br>${fmt(s.views)} views em ${fmt(s.videos)} vídeos`})), NARROW);
+hbars('#albums', D.albuns.slice(0,8).map(a => ({label:`${a.album.length>16?a.album.slice(0,15)+'…':a.album} ’${String(a.ano).slice(2)}`, value:a.popularidade, tip:`<b>${esc(a.album)}</b> · ${a.ano}<br>Popularidade: ${a.popularidade}/100${a.alcance_playlists?`<br>Alcance em playlists: ${short(a.alcance_playlists)}`:''}`})), {...NARROW, max:100, valW:34});
+
+/* playlists */
+const PR = D.playlists.resumo;
+$('#v-pl').innerHTML = `As playlists editoriais do Spotify estão paradas em <em>${PR.editoriais} desde ${esc(PR.editoriais_parado_desde||'—')}</em>, mesmo com disco novo. Quem sustenta a descoberta são os fãs: ${fmt(PR.usuarios)} playlists criadas por usuários.`;
+$('#pl-tiles').innerHTML = [
+  {v: PR.editoriais, l:'playlists editoriais', d:`<span class="muted">estável desde ${esc(PR.editoriais_parado_desde||'')}</span>`},
+  {v: short(PR.usuarios), l:'playlists de fãs', d:`<span class="${cls(PR.usuarios_g12)}">${sign(PR.usuarios_g12,1)}</span> <span class="muted">em 12 meses</span>`},
+  {v: fmt(PR.dependencia_editorial)+'%', l:'do alcance vem de editoriais', d:`<span class="muted">baixa dependência = base sólida</span>`},
+  ...(D.destaque_playlist ? [{v: D.destaque_playlist.posicao+'º', l:`lugar na ${esc(D.destaque_playlist.playlist)} (${esc(D.destaque_playlist.tipo.toLowerCase())}, ${esc(D.destaque_playlist.seguidores.replace('K',' mil'))} seg.)`, d:`<span class="muted">com "${esc(D.destaque_playlist.faixa)}" · ${new Date(D.destaque_playlist.data+'T12:00').toLocaleDateString('pt-BR',{month:'short',year:'numeric'}).replace('.','')}</span>`}] : []),
+].map(k => `<div class="kpi reveal"><div class="v">${k.v}</div><div class="l">${k.l}</div><div class="d">${k.d}</div></div>`).join('');
+const pe = D.playlists.evolucao;
+line('#pl-users', [{name:'Playlists de fãs', color:'var(--data-1)', points: pe.map(p=>({v:p.usuarios}))}], {labels: pe.map(p=>p.mes), h:220});
+$('#pl-recs').innerHTML = D.playlists.recomendadas.slice(0,7).map(p => `<div class="row"><span class="k"><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.playlist)}</a><br><span class="muted" style="font-size:12px">por ${esc(p.curador)}</span></span><span class="vv">${short(p.seguidores)} seg.</span></div>`).join('');
+
+/* público */
+const P = D.publico;
+$('#v-pub').innerHTML = `Existem duas ${esc(D.meta.artista)}s. <em>Quem ouve</em> no streaming é ${fmt(P.streaming.masc)}% homem e tem ${esc(P.streaming.faixa_top)} anos. <em>Quem assiste</em> no TikTok é ${fmt(P.tiktok.fem)}% mulher, com ${esc(P.tiktok.segmento_top.faixa)} anos. Conteúdo puxa a geração nova; produto e ingresso premium falam com a antiga.`;
+[['streaming','Streaming (Spotify e outros)'],['tiktok','TikTok · seguidores'],['instagram','Instagram · seguidores']].forEach(([k, t]) => {
+  if (!P[k]) return; const el = document.createElement('div'); el.className = 'card reveal'; el.innerHTML = `<h3>${t}</h3><div class="sub">Idade × gênero (% do público)</div><div class="chart" id="pyr-${k}"></div>`;
+  $('#pyramids').appendChild(el); pyramid('#pyr-'+k, P[k], t);
+});
+const CM = D.comentarios;
+if (CM){
+  $('#com-sub').textContent = `${fmt(CM.n)} comentários mais curtidos dos clipes no YouTube, por tema (um comentário pode ter mais de um tema)`;
+  hbars('#themes', CM.temas.map(t => ({label:t.tema, value:t.pct, display: t.pct+'%', max:100})), {labelW:230, maxChars:34, max:100});
+  $('#quotes').innerHTML = CM.destaques.slice(0,2).map(q => `<div class="quote">“${esc(q.texto)}”<small>${fmt(q.curtidas)} curtidas</small></div>`).join('');
+}
+table('#plats', D.plataformas, [
+  {k:'plataforma', h:'Plataforma'}, {k:'total', h:'Seguidores', r:1, f:v=>short(v)},
+  {k:'g12', h:'12 meses', r:1, f:v=>`<b class="${cls(v)}">${sign(v,1)}</b>`},
+  {k:'spark', h:'2 anos', f:v=>{ const lo=Math.min(...v), hi=Math.max(...v); const pts=v.map((x,i)=>`${(i/(v.length-1))*90},${18-((x-lo)/((hi-lo)||1))*16}`).join(' '); return `<svg viewBox="0 0 90 20" width="90" height="20"><polyline points="${pts}" fill="none" stroke="var(--data-1)" stroke-width="2"/></svg>`; }},
+], 'g12');
+
+/* parcerias */
+const B = D.marcas;
+$('#v-parc').innerHTML = `O público já segue <em>${esc(B.filter(b=>/drink/i.test(b.categoria)).slice(0,3).map(b=>b.marca).join(', '))}</em> acima da média: patrocínio de turnê com marca de bebida tem fit comprovado. Entre os pares, a ${esc(D.meta.artista)} tem uma das bases mais fiéis.`;
+hbars('#brands', B.slice(0,10).map(b => ({label:b.marca, value:b.afinidade, display: fmt1(b.afinidade)+'x', tip:`<b>${esc(b.marca)}</b><br>${esc(b.categoria)}<br>Afinidade: ${fmt1(b.afinidade)}x · correspondência de público ${b.match}%`})), {labelW:200, maxChars:26});
+const peers = D.pares.filter(p => p.lealdade != null).sort((a,b)=>b.lealdade-a.lealdade).slice(0,12);
+if (!peers.find(p=>p.artista===D.meta.artista)){ const me = D.pares.find(p=>p.artista===D.meta.artista); if (me) peers.push(me); }
+hbars('#peers', peers.map(p => ({label:p.artista, value:p.lealdade, strong: p.artista===D.meta.artista, color: p.artista===D.meta.artista ? 'var(--data-1)' : 'var(--data-muted)',
+  tip:`<b>${esc(p.artista)}</b><br>${fmt(p.ouvintes)} ouvintes · ${fmt(p.seguidores)} seguidores<br>${p.lealdade} seguidores por 100 ouvintes<br>${esc(p.estagio)} · ${esc(p.momento)}`})), {labelW:150});
+$('#news').innerHTML = (D.contexto.noticias||[]).map(n => `<div class="row"><span class="k">${esc(n.texto)}</span><span class="vv"><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.fonte)}</a> · ${new Date(n.data+'T12:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'short'})}</span></div>`).join('');
+
+/* CTA + metodologia */
+const ct = CFG.contato || {};
+const btns = [];
+if (ct.whatsapp) btns.push(`<a class="btn" href="https://wa.me/${esc(ct.whatsapp.replace(/\D/g,''))}" target="_blank" rel="noopener">Falar no WhatsApp</a>`);
+if (ct.email) btns.push(`<a class="btn ${btns.length?'sec':''}" href="mailto:${esc(ct.email)}?subject=${encodeURIComponent('Raio-X '+D.meta.artista)}">Mandar e-mail</a>`);
+if (ct.instagram) btns.push(`<a class="btn sec" href="https://instagram.com/${esc(ct.instagram.replace('@',''))}" target="_blank" rel="noopener">${esc(ct.instagram)}</a>`);
+$('#cta').innerHTML = `<h2>Isso é uma foto.<br>Imagina o filme.</h2><p>${esc(ct.texto_cta||'')}</p>${btns.length?`<div class="btns">${btns.join('')}</div>`:`<p class="muted" style="margin-top:18px">Responda a mensagem que trouxe você até aqui.</p>`}`;
+$('#metodo').innerHTML = `<b>Metodologia e qualidade dos dados</b><p style="margin-top:8px">Fonte: ${esc(D.meta.fonte)}, ${D.meta.arquivos} relatórios, dados de ${dm(d0)} a ${dm(d1)}; população: IBGE Censo 2022; contexto: imprensa (links acima). Variações "ajustadas" descontam o padrão sazonal da própria banda. Índices e faixas de cachê são regras de bolso transparentes, não promessas de resultado.</p>
+<ul>${(D.qualidade||[]).map(q=>`<li>${esc(q)}</li>`).join('')}</ul><p style="margin-top:14px">Raio-X de carreira · gerado em ${new Date(D.meta.gerado_em+'T12:00').toLocaleDateString('pt-BR')}</p>`;
+
+/* reveal + nav ativa */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.08});
+document.querySelectorAll('.reveal, .card, .rec').forEach(el => { el.classList.add('reveal'); io.observe(el); });
+const navA = [...document.querySelectorAll('#navlinks a')];
+const so = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ navA.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#'+e.target.id)); } }), {rootMargin:'-40% 0px -55% 0px'});
+document.querySelectorAll('section.s').forEach(s => so.observe(s));
+</script>
+</body>
+</html>

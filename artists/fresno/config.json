@@ -1,0 +1,118 @@
+{
+  "nome": "Fresno",
+  "slug": "fresno",
+  "subtitulo": "Raio-X de carreira com dados",
+  "cidade_origem": "Porto Alegre",
+  "desde": 1999,
+  "tema": {
+    "fundo": "#0E0C0F",
+    "superficie": "#17141A",
+    "superficie_2": "#211C24",
+    "linha": "#2E2832",
+    "texto": "#F4EEE6",
+    "texto_suave": "#A99FA6",
+    "destaque": "#FF4D3D",
+    "destaque_2": "#F6C177",
+    "positivo": "#5ED3A0",
+    "negativo": "#FF7A6B",
+    "fonte_titulo": "Archivo Black",
+    "fonte_texto": "Inter"
+  },
+  "casos_show_cidade": [
+    {
+      "coluna": "Porto Alegre",
+      "data": "2026-05-16",
+      "titulo": "Redenção, Porto Alegre",
+      "descricao": "o show gratuito na Redenção (cerca de 70 mil pessoas, 16/05/2026)"
+    },
+    {
+      "coluna": "Campinas",
+      "data": "2026-07-25",
+      "titulo": "Multi Arena, Campinas",
+      "descricao": "o show da turnê Carta de Adeus no Multi Arena (25/07/2026)"
+    },
+    {
+      "coluna": "Rio de Janeiro",
+      "data": "2026-05-23",
+      "titulo": "Fundição Progresso, Rio",
+      "descricao": "o lançamento de Carta de Adeus na Fundição Progresso (23/05/2026)"
+    },
+    {
+      "coluna": "Sao Paulo",
+      "data": "2026-04-18",
+      "titulo": "Espaço Unimed, São Paulo",
+      "descricao": "a estreia da turnê Carta de Adeus no Espaço Unimed (18/04/2026)"
+    }
+  ],
+  "contexto": {
+    "prova_nostalgia": "Em julho de 2026 a 'Jaqueta Fresno 1999', de R$ 950, esgotou na pré-venda mesmo com polêmica de preço: o fã de 25–34 anos paga por memória.",
+    "aniversarios": [
+      {
+        "ano": 2026,
+        "marco": "10 anos de A Sinfonia de Tudo Que Há",
+        "status": "em curso (Fresno Sinfonia'26: Rio 28/11, SP 04/12)"
+      },
+      {
+        "ano": 2027,
+        "marco": "15 anos de Infinito",
+        "status": "oportunidade"
+      },
+      {
+        "ano": 2028,
+        "marco": "20 anos de Redenção (o disco mais ouvido do catálogo)",
+        "status": "grande oportunidade"
+      },
+      {
+        "ano": 2029,
+        "marco": "30 anos de banda",
+        "status": "turnê comemorativa"
+      },
+      {
+        "ano": 2030,
+        "marco": "20 anos de Revanche",
+        "status": "oportunidade"
+      }
+    ],
+    "noticias": [
+      {
+        "data": "2026-04-18",
+        "texto": "Estreia da turnê Carta de Adeus com Espaço Unimed lotado (SP)",
+        "fonte": "Billboard Brasil",
+        "url": "https://billboard.com.br/fresno-o-adeus-bem-resolvido-novo-disco/"
+      },
+      {
+        "data": "2026-05-16",
+        "texto": "Show gratuito na Redenção reúne cerca de 70 mil pessoas",
+        "fonte": "Billboard Brasil",
+        "url": "https://billboard.com.br/fresno-show-gratuito-porto-alegre/"
+      },
+      {
+        "data": "2026-07-07",
+        "texto": "Jaqueta oficial de R$ 950 esgota na pré-venda e gera debate",
+        "fonte": "BNews SP",
+        "url": "https://www.bnewssaopaulo.com.br/noticias/entretenimento/jaqueta-de-r-950-da-fresno-vira-alvo-de-criticas-e-gera-debate-nas-redes.html"
+      },
+      {
+        "data": "2026-11-28",
+        "texto": "Fresno Sinfonia'26 com orquestra: Fundição Progresso (28/11) e Vibra SP (04/12)",
+        "fonte": "Rolling Stone Brasil",
+        "url": "https://rollingstone.com.br/guia-show/fresno-anuncia-nova-data-de-show-com-orquestra/"
+      }
+    ]
+  },
+  "qualidade_dados": [
+    "Ouvintes por cidade no Spotify vêm do último snapshot disponível na Chartmetric (ago–dez/2024). A versão com API atualiza isso diariamente.",
+    "A lista de shows da Chartmetric tem 60+ eventos desde 2018, não a agenda completa. Os efeitos de show são uma amostra.",
+    "O export 'Popularidade do Spotify' por faixa veio idêntico ao de streams (bug do export) e foi descartado.",
+    "Comparação por faixa cobre 5 músicas escolhidas no export; Shazam só tem 1 faixa.",
+    "Em outubro/2026 a série de Campinas mostra uma queda de -46% em 1 dia, típica de falha de coleta. Itabuna (BA) aparece com +164% no mesmo mês: vale investigar (show? vídeo viral?)."
+  ],
+  "carta": "Uma base que segue a banda mais do que ouve playlist, um catálogo de 20 anos que não envelhece e uma geração nova chegando pelo TikTok. Este raio-x cruza {arquivos} relatórios da Chartmetric, de 2018 até hoje, para responder cinco perguntas: onde tocar, quanto cobrar, quando lançar, o que postar e com quem se juntar.",
+  "contato": {
+    "nome": "",
+    "email": "",
+    "whatsapp": "",
+    "instagram": "",
+    "texto_cta": "Este é um retrato de novembro de 2026. A versão viva atualiza toda semana, avisa quando uma cidade dispara e responde perguntas da equipe direto nos dados."
+  }
+}
