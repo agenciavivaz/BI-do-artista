@@ -9,8 +9,19 @@ type Aba = { id: string; nome: string; blocos: (nome: string) => BlocoT[] };
 const ABAS: Aba[] = [
   { id: 'pracas', nome: 'Praças', blocos: () => [
     { tipo: 'mapa', dados: 'cidades' },
-    { tipo: 'tabela', dados: 'cidades', colunas: ['cidade', 'ouvintes', 'demanda_rel', 'faixa', 'base_fa', 'publico_min', 'publico', 'publico_max', 'confianca', 'veredito_casa'], titulo: 'Todas as praças' },
+    { tipo: 'tabela', dados: 'cidades', colunas: ['cidade', 'ouvintes', 'demanda_rel', 'faixa', 'base_fa', 'publico_min', 'publico', 'publico_max', 'confianca', 'ticket_medio', 'bilheteria', 'veredito_casa'], titulo: 'Todas as praças' },
     { tipo: 'barras', dados: 'cidades', campo: 'yt_3m' },
+  ] },
+  { id: 'bilheteria', nome: 'Bilheteria', blocos: () => [
+    { tipo: 'tabela', dados: 'publico_praca.shows_usados',
+      colunas: ['data', 'cidade', 'local', 'capacidade', 'ocupacao', 'publico', 'peso', 'no_ajuste', 'fonte'],
+      titulo: 'Shows próprios que alimentam a previsão de público' },
+    { tipo: 'tabela', dados: 'publico_praca.modelo.validacao.linhas',
+      colunas: ['cidade', 'local', 'data', 'real', 'previsto', 'erro_pct'],
+      titulo: 'Validação: tirando um show de cada vez do ajuste' },
+    { tipo: 'tabela', dados: 'publico_praca.modelo.comparacao',
+      colunas: ['formula', 'coeficientes', 'r2', 'erro_mediano_pct', 'erro_medio_pct', 'cobertura_pct'],
+      titulo: 'Fórmulas testadas (vence a que erra menos na validação)' },
   ] },
   { id: 'shows', nome: 'Shows', blocos: () => [
     { tipo: 'pontos_eventos', dados: 'shows.eventos' },

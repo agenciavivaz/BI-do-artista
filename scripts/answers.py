@@ -131,44 +131,53 @@ def build_answers(d):
 
     pp = d['publico_praca']
     mod = pp['modelo']
+    val = mod.get('validacao') or {}
     com_casa = sorted([c for c in cid if c.get('chance_esgotar') is not None], key=lambda c: -c['publico'])
     crescer = [c for c in com_casa if c['folga'] and c['folga'] >= pp['limiares']['crescer']
                and (c['ancora'] or {}).get('capacidade', 0) >= 500]
     melhor = com_casa[0] if com_casa else cid[0]
+    alvo = crescer[0] if crescer else melhor
     A.append({
         'id': 'quantos-ingressos', 'tema': 'cache', 'simulador': 'ingressos',
         'pergunta': 'Quantos ingressos dá pra vender numa cidade?',
         'variacoes': ['ingressos', 'lotar', 'tamanho da casa', 'capacidade', 'vender ingresso', 'casa de show',
-                      'casa maior', 'segunda data', 'esgotar'],
+                      'casa maior', 'segunda data', 'esgotar', 'bilheteria'],
         'pensando': [
             step('Pegando os ouvintes da cidade e corrigindo o snapshot para hoje', ['cidades', 'ouvintes']),
             step(f"Virando base de fãs: {d['kpis']['lealdade']:.0f} seguidores a cada 100 ouvintes", ['cidades', 'seguidores']),
-            step(f"Lendo a agenda: {mod['n_provas']} shows próprios da banda", ['shows', 'imprensa']),
+            step(f"Lendo a agenda própria da banda: {mod['n_provas']} shows desde 2024", ['shows', 'imprensa']),
             step(f"Ajustando a regressão nos {mod['n_shows']} shows com capacidade de casa conhecida", ['shows', 'cidades']),
-            step('Projetando público e chance de esgotar cada casa', ['cidades', 'ibge']),
+            step(f"Testando o modelo: tira um show, tenta prever ele — erro mediano de {val.get('erro_mediano_pct','–')}%",
+                 ['shows', 'imprensa']),
+            step('Projetando público, chance de esgotar e bilheteria', ['cidades', 'ibge']),
         ],
-        'veredito': (f"Em {melhor['cidade']}, {n(melhor['publico'])} pessoas é o cenário mais provável — "
-                     + (f"{melhor['chance_esgotar']}% de chance de esgotar a casa que a banda usou lá."
-                        if melhor.get('chance_esgotar') is not None else 'veja a faixa por praça.')),
-        'explicacao': (f"A conta não é uma taxa de conversão escolhida a dedo. É uma regressão sobre os shows próprios da banda: "
-                       f"o público cresce com a base de fãs da praça elevada a {br(mod['beta'][1],2)} — menor que 1, ou seja, praça "
-                       f"grande converte uma fatia menor — e com a afinidade local elevada a {br(mod['beta'][2],2)}. "
-                       f"O ajuste explica {br((mod['r2'] or 0)*100,0)}% da variação dos {mod['n_shows']} shows medidos, com desvio de "
-                       f"{br(mod['sigma']*100,0)}% em escala log. Show esgotado entra como piso, não como teto: ele diz que a banda "
-                       f"venderia pelo menos aquilo."),
-        'numeros': [{'valor': f"{n(c['publico'])}", 'rotulo': f"{c['cidade']} · {c['chance_esgotar']}% de esgotar"} for c in com_casa[:3]],
+        'veredito': (f"{melhor['cidade']}: {n(melhor['publico'])} pessoas é o cenário mais provável, "
+                     f"{melhor['chance_esgotar']}% de chance de esgotar a casa que a banda usou lá"
+                     + (f". Em {alvo['cidade']}, a previsão já passa da casa usada." if crescer else '.')),
+        'explicacao': (f"A conta não é uma taxa de conversão escolhida a dedo nem uma média. É uma regressão sobre os shows "
+                       f"próprios da banda, com o público crescendo com a base de fãs da praça elevada a "
+                       f"{br(mod['beta'][1],2)} — menor que 1, ou seja, praça grande converte uma fatia menor. "
+                       f"Show esgotado entra como piso e não como teto, porque lotar diz que a banda venderia pelo menos "
+                       f"aquilo. Testado show a show, o modelo erra {val.get('erro_mediano_pct','–')}% na mediana e "
+                       f"{val.get('erro_medio_pct','–')}% na média — é a margem com que esses números devem ser lidos."),
+        'numeros': [{'valor': n(c['publico']), 'rotulo': f"{c['cidade']} · {c['chance_esgotar']}% de esgotar"} for c in com_casa[:3]],
         'blocos': [{'tipo': 'simulador', 'simulador': 'ingressos', 'dados': 'cidades'},
                    {'tipo': 'tabela', 'dados': 'cidades',
-                    'colunas': ['cidade', 'base_fa', 'publico_min', 'publico', 'publico_max', 'confianca', 'veredito_casa'],
-                    'titulo': 'Público provável por praça'}],
+                    'colunas': ['cidade', 'base_fa', 'publico_min', 'publico', 'publico_max', 'confianca', 'bilheteria', 'veredito_casa'],
+                    'titulo': 'Público provável por praça'},
+                   {'tipo': 'tabela', 'dados': 'publico_praca.modelo.validacao.linhas',
+                    'colunas': ['cidade', 'local', 'data', 'real', 'previsto', 'erro_pct'],
+                    'titulo': 'O quanto o modelo erra, show a show'}],
         'acoes': ([f"Em {', '.join(c['cidade'] for c in crescer[:3])}, a previsão passa da casa usada: peça casa maior ou uma segunda data."]
                   if crescer else []) +
                  ['Prefira a casa que lota no limite de baixo da faixa: casa cheia vira conteúdo e escassez.',
-                  'Depois de cada show, anote capacidade e ocupação em config.json → calibracao.ancoras: a regressão se refaz sozinha.'],
-        'confianca': {'nivel': 'alta' if mod['n_shows'] >= 6 and (mod['r2'] or 0) >= 0.7 else 'média',
-                      'motivo': (f"Regressão sobre {mod['n_shows']} shows próprios com capacidade conhecida "
-                                 f"(R² {br(mod['r2'] or 0, 2)}). Casa de configuração variável fica fora do ajuste, porque a "
-                                 f"capacidade da arena não diz quanta gente foi.")},
+                  'Anote capacidade e ocupação de cada show em config.json → calibracao.ancoras: a regressão se refaz sozinha.'],
+        'confianca': {'nivel': 'média',
+                      'motivo': (f"Regressão sobre {mod['n_shows']} shows próprios com capacidade de casa conhecida, de "
+                                 f"{mod['n_provas']} na agenda. Na validação show a show o erro mediano é de "
+                                 f"{val.get('erro_mediano_pct','–')}% e o pior caso foi {val.get('erro_maximo_pct','–')}%. "
+                                 f"Capacidade de casa quase nunca é publicada no Brasil e a ocupação é presumida quando a "
+                                 f"fonte não diz: com bilheteria oficial, a margem cai.")},
         'seguintes': ['onde-cobrar-mais', 'proxima-cidade'],
     })
 

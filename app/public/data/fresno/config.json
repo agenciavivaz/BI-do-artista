@@ -31,41 +31,11 @@
     "ancoras": [
       {
         "cidade": "São Paulo",
-        "local": "Espaço Unimed",
-        "data": "2024-10-18",
-        "capacidade": 8000,
-        "ocupacao": 0.9,
-        "peso": 0.8,
-        "fonte": "Tô na Grade: pista premium e mezanino esgotados antes do show, casa de ~8.000"
-      },
-      {
-        "cidade": "São Paulo",
-        "local": "Terra SP",
-        "data": "2025-01-18",
-        "capacidade": 3000,
-        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
-      },
-      {
-        "cidade": "São Paulo",
-        "local": "Clube Atlético Juventus",
-        "data": "2025-02-14",
-        "capacidade": 4400,
-        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
-      },
-      {
-        "cidade": "São Paulo",
-        "local": "Espaço Unimed",
-        "data": "2026-04-18",
-        "capacidade": 8000,
-        "ocupacao": 1.0,
-        "fonte": "Billboard Brasil: estreia da turnê Carta de Adeus com Espaço Unimed lotado"
-      },
-      {
-        "cidade": "São Paulo",
-        "local": "Clube Atlético Juventus",
-        "data": "2026-10-03",
-        "capacidade": 4400,
-        "fonte": "setlist.fm (data) + Chartmetric (capacidade da casa); ocupação não publicada"
+        "local": "Vibra São Paulo",
+        "data": "2026-12-04",
+        "capacidade": 7000,
+        "fonte": "Billboard Brasil: data extra aberta pela procura, depois do esgotamento da Sala São Paulo. 10 setores, de R$210 a R$450 (Uhuu)",
+        "peso": 0.45
       },
       {
         "cidade": "São Paulo",
@@ -73,31 +43,16 @@
         "data": "2026-12-02",
         "capacidade": 1498,
         "ocupacao": 1.0,
-        "fonte": "Billboard Brasil / Revista Business: esgotou em minutos e motivou data extra"
+        "fonte": "Billboard Brasil, Rolling Stone Brasil e a bilheteria oficial do Complexo Cultural Júlio Prestes: esgotado em minutos. Ingressos de R$300 a R$450",
+        "peso": 1.0
       },
       {
-        "cidade": "São Paulo",
-        "local": "Vibra São Paulo",
-        "data": "2026-12-04",
-        "capacidade": 7000,
-        "fonte": "Rolling Stone Brasil: data extra da Sinfonia'26, aberta por esgotamento da Sala São Paulo"
-      },
-      {
-        "cidade": "Porto Alegre",
-        "local": "Auditório Araújo Vianna",
-        "data": "2024-11-17",
-        "capacidade": 3628,
-        "ocupacao": 1.0,
-        "fonte": "Insanity Records: primeira data com ingressos esgotados (remarcada das enchentes)"
-      },
-      {
-        "cidade": "Porto Alegre",
-        "local": "Auditório Araújo Vianna",
-        "data": "2024-11-15",
-        "capacidade": 3628,
-        "ocupacao": 0.9,
-        "peso": 0.6,
-        "fonte": "Insanity Records: data extra aberta por grande procura"
+        "cidade": "Rio de Janeiro",
+        "local": "Fundição Progresso",
+        "data": "2026-11-28",
+        "capacidade": 5000,
+        "fonte": "Rolling Stone Brasil: Sinfonia'26 com a Nova Orquestra. Casa de ~5.000 (Wikipédia), formato sentado reduz a lotação",
+        "escalavel": true
       },
       {
         "cidade": "Porto Alegre",
@@ -105,21 +60,111 @@
         "data": "2026-11-20",
         "capacidade": 3628,
         "ocupacao": 0.95,
-        "fonte": "Equipe da banda: quase esgotado na semana do show"
+        "fonte": "Equipe da banda: quase esgotado. Nenhuma fonte menciona segunda data. 5 setores no lote 1, de R$160 a R$360 (média R$244); no lote 4 vai a R$480. Capacidade diverge: 3.146 sentados no edital da Prefeitura, 3.628 no Bandsintown, 4.200 na imprensa com pista",
+        "peso": 1.0,
+        "preco_inteira": 244
       },
       {
-        "cidade": "Curitiba",
-        "local": "Teatro Positivo",
-        "data": "2024-11-14",
-        "capacidade": 2400,
-        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
+        "cidade": "Florianópolis",
+        "local": "Arena Opus (São José/SC)",
+        "data": "2026-11-06",
+        "capacidade": 3050,
+        "escalavel": false,
+        "fonte": "Uhuu: 3.050 ingressos no total à venda — é a configuração real do show, não os 17.000 da arena. Página 3: últimos ingressos em 05/11; Under Floripa, três semanas antes: ainda disponíveis, com 40% de desconto para sócios. Ocupação de 75% é premissa nossa, com peso baixo",
+        "ocupacao": 0.75,
+        "peso": 0.4,
+        "preco_inteira": 108
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Clube Atlético Juventus",
+        "data": "2026-10-03",
+        "capacidade": 4400,
+        "fonte": "Ticket360: ingressos para Fresno e CPM 22, a partir de R$60",
+        "tipo": "dividido",
+        "fora_do_ajuste": true,
+        "motivo": "bill dividido com o CPM 22"
       },
       {
         "cidade": "Curitiba",
         "local": "Cine Lido",
         "data": "2026-08-29",
+        "capacidade": 2500,
+        "fonte": "Tribuna do Paraná / Band: casa reformada, 2.500 lugares. Nenhuma fonte publicou bilheteria"
+      },
+      {
+        "cidade": "Campinas",
+        "local": "Multi Arena",
+        "data": "2026-07-25",
+        "capacidade": 5000,
+        "fonte": "A Cidade On: ingressos de R$60 a R$240 (média R$150). Estrutura temporária de 5.000 por dia no estacionamento do Iguatemi",
+        "escalavel": true,
+        "preco_inteira": 150
+      },
+      {
+        "cidade": "Rio de Janeiro",
+        "local": "Fundição Progresso",
+        "data": "2026-05-23",
+        "capacidade": 5000,
+        "fonte": "Fundição Progresso / Diário do Rio: a partir de R$70 na meia solidária com 1kg de alimento (inteira estimada em R$140). Casa de ~5.000 no máximo, configuração variável",
+        "escalavel": true,
+        "preco_inteira": 140
+      },
+      {
+        "cidade": "Brasília",
+        "local": "Clube AABB",
+        "data": "2026-04-25",
         "capacidade": null,
         "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Espaço Unimed",
+        "data": "2026-04-18",
+        "capacidade": 8000,
+        "ocupacao": 1.0,
+        "fonte": "Billboard Brasil (contexto do artista): Espaço Unimed lotado na estreia da turnê. Uma busca independente não achou confirmação de esgotamento, por isso o peso é menor. Preços de R$180 pista a R$320 camarote, de resumo de busca",
+        "peso": 0.7,
+        "preco_inteira": 250
+      },
+      {
+        "cidade": "São José dos Campos",
+        "local": "SESI",
+        "data": "2025-10-04",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Caxias do Sul",
+        "local": "All Need Master Hall",
+        "data": "2025-09-06",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Belo Horizonte",
+        "local": "BeFly Hall",
+        "data": "2025-05-24",
+        "capacidade": 5000,
+        "escalavel": true,
+        "fonte": "BH 24 Horas: ingressos de R$90 a R$260 (média R$175), venda mediante disponibilidade. Casa de 5.000, configuração variável",
+        "preco_inteira": 175
+      },
+      {
+        "cidade": "Campinas",
+        "local": "Multi Arena (Iguatemi)",
+        "data": "2025-05-23",
+        "capacidade": 5000,
+        "fonte": "Jornal do Brás: 5.000 por dia, estrutura temporária no estacionamento do Iguatemi",
+        "escalavel": true
+      },
+      {
+        "cidade": "Joinville",
+        "local": "Joinville Square Garden",
+        "data": "2025-05-16",
+        "capacidade": 5300,
+        "escalavel": true,
+        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
       },
       {
         "cidade": "Santo André",
@@ -132,35 +177,23 @@
       },
       {
         "cidade": "Rio de Janeiro",
-        "local": "Qualistage",
-        "data": "2024-07-05",
-        "capacidade": 9500,
-        "escalavel": true,
-        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
-      },
-      {
-        "cidade": "Belo Horizonte",
-        "local": "BeFly Hall",
-        "data": "2025-05-24",
+        "local": "Fundição Progresso",
+        "data": "2025-04-26",
         "capacidade": 5000,
-        "escalavel": true,
-        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
+        "fonte": "Wikipédia: galpão de ~5.000 no máximo. Ocupação de 70% é premissa nossa (casa de configuração variável), com peso baixo no ajuste",
+        "ocupacao": 0.7,
+        "peso": 0.3
       },
       {
-        "cidade": "Joinville",
-        "local": "Joinville Square Garden",
-        "data": "2025-05-16",
-        "capacidade": 5300,
-        "escalavel": true,
-        "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
-      },
-      {
-        "cidade": "Florianópolis",
-        "local": "Arena Opus (São José/SC)",
-        "data": "2026-11-06",
-        "capacidade": 17000,
-        "escalavel": true,
-        "fonte": "Under Floripa: ingressos ainda disponíveis no fim de outubro, com 40% de desconto para sócios"
+        "cidade": "Jundiaí",
+        "local": "Sesc Jundiaí",
+        "data": "2025-04-11",
+        "capacidade": 700,
+        "ocupacao": 1.0,
+        "fonte": "Jornal de Jundiaí: ingressos esgotados. Sesc: teatro 220 lugares, ginásio 700",
+        "peso": 0.3,
+        "fora_do_ajuste": true,
+        "motivo": "o Sesc tem teatro de 220 e ginásio de 700; a fonte do esgotamento não diz qual espaço foi usado"
       },
       {
         "cidade": "Florianópolis",
@@ -171,101 +204,37 @@
         "fonte": "Chartmetric (live_events) — capacidade da casa; ocupação não publicada"
       },
       {
-        "cidade": "Rio de Janeiro",
-        "local": "Fundição Progresso",
-        "data": "2025-04-26",
-        "capacidade": null,
-        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
-      },
-      {
-        "cidade": "Rio de Janeiro",
-        "local": "Fundição Progresso",
-        "data": "2026-05-23",
-        "capacidade": null,
-        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
-      },
-      {
-        "cidade": "Rio de Janeiro",
-        "local": "Fundição Progresso",
-        "data": "2026-11-28",
-        "capacidade": null,
-        "fonte": "Rolling Stone Brasil: Sinfonia'26 com a Nova Orquestra"
-      },
-      {
-        "cidade": "Campinas",
-        "local": "Multi Arena",
-        "data": "2024-05-10",
-        "capacidade": null,
-        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
-      },
-      {
-        "cidade": "Campinas",
-        "local": "Multi Arena (Iguatemi)",
-        "data": "2025-05-23",
-        "capacidade": null,
-        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
-      },
-      {
-        "cidade": "Campinas",
-        "local": "Multi Arena",
-        "data": "2026-07-25",
-        "capacidade": null,
-        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
-      },
-      {
-        "cidade": "Brasília",
-        "local": "Clube AABB",
-        "data": "2026-04-25",
-        "capacidade": null,
-        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
-      },
-      {
         "cidade": "Ribeirão Preto",
         "local": "Alcans Hall",
         "data": "2025-03-14",
         "capacidade": null,
-        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+        "fonte": "ABC do ABC: Eu Quero Rock — Pitty e Fresno. Pista R$200/100, premium R$300/150, camarote R$400",
+        "tipo": "dividido",
+        "fora_do_ajuste": true,
+        "motivo": "evento \"Eu Quero Rock\" com a Pitty: bill dividido"
       },
       {
-        "cidade": "Caxias do Sul",
-        "local": "All Need Master Hall",
-        "data": "2025-09-06",
-        "capacidade": null,
-        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+        "cidade": "São Paulo",
+        "local": "Clube Atlético Juventus",
+        "data": "2025-02-14",
+        "capacidade": 4400,
+        "fonte": "Os Garotos de Liverpool: show com CPM 22, pista a partir de R$60 (Ticket360)",
+        "tipo": "dividido",
+        "fora_do_ajuste": true,
+        "motivo": "bill dividido com o CPM 22: o público não é só da Fresno"
       },
       {
-        "cidade": "Jundiaí",
-        "local": "Sesc Jundiaí",
-        "data": "2025-04-11",
-        "capacidade": null,
-        "ocupacao": 1.0,
-        "fonte": "Jornal de Jundiaí: primeira vez no Sesc Jundiaí, ingressos esgotados"
+        "cidade": "São Paulo",
+        "local": "Terra SP",
+        "data": "2025-01-18",
+        "capacidade": 4000,
+        "fonte": "Bares SP: 4.000 lugares. Nenhuma fonte publicou bilheteria nem preço desta data",
+        "preco_inteira": null
       },
       {
-        "cidade": "São José dos Campos",
-        "local": "Palácio Sunset",
-        "data": "2024-08-17",
-        "capacidade": null,
-        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
-      },
-      {
-        "cidade": "São José dos Campos",
-        "local": "SESI",
-        "data": "2025-10-04",
-        "capacidade": null,
-        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
-      },
-      {
-        "cidade": "Santos",
-        "local": "Arena Club",
-        "data": "2024-11-08",
-        "capacidade": null,
-        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
-      },
-      {
-        "cidade": "Osasco",
-        "local": "Concha Acústica da Faculdade Fito",
-        "data": "2024-10-13",
+        "cidade": "Vitória",
+        "local": "Oásis Beach Club",
+        "data": "2024-12-07",
         "capacidade": null,
         "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
       },
@@ -277,12 +246,89 @@
         "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
       },
       {
-        "cidade": "Vitória",
-        "local": "Oásis Beach Club",
-        "data": "2024-12-07",
+        "cidade": "Porto Alegre",
+        "local": "Auditório Araújo Vianna",
+        "data": "2024-11-17",
+        "capacidade": 3628,
+        "ocupacao": 1.0,
+        "fonte": "Insanity Records: todos os ingressos esgotados (data original 23/06/2024, remarcada pelas enchentes)",
+        "peso": 1.0
+      },
+      {
+        "cidade": "Porto Alegre",
+        "local": "Auditório Araújo Vianna",
+        "data": "2024-11-15",
+        "capacidade": 3628,
+        "ocupacao": 0.9,
+        "peso": 0.6,
+        "fonte": "Insanity Records: data extra aberta pela procura, depois do esgotamento da outra noite"
+      },
+      {
+        "cidade": "Curitiba",
+        "local": "Teatro Positivo",
+        "data": "2024-11-14",
+        "capacidade": 2400,
+        "fonte": "Popster: 5 setores de R$200 a R$380 (média R$284). O título da matéria fala em últimos ingressos, mas o texto não confirma",
+        "preco_inteira": 284
+      },
+      {
+        "cidade": "Santos",
+        "local": "Arena Club",
+        "data": "2024-11-08",
+        "capacidade": 1650,
+        "fonte": "Diário do Litoral: 1.650 (guia de eventos cita 1.400 em pé). Nenhuma fonte publicou bilheteria"
+      },
+      {
+        "cidade": "São Paulo",
+        "local": "Espaço Unimed",
+        "data": "2024-10-18",
+        "capacidade": 8000,
+        "ocupacao": 0.9,
+        "peso": 0.8,
+        "fonte": "Tô na Grade: mezanino marcado como esgotado e último lote à venda, casa de 8.000"
+      },
+      {
+        "cidade": "Osasco",
+        "local": "Concha Acústica da Faculdade Fito",
+        "data": "2024-10-13",
         "capacidade": null,
         "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "São José dos Campos",
+        "local": "Palácio Sunset",
+        "data": "2024-08-17",
+        "capacidade": null,
+        "fonte": "setlist.fm (arquivo da banda) — capacidade não publicada"
+      },
+      {
+        "cidade": "Rio de Janeiro",
+        "local": "Qualistage",
+        "data": "2024-07-05",
+        "capacidade": 8450,
+        "escalavel": true,
+        "fonte": "Os Garotos de Liverpool: camarotes A e B esgotados, demais setores à venda. Pista R$180, poltronas R$260, camarote C R$280. Casa com 4 configurações (8.450 em pé, 3.368 sentada), por isso fora do ajuste",
+        "preco_inteira": 180
+      },
+      {
+        "cidade": "Campinas",
+        "local": "Multi Arena",
+        "data": "2024-05-10",
+        "capacidade": 5000,
+        "fonte": "Multi Arena Campinas, em material da casa: o show de maio/2024 reuniu mais de dois mil fãs",
+        "escalavel": true,
+        "publico": 2000,
+        "peso": 0.6
+      },
+      {
+        "cidade": "Curitiba",
+        "local": "Live Curitiba",
+        "data": "2023-10-14",
+        "capacidade": 5000,
+        "escalavel": true,
+        "fonte": "Opus Entretenimento: 5.000, adaptável a qualquer formato"
       }
-    ]
+    ],
+    "cidade_casa": "Porto Alegre"
   }
 }

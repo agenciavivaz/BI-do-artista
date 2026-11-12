@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useArtist } from '../../data/ArtistContext';
 import { dec, int } from '../../lib/format';
-import { CASAS, CONFIANCA, casaPara, chanceDeEsgotar, fraseProva, pct, pub } from '../../lib/publico';
+import { CASAS, CONFIANCA, casaPara, chanceDeEsgotar, coef, dataBr, fraseProva, pct, pub } from '../../lib/publico';
 import { evento } from '../../lib/track';
 import { CidadeBusca } from './CidadeBusca';
 
@@ -59,6 +59,23 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
         <p className="apoio linha-conf">
           <span className={`pastilha pastilha-${cidade.confianca}`}>{conf.rotulo}</span> {conf.motivo}
         </p>
+        {cidade.extrapolada && m.faixa_demanda && (
+          <p className="apoio linha-conf">
+            <span className="pastilha pastilha-baixa">fora do intervalo testado</span>
+            O modelo foi medido em praças com afinidade de {dec(m.faixa_demanda[0], 1)}x a {dec(m.faixa_demanda[1], 1)}x a mediana.
+            Esta aqui está fora disso, então a previsão é extrapolação e a faixa vem mais larga de propósito.
+          </p>
+        )}
+        {cidade.ticket_medio && (
+          <p className="apoio">
+            Bilheteria bruta provável: <strong className="num">R$ {int(cidade.bilheteria ?? 0)}</strong> — {int(cidade.publico)} pessoas
+            a um ticket médio de R$ {int(cidade.ticket_medio)}
+            {cidade.preco_proprio
+              ? ` (preço praticado pela banda nesta praça: inteira de R$ ${int(cidade.preco_inteira ?? 0)})`
+              : ` (sem preço publicado aqui; usamos a mediana das praças, inteira de R$ ${int(cidade.preco_inteira ?? 0)})`}.
+            A conta supõe que metade do público paga meia.
+          </p>
+        )}
         <ol className="casas" aria-label="Tamanho de casa">
           {CASAS.map((c, i) => <li key={c.curto} className={i === faixaCasa ? 'sel' : ''} aria-current={i === faixaCasa ? 'true' : undefined}>{c.curto}</li>)}
         </ol>
@@ -94,6 +111,7 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
             {cidade.provas.map((pr) => (
               <li key={pr.data + pr.local} className={pr.esgotou ? 'esgotou' : undefined}>
                 <span>{fraseProva(pr)}</span>
+                {pr.motivo && <small className="apoio">Fora do ajuste: {pr.motivo}.</small>}
                 {pr.fonte && <small className="apoio">{pr.fonte}</small>}
               </li>
             ))}
@@ -136,8 +154,9 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
               <span>Previsão da regressão</span>
               <strong className="num">{int(cidade.publico)}</strong>
               <small className="apoio">
-                público ∝ base<sup>{dec(m.beta[1], 2)}</sup> × afinidade<sup>{dec(m.beta[2], 2)}</sup>. O expoente da base é menor que 1:
-                praça grande converte uma fatia menor ({pct(cidade.conv_pct)} aqui).{' '}
+                público ∝ base<sup>{dec(coef(m, 'ln_base') ?? 0, 2)}</sup>
+                {coef(m, 'ln_demanda') != null && <> × afinidade<sup>{dec(coef(m, 'ln_demanda') as number, 2)}</sup></>}.
+                O expoente da base é menor que 1: praça grande converte uma fatia menor ({pct(cidade.conv_pct)} aqui).{' '}
                 {m.afinidade_fixa && 'Com poucos shows medidos, o expoente da afinidade fica fixo para não superajustar.'}
               </small>
             </li>
@@ -150,6 +169,40 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
               </small>
             </li>
           </ol>
+
+          {m.validacao && (
+            <div className="validacao">
+              <h5>O quanto esse modelo erra</h5>
+              <p className="apoio">
+                Tiramos um show de cada vez do ajuste e pedimos ao modelo que previsse justamente ele. Nos{' '}
+                {m.validacao.n} shows medidos, o erro foi de <strong className="num">{m.validacao.erro_mediano_pct}%</strong> na
+                mediana e <strong className="num">{m.validacao.erro_medio_pct}%</strong> na média, com um pior caso de{' '}
+                {m.validacao.erro_maximo_pct}%. A faixa original pegava o número real em {m.validacao.cobertura_pct}% das vezes,
+                menos que os 80% prometidos, então ela foi alargada {dec(m.fator_faixa, 2)}x — a faixa que você vê já está corrigida.
+              </p>
+              <table className="t-val">
+                <thead><tr><th>Show</th><th>Real</th><th>Previsto</th><th>Erro</th></tr></thead>
+                <tbody>
+                  {m.validacao.linhas.map((l) => (
+                    <tr key={l.data + l.local}>
+                      <td>{l.cidade}, {dataBr(l.data)}<small className="apoio">{l.local}</small></td>
+                      <td className="num">{int(l.real)}</td>
+                      <td className="num">{int(l.previsto)}</td>
+                      <td className="num">{l.erro_pct > 0 ? '+' : ''}{l.erro_pct}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {m.comparacao.length > 1 && (
+                <p className="apoio">
+                  Fórmula escolhida: <strong>{m.formula}</strong>. Testamos {m.comparacao.length} formas de montar a conta e
+                  ficamos com a que erra menos nessa validação, não com a de R² mais alto
+                  ({m.comparacao.map((c) => `${c.formula} ${c.erro_mediano_pct}%`).join(' · ')}). Coeficiente fora do plausível —
+                  público crescendo mais que proporcionalmente à base, por exemplo — elimina a fórmula antes da validação.
+                </p>
+              )}
+            </div>
+          )}
         </div>
       </details>
     </div>

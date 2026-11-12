@@ -72,7 +72,12 @@ export interface Cidade {
   publico: number;
   publico_max: number;
   incerteza_pct: number;
+  extrapolada: boolean;
   ep: number;
+  preco_inteira: number | null;
+  ticket_medio: number | null;
+  bilheteria: number | null;
+  preco_proprio: boolean;
   casa: number;
   confianca: 'alta' | 'media' | 'baixa';
   datas_ano: number;
@@ -81,12 +86,12 @@ export interface Cidade {
   folga: number | null;
   veredito_casa: string;
   provas: {
-    local: string; data: string; capacidade: number | null;
-    ocupacao: number | null; publico: number | null; esgotou: boolean; fonte: string;
+    local: string; data: string; capacidade: number | null; ocupacao: number | null;
+    publico: number | null; esgotou: boolean; fonte: string; tipo?: string; motivo?: string | null;
   }[];
   ancora: {
-    local: string; data: string; capacidade: number | null;
-    ocupacao: number | null; publico: number | null; esgotou: boolean; fonte: string;
+    local: string; data: string; capacidade: number | null; ocupacao: number | null;
+    publico: number | null; esgotou: boolean; fonte: string; tipo?: string; motivo?: string | null;
   } | null;
 }
 

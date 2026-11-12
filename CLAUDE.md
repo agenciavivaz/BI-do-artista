@@ -35,13 +35,20 @@ Commit na `main` → Vercel publica. O `vercel.json` roda o build do `app/` e pu
 - `data/` contextos (artista, mesa de cruzamento, UI) · `lib/match.ts` casamento de texto livre (teste: `npm run test:match`)
 - `components/shell/` rail, barra de pergunta, mesa, cabo de luz, gaveta · `components/answer/` raciocínio e resposta
 - `components/blocks/` os 14 tipos de bloco em SVG próprio (despacho em `Bloco.tsx`) · `components/sims/` simuladores
-- Decisão de produto: **público provável por praça** (`scripts/publico.py` + `app/src/lib/publico.ts`). A conta antiga
-  ("3% a 5% dos ouvintes mensais") errava 3 a 5 vezes para baixo. A nova é uma **regressão ponderada em escala log**
-  sobre a agenda própria da banda: `ln(público) = b0 + b1·ln(base de fãs) + b2·ln(demanda_rel)`. Saem dela o P50, a
-  faixa P10–P90 (erro do ajuste + alavancagem da praça), a **chance de esgotar** qualquer casa (lognormal da predição)
-  e o veredito de casa maior / segunda data / subir preço. Regras que importam: show esgotado é **piso**, não teto;
-  casa de configuração variável (arena) fica fora do ajuste porque capacidade não é lotação; por cidade e ano só a
-  maior evidência entra; com menos de 10 shows medidos o expoente da afinidade fica fixo no prior, para não
-  superajustar. Os shows ficam em `artists/<slug>/config.json → calibracao.ancoras` (local, data, capacidade,
-  ocupação, fonte, `escalavel`, `fora_do_ajuste`) — **anotar a ocupação depois de cada show refaz a regressão**.
+- Decisão de produto: **público provável por praça** (`scripts/publico.py` + `app/src/lib/publico.ts`). Regressão
+  ponderada em escala log sobre a agenda própria da banda, levantada na web (setlist.fm, imprensa, bilheterias) e
+  guardada em `artists/<slug>/config.json → calibracao.ancoras`. Regras que importam, todas com motivo:
+  - **censura**: show esgotado não mede demanda, mede o tamanho da casa — entra como Tobit por EM (`_wls_censurado`),
+    não como ponto exato, senão a curva afunda justamente nas praças que lotam;
+  - **bill dividido** (com CPM 22, com a Pitty) e **casa de configuração variável** (arena, galpão, estrutura de
+    festival) ficam fora do ajuste: capacidade de arena não diz quanta gente foi;
+  - **uma linha por praça e ano**, e a temporada menor é descartada se a mesma praça fez quase o dobro em até 2 anos
+    (foi escolha de casa, não teto de demanda);
+  - **fórmula escolhida pela validação leave-one-out**, não pelo R², entre candidatas com limites de plausibilidade
+    (expoente da base entre 0,3 e 1: mercado satura);
+  - **faixa P10–P90 calibrada**: se a cobertura observada na validação fica abaixo de 80%, a faixa é alargada;
+  - **guarda de extrapolação**: praça fora do intervalo de afinidade testado recebe correção pelo prior e faixa
+    mais larga, e a tela diz que é extrapolação.
+  O erro medido (hoje: mediana 21%, média 31%) aparece na interface — é o que protege a demo. **Anotar capacidade e
+  ocupação depois de cada show refaz a regressão inteira.**
 - Decisão de produto: o simulador "Janela de lançamento" mostra o **nível** de ouvintes 1 mês depois (índice sazonal do mês seguinte + mediana dos lançamentos) e o **salto** do PRD §5.5 como informação extra. Só a fórmula do salto apontaria março como melhor mês, contrariando o veredito de "quando lançar".

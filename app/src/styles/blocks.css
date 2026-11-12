@@ -147,6 +147,15 @@
 .chance-valor { font-size: var(--t-15); color: var(--fumaca); }
 .chance-valor strong { color: var(--luz); font-size: var(--t-21); }
 
+.validacao { display: flex; flex-direction: column; gap: 10px; padding-top: 12px; border-top: 1px solid var(--ferragem); }
+.validacao h5 { font-size: var(--t-15); color: var(--luz); }
+.validacao .apoio { max-width: 68ch; }
+.t-val { width: 100%; border-collapse: collapse; font-size: var(--t-13); }
+.t-val th { text-align: right; color: var(--fumaca); font-weight: 400; padding: 6px 8px; border-bottom: 1px solid var(--ferragem); }
+.t-val th:first-child, .t-val td:first-child { text-align: left; }
+.t-val td { text-align: right; padding: 8px; border-bottom: 1px solid var(--ferragem); }
+.t-val td small { display: block; font-size: var(--t-13); }
+
 /* provas: o que a banda já fez na praça */
 .provas h4 { font-size: var(--t-15); color: var(--fumaca); font-weight: 400; margin-bottom: 8px; }
 .provas ul { display: flex; flex-direction: column; gap: 8px; list-style: none; }

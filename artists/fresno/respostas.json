@@ -217,7 +217,8 @@
             "demanda_rel",
             "faixa",
             "publico",
-            "chance_esgotar"
+            "ticket_medio",
+            "bilheteria"
           ],
           "filtro": {
             "faixa": [
@@ -336,7 +337,8 @@
         "casa de show",
         "casa maior",
         "segunda data",
-        "esgotar"
+        "esgotar",
+        "bilheteria"
       ],
       "pensando": [
         {
@@ -356,7 +358,7 @@
           "ms": 700
         },
         {
-          "texto": "Lendo a agenda: 34 shows próprios da banda",
+          "texto": "Lendo a agenda própria da banda: 34 shows desde 2024",
           "fontes": [
             "shows",
             "imprensa"
@@ -364,7 +366,7 @@
           "ms": 700
         },
         {
-          "texto": "Ajustando a regressão nos 6 shows com capacidade de casa conhecida",
+          "texto": "Ajustando a regressão nos 10 shows com capacidade de casa conhecida",
           "fontes": [
             "shows",
             "cidades"
@@ -372,7 +374,15 @@
           "ms": 700
         },
         {
-          "texto": "Projetando público e chance de esgotar cada casa",
+          "texto": "Testando o modelo: tira um show, tenta prever ele — erro mediano de 21%",
+          "fontes": [
+            "shows",
+            "imprensa"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Projetando público, chance de esgotar e bilheteria",
           "fontes": [
             "cidades",
             "ibge"
@@ -380,20 +390,20 @@
           "ms": 700
         }
       ],
-      "veredito": "Em São Paulo, 8.000 pessoas é o cenário mais provável — 68% de chance de esgotar a casa que a banda usou lá.",
-      "explicacao": "A conta não é uma taxa de conversão escolhida a dedo. É uma regressão sobre os shows próprios da banda: o público cresce com a base de fãs da praça elevada a 0,61 — menor que 1, ou seja, praça grande converte uma fatia menor — e com a afinidade local elevada a 0,30. O ajuste explica 81% da variação dos 6 shows medidos, com desvio de 24% em escala log. Show esgotado entra como piso, não como teto: ele diz que a banda venderia pelo menos aquilo.",
+      "veredito": "São Paulo: 8.000 pessoas é o cenário mais provável, 63% de chance de esgotar a casa que a banda usou lá. Em Curitiba, a previsão já passa da casa usada.",
+      "explicacao": "A conta não é uma taxa de conversão escolhida a dedo nem uma média. É uma regressão sobre os shows próprios da banda, com o público crescendo com a base de fãs da praça elevada a 0,53 — menor que 1, ou seja, praça grande converte uma fatia menor. Show esgotado entra como piso e não como teto, porque lotar diz que a banda venderia pelo menos aquilo. Testado show a show, o modelo erra 21% na mediana e 31% na média — é a margem com que esses números devem ser lidos.",
       "numeros": [
         {
           "valor": "8.000",
-          "rotulo": "São Paulo · 68% de esgotar"
+          "rotulo": "São Paulo · 63% de esgotar"
+        },
+        {
+          "valor": "3.700",
+          "rotulo": "Rio de Janeiro · 21% de esgotar"
         },
         {
           "valor": "3.600",
           "rotulo": "Porto Alegre · 50% de esgotar"
-        },
-        {
-          "valor": "2.900",
-          "rotulo": "Curitiba · 73% de esgotar"
         }
       ],
       "blocos": [
@@ -412,19 +422,33 @@
             "publico",
             "publico_max",
             "confianca",
+            "bilheteria",
             "veredito_casa"
           ],
           "titulo": "Público provável por praça"
+        },
+        {
+          "tipo": "tabela",
+          "dados": "publico_praca.modelo.validacao.linhas",
+          "colunas": [
+            "cidade",
+            "local",
+            "data",
+            "real",
+            "previsto",
+            "erro_pct"
+          ],
+          "titulo": "O quanto o modelo erra, show a show"
         }
       ],
       "acoes": [
         "Em Curitiba, a previsão passa da casa usada: peça casa maior ou uma segunda data.",
         "Prefira a casa que lota no limite de baixo da faixa: casa cheia vira conteúdo e escassez.",
-        "Depois de cada show, anote capacidade e ocupação em config.json → calibracao.ancoras: a regressão se refaz sozinha."
+        "Anote capacidade e ocupação de cada show em config.json → calibracao.ancoras: a regressão se refaz sozinha."
       ],
       "confianca": {
-        "nivel": "alta",
-        "motivo": "Regressão sobre 6 shows próprios com capacidade conhecida (R² 0,81). Casa de configuração variável fica fora do ajuste, porque a capacidade da arena não diz quanta gente foi."
+        "nivel": "média",
+        "motivo": "Regressão sobre 10 shows próprios com capacidade de casa conhecida, de 34 na agenda. Na validação show a show o erro mediano é de 21% e o pior caso foi 75%. Capacidade de casa quase nunca é publicada no Brasil e a ocupação é presumida quando a fonte não diz: com bilheteria oficial, a margem cai."
       },
       "seguintes": [
         "onde-cobrar-mais",

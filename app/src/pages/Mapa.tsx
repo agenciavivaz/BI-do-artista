@@ -60,6 +60,10 @@ export default function MapaPage() {
               {sel.chance_esgotar != null && sel.ancora?.capacidade && (
                 <Dado rotulo={`Chance de esgotar ${int(sel.ancora.capacidade)} lugares`} valor={`${sel.chance_esgotar}%`} sub={sel.veredito_casa} />
               )}
+              {sel.bilheteria && (
+                <Dado rotulo="Bilheteria bruta provável" valor={`R$ ${int(sel.bilheteria)}`}
+                  sub={`ticket médio de R$ ${int(sel.ticket_medio ?? 0)}${sel.preco_proprio ? ', preço praticado aqui' : ', mediana das praças'}`} />
+              )}
               {sel.provas[0] && <Dado rotulo="Último show próprio aqui" valor={sel.provas[0].local} sub={fraseProva(sel.provas[0])} />}
               <Dado rotulo="Views no YouTube, 3 meses" valor={sel.yt_3m == null ? 'sem dado' : signed(sel.yt_3m, 0)} />
             </dl>

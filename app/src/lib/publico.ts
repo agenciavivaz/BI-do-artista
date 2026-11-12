@@ -21,6 +21,7 @@ export const casaPara = (n: number) => CASAS.findIndex((c) => n < c.ate);
 export interface Prova {
   local: string; data: string; capacidade: number | null;
   ocupacao: number | null; publico: number | null; esgotou: boolean; fonte: string;
+  tipo?: string; motivo?: string | null;
 }
 
 export interface ShowUsado extends Prova { cidade: string; peso: number; no_ajuste: boolean; fator_tempo: number }
@@ -32,6 +33,8 @@ export interface PublicoPraca {
   ouvintes_atuais: number;
   modelo: {
     tipo: 'regressao' | 'referencia';
+    formula: string;
+    termos: string[];
     beta: number[];
     erro_padrao: number[] | null;
     sigma: number;
@@ -41,6 +44,22 @@ export interface PublicoPraca {
     n_provas: number;
     afinidade_fixa: boolean;
     cidades: string[];
+    validacao: {
+      n: number;
+      erro_mediano_pct: number;
+      erro_medio_pct: number;
+      erro_maximo_pct: number;
+      cobertura_pct: number;
+      linhas: { cidade: string; local: string; data: string; real: number; previsto: number; erro_pct: number }[];
+    } | null;
+    fator_faixa: number;
+    faixa_base: [number, number] | null;
+    faixa_demanda: [number, number] | null;
+    prior_demanda: number;
+    comparacao: {
+      formula: string; coeficientes: number; beta: number[]; termos: string[];
+      r2: number | null; erro_mediano_pct: number; erro_medio_pct: number; cobertura_pct: number;
+    }[];
   };
   limiares: { crescer: number; encolher: number };
   datas_por_ano: Record<string, number>;
@@ -71,6 +90,12 @@ function fi(z: number): number {
   return 0.5 * (1 + s * y);
 }
 
+/** coeficiente de um termo da regressão, se ele estiver na fórmula escolhida */
+export const coef = (m: PublicoPraca['modelo'], termo: string) => {
+  const i = m.termos.indexOf(termo);
+  return i < 0 ? null : m.beta[i];
+};
+
 export const pct = (v: number) => `${dec(v, v % 1 ? 1 : 0)}%`;
 export const dataBr = (iso: string) => iso.split('-').reverse().join('/');
 
@@ -78,6 +103,7 @@ export const dataBr = (iso: string) => iso.split('-').reverse().join('/');
 export function fraseProva(p: Prova): string {
   const partes = [`${p.local}, ${dataBr(p.data)}`];
   if (p.capacidade) partes.push(`${int(p.capacidade)} lugares`);
+  if (p.tipo === 'dividido') partes.push('bill dividido');
   if (p.esgotou) partes.push('esgotado');
   else if (p.ocupacao) partes.push(`${pct(p.ocupacao * 100)} da casa`);
   else if (p.capacidade) partes.push('ocupação não publicada');
