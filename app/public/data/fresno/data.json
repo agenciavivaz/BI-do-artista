@@ -5625,6 +5625,38 @@
     "fonte": "Rolling Stone Brasil",
     "url": "https://rollingstone.com.br/guia-show/fresno-anuncia-nova-data-de-show-com-orquestra/"
    }
+  ],
+  "radar": [
+   {
+    "modelo": "merch_comunidade",
+    "data": "2026-11-17",
+    "tipo": "Receita",
+    "titulo": "A collab com a Tattoo Week pode virar uma linha recorrente de comunidade",
+    "leitura": "A notícia confirma demanda por produto que combina identidade visual, memória e pertencimento. Os dados digitais medem se existe base suficiente para repetir o formato além de uma ação pontual.",
+    "acao": "Medir conversão, ticket médio e recompra desta coleção; usar o resultado para desenhar dois drops anuais ligados a marcos do catálogo.",
+    "fonte": "Portal Radar",
+    "url": "https://portalradar.com.br/fresno-lanca-colecao-exclusiva-de-camisetas-em-collab-com-a-tattoo-week/"
+   },
+   {
+    "modelo": "palco_aquisicao",
+    "data": "2026-10-27",
+    "tipo": "Aquisição",
+    "titulo": "Os shows com Simple Plan em 2027 devem ser tratados como campanha de aquisição",
+    "leitura": "Abrir uma turnê internacional coloca a Fresno diante de público adjacente. O histórico permite comparar o efeito de palcos compartilhados com o de shows próprios.",
+    "acao": "Negociar captação de audiência por cidade, impulsionar conteúdo colaborativo antes das datas e medir ouvintes, seguidores e YouTube por 30 dias após cada show.",
+    "fonte": "Tenho Mais Discos Que Amigos",
+    "url": "https://www.tenhomaisdiscosqueamigos.com/2026/10/27/simple-plan-all-time-low-shows-brasil-2027/"
+   },
+   {
+    "modelo": "catalogo_premium",
+    "data": "2026-10-08",
+    "tipo": "Produto",
+    "titulo": "Fresno Sinfonia valida um produto premium apoiado no catálogo",
+    "leitura": "O esgotamento da Sala São Paulo em minutos e a abertura de uma data extra são prova comercial. O desempenho do catálogo mostra se o formato tem fôlego para novas praças e novos repertórios.",
+    "acao": "Tratar o Sinfonia como unidade de negócio: registrar ocupação, receita por setor, merchandising e origem do comprador para decidir a expansão em 2027.",
+    "fonte": "Rolling Stone Brasil",
+    "url": "https://rollingstone.com.br/guia-show/fresno-anuncia-nova-data-de-show-com-orquestra/"
+   }
   ]
  },
  "qualidade": [
@@ -6234,6 +6266,53 @@
    }
   ]
  },
+ "radar": [
+  {
+   "modelo": "merch_comunidade",
+   "data": "2026-11-17",
+   "tipo": "Receita",
+   "titulo": "A collab com a Tattoo Week pode virar uma linha recorrente de comunidade",
+   "leitura": "A notícia confirma demanda por produto que combina identidade visual, memória e pertencimento. Os dados digitais medem se existe base suficiente para repetir o formato além de uma ação pontual.",
+   "acao": "Medir conversão, ticket médio e recompra desta coleção; usar o resultado para desenhar dois drops anuais ligados a marcos do catálogo.",
+   "fonte": "Portal Radar",
+   "url": "https://portalradar.com.br/fresno-lanca-colecao-exclusiva-de-camisetas-em-collab-com-a-tattoo-week/",
+   "evidencias": [
+    "128 seguidores para cada 100 ouvintes no Spotify",
+    "Lealdade da base: 86/100",
+    "TikTok +14,1% e Instagram +8,7% em 12 meses"
+   ]
+  },
+  {
+   "modelo": "palco_aquisicao",
+   "data": "2026-10-27",
+   "tipo": "Aquisição",
+   "titulo": "Os shows com Simple Plan em 2027 devem ser tratados como campanha de aquisição",
+   "leitura": "Abrir uma turnê internacional coloca a Fresno diante de público adjacente. O histórico permite comparar o efeito de palcos compartilhados com o de shows próprios.",
+   "acao": "Negociar captação de audiência por cidade, impulsionar conteúdo colaborativo antes das datas e medir ouvintes, seguidores e YouTube por 30 dias após cada show.",
+   "fonte": "Tenho Mais Discos Que Amigos",
+   "url": "https://www.tenhomaisdiscosqueamigos.com/2026/10/27/simple-plan-all-time-low-shows-brasil-2027/",
+   "evidencias": [
+    "Palco coletivo: +1,8% de ouvintes depois do show; próprio: −0,2%",
+    "YouTube: 396.000 inscritos (+2,3% em 12 meses)",
+    "Momentum da carreira: 69/100"
+   ]
+  },
+  {
+   "modelo": "catalogo_premium",
+   "data": "2026-10-08",
+   "tipo": "Produto",
+   "titulo": "Fresno Sinfonia valida um produto premium apoiado no catálogo",
+   "leitura": "O esgotamento da Sala São Paulo em minutos e a abertura de uma data extra são prova comercial. O desempenho do catálogo mostra se o formato tem fôlego para novas praças e novos repertórios.",
+   "acao": "Tratar o Sinfonia como unidade de negócio: registrar ocupação, receita por setor, merchandising e origem do comprador para decidir a expansão em 2027.",
+   "fonte": "Rolling Stone Brasil",
+   "url": "https://rollingstone.com.br/guia-show/fresno-anuncia-nova-data-de-show-com-orquestra/",
+   "evidencias": [
+    "Força do catálogo: 92/100",
+    "Redenção está a 1 ponto de popularidade de Carta de Adeus no Spotify",
+    "Revanche: popularidade 52 e alcance potencial de 728.815 em playlists"
+   ]
+  }
+ ],
  "recomendacoes": [
   {
    "area": "Cachê & Turnê",
