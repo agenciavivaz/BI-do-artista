@@ -189,21 +189,21 @@ def build_answers(d):
     c0 = cases[0]
     A.append({
         'id': 'show-da-retorno', 'tema': 'shows', 'destaque': True,
-        'pergunta': 'Show grande dá retorno no streaming?',
+        'pergunta': 'O streaming costuma mudar perto dos shows?',
         'variacoes': ['show aumenta', 'show grande', 'depois do show', 'efeito do show', 'show gratuito', 'aumento no spotify'],
         'pensando': [
             step('Abrindo a série diária de ouvintes de 5 cidades', ['cidade_diaria']),
             step('Marcando as datas dos shows de 2026', ['shows', 'imprensa']),
             step('Medindo antes × 30 dias depois de cada show', ['cidade_diaria', 'shows']),
         ],
-        'veredito': f"Sim: {c0['titulo'].split(',')[-1].strip()} ganhou {br(c0['lift'],0)}% de ouvintes depois do show na {c0['titulo'].split(',')[0].strip()}.",
+        'veredito': f"Em {c0['titulo'].split(',')[-1].strip()}, os ouvintes subiram {br(c0['lift'],0)}% perto do show na {c0['titulo'].split(',')[0].strip()}.",
         'explicacao': (f"Após {c0['descricao']}, os ouvintes em {c0['titulo'].split(',')[-1].strip()} foram de {br(c0['antes'],0,True)}% "
-                       f"para {br(c0['pico'],0,True)}% em relação a nov/2025. Show grande na cidade certa funciona como campanha de mídia."),
+                       f"para {br(c0['pico'],0,True)}% em relação a nov/2025. A coincidência é útil para planejar mídia, mas não prova que o show causou a alta."),
         'numeros': [{'valor': br(c['lift'], 0, True) + '%', 'rotulo': c['titulo']} for c in cases],
         'blocos': [{'tipo': 'casos_show', 'dados': 'shows.casos_cidade'}],
         'acoes': ['Faça 1 show de grande porte por ano numa praça-chave com marca pagando a conta.',
                   'Publique conteúdo do show na semana seguinte: é quando a cidade está ouvindo.'],
-        'confianca': {'nivel': 'alta', 'motivo': 'Série diária da cidade com o salto exatamente na semana do show.'},
+        'confianca': {'nivel': 'média', 'motivo': 'Série diária da cidade; lançamento, imprensa, mídia e outros eventos próximos podem explicar parte da alta.'},
         'seguintes': ['festival-ou-proprio', 'marca-certa'],
     })
     bt = {b['tipo']: b for b in d['shows']['por_tipo']}
@@ -213,19 +213,20 @@ def build_answers(d):
         'pergunta': 'Vale mais tocar em festival ou fazer show próprio?',
         'variacoes': ['festival', 'show próprio', 'line-up', 'abrir show', 'turnê coletiva'],
         'pensando': [
-            step(f"Separando {fest['n'] + prop['n']} eventos desde 2019 em dois tipos", ['shows']),
+            step(f"Separando {fest['n'] + prop['n']} combinações de mês e tipo desde 2019", ['shows']),
             step('Descontando o efeito do mês (dezembro sempre cai)', ['shows', 'ouvintes']),
             step('Comparando a mediana de cada grupo', ['shows', 'ouvintes']),
         ],
-        'veredito': 'Festival traz público novo; show próprio monetiza quem já é fã.',
+        'veredito': 'Nos dados observados, meses com festival tiveram sinal melhor; use isso como hipótese de teste.',
         'explicacao': (f"Depois de festival ou turnê coletiva os ouvintes mudam {br(fest['mediana'],1,True)}% na mediana "
                        f"({fest['positivos']:.0f}% dos casos com alta), contra {br(prop['mediana'],1,True)}% em show próprio. "
-                       "Palco dividido coloca a banda na frente de quem ainda não ouve."),
+                       "O resultado é uma associação: lançamentos, mídia e outras datas no mesmo mês também influenciam."),
         'numeros': [{'valor': br(fest['mediana'], 1, True) + '%', 'rotulo': 'festival / coletivo'},
                     {'valor': br(prop['mediana'], 1, True) + '%', 'rotulo': 'show próprio'}],
         'blocos': [{'tipo': 'pontos_eventos', 'dados': 'shows.eventos'}],
-        'acoes': ['2 a 3 festivais ou line-ups de nostalgia por semestre.', 'Shows próprios nas praças de prêmio de cachê.'],
-        'confianca': {'nivel': 'média', 'motivo': f"{fest['n'] + prop['n']} eventos: amostra pequena, direção consistente."},
+        'acoes': ['Teste um festival com campanha e códigos rastreáveis; compare novos ouvintes e seguidores antes/depois.',
+                  'Use show próprio nas praças fortes e registre bilheteria, mídia e resultado líquido.'],
+        'confianca': {'nivel': 'baixa', 'motivo': f"{fest['n'] + prop['n']} meses/tipos observados, sem grupo de controle; útil como hipótese para teste."},
         'seguintes': ['com-quem-dividir-palco', 'onde-cobrar-mais'],
     })
 
@@ -292,16 +293,19 @@ def build_answers(d):
         'id': 'proximos-meses', 'tema': 'lancamentos',
         'pergunta': 'O que esperar dos próximos 6 meses?',
         'variacoes': ['previsão', 'próximos meses', 'vai cair', 'vai crescer', 'projeção', 'futuro'],
-        'pensando': [step('Calculando o nível real, sem efeito do mês, dos últimos 12 meses', ['ouvintes']),
-                     step('Aplicando o padrão de cada mês', ['ouvintes']),
-                     step('Desenhando uma faixa indicativa pela variação histórica', ['ouvintes'])],
+        'pensando': [step('Comparando quatro métodos simples nos meses já observados', ['ouvintes']),
+                     step('Escolhendo o método que menos errou no backtest', ['ouvintes']),
+                     step('Aplicando o padrão de cada mês e ampliando a margem com o horizonte', ['ouvintes'])],
         'veredito': f"Janeiro deve ficar perto de {short(jan['valor'])} ouvintes. É um cenário sazonal, sujeito a lançamentos e outros eventos.",
-        'explicacao': (f"A base sem efeito sazonal está em {short(d['base_dessazonalizada'])}. A faixa provável para janeiro vai de "
-                       f"{short(jan['min'])} a {short(jan['max'])}; a faixa é indicativa e não foi validada como intervalo de 80%."),
+        'explicacao': (f"O método escolhido foi {d['previsao_meta']['metodo']}, com erro médio de "
+                       f"{br(d['previsao_meta']['erro_medio_pct'])}% em {d['previsao_meta']['meses_teste']} meses de teste. "
+                       f"A faixa indicativa para janeiro vai de {short(jan['min'])} a {short(jan['max'])}; ela aumenta nos meses mais distantes "
+                       "e não antecipa lançamento, viral ou show grande."),
         'numeros': [{'valor': short(f['valor']), 'rotulo': f['mes']} for f in fc[:3]],
         'blocos': [{'tipo': 'previsao', 'dados': 'historico+previsao'}],
         'acoes': ['Compare o resultado real com a projeção e planeje conteúdo de catálogo para esse período.'],
-        'confianca': {'nivel': 'média', 'motivo': 'Projeção estatística simples; um lançamento ou show grande muda a curva.'},
+        'confianca': {'nivel': 'média', 'motivo': (f"Método escolhido em backtest de {d['previsao_meta']['meses_teste']} meses; "
+                                                  "eventos futuros não estão na série e podem mudar a curva.")},
         'seguintes': ['quando-lancar'],
     })
 
@@ -327,6 +331,34 @@ def build_answers(d):
                   'Grave a faixa nova ao vivo em vertical para alimentar o som no Reels.'],
         'confianca': {'nivel': 'média', 'motivo': 'O export cobre 5 faixas monitoradas; a API cobre o catálogo inteiro.'},
         'seguintes': ['viralizando', 'edicao-comemorativa'],
+    })
+
+    sc = d['saude_catalogo']
+    acel = sc['acelerando']
+    A.append({
+        'id': 'catalogo-concentrado', 'tema': 'catalogo',
+        'pergunta': 'Minha carreira depende de poucas músicas?',
+        'variacoes': ['catálogo concentrado', 'dependo de hits', 'poucas músicas', 'cauda longa', 'músicas acelerando',
+                      'qual música está crescendo', 'faixa crescendo agora'],
+        'pensando': [step('Somando os streams de cada faixa nos últimos 90 dias', ['faixas']),
+                     step('Medindo quanto as três maiores representam', ['faixas']),
+                     step('Comparando os últimos 30 dias com os 60 anteriores', ['faixas'])],
+        'veredito': (f"No recorte exportado, {sc['faixas_80pct']} de {sc['faixas_ativas']} faixas formam 80% dos streams recentes."),
+        'explicacao': (f"O relatório fornecido contém {sc['faixas_ativas']} faixas com streams nos últimos 90 dias, não o catálogo completo. "
+                       f"Nesse recorte, a maior responde por {sc['top1_pct']:.0f}% e as três maiores por {sc['top3_pct']:.0f}%. "
+                       + (f"Agora, “{acel[0]['faixa']}” está {br(acel[0]['aceleracao_30d'],0,True)}% acima do ritmo mensal dos 60 dias anteriores. "
+                          if acel else "Nenhuma faixa está mais de 10% acima do ritmo dos 60 dias anteriores. ")
+                       + "Concentração não é ruim por si só, mas aumenta o risco de setlist, mídia e receita dependerem dos mesmos hits."),
+        'numeros': [{'valor': f"{sc['top3_pct']:.0f}%", 'rotulo': 'dos streams nas 3 maiores do recorte'},
+                    {'valor': str(sc['faixas_80pct']), 'rotulo': 'faixas formam 80% do consumo'},
+                    {'valor': str(len(acel)), 'rotulo': 'faixas acelerando agora'}],
+        'blocos': [{'tipo': 'tabela', 'dados': 'faixas',
+                    'colunas': ['faixa', 'streams_30d', 'streams_90d', 'aceleracao_30d', 'forca'],
+                    'titulo': 'Velocidade e peso de cada faixa'}],
+        'acoes': ['Proteja os hits no setlist, mas escolha uma faixa acelerando para receber conteúdo e mídia.',
+                  'Acompanhe mensalmente quantas faixas são necessárias para formar 80% dos streams.'],
+        'confianca': {'nivel': 'média', 'motivo': 'As contas são exatas para as faixas exportadas, mas o arquivo não contém o catálogo completo.'},
+        'seguintes': ['setlist', 'viralizando', 'edicao-comemorativa'],
     })
     tt = d['sons']['tiktok']
     A.append({
@@ -429,10 +461,11 @@ def build_answers(d):
                      step('Calculando quanto do alcance depende de editorial', ['playlists'])],
         'veredito': f"As editoriais pararam em {pr['editoriais']} desde {pr['editoriais_parado_desde']}; os fãs continuam colocando a banda nas deles.",
         'explicacao': (f"Mesmo com disco novo, o número de editoriais não mudou. Já as playlists de fãs cresceram {br(pr['usuarios_g12'],0,True)}% "
-                       f"em 12 meses ({n(pr['usuarios'])}). Só {pr['dependencia_editorial']:.0f}% do alcance vem de editorial: base sólida, teto baixo."
+                       f"em 12 meses ({n(pr['usuarios'])}). As editoriais representam {pr['alcance_editorial_pct']:.0f}% do alcance potencial "
+                       "somado das playlists; isso mede exposição possível, não a origem dos streams."
                        + (f" O melhor sinal recente: {dp['posicao']}º lugar na {dp['playlist']} com \"{dp['faixa']}\"." if dp else '')),
         'numeros': [{'valor': str(pr['editoriais']), 'rotulo': 'editoriais'}, {'valor': short(pr['usuarios']), 'rotulo': 'playlists de fãs'},
-                    {'valor': f"{pr['dependencia_editorial']:.0f}%", 'rotulo': 'do alcance é editorial'}],
+                    {'valor': f"{pr['alcance_editorial_pct']:.0f}%", 'rotulo': 'do alcance potencial é editorial'}],
         'blocos': [{'tipo': 'linha', 'dados': 'playlists.evolucao', 'campo': 'usuarios'}, {'tipo': 'lista', 'dados': 'playlists.recomendadas'}],
         'acoes': ['Pitch editorial 4 semanas antes de cada lançamento, com o recorte "rock nostalgia".', 'Contate os 10 curadores-fãs com mais seguidores.'],
         'confianca': {'nivel': 'alta', 'motivo': 'Série diária de playlists do Spotify.'},

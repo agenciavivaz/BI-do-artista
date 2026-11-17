@@ -6,7 +6,7 @@ const M = { l: 50, r: 14, t: 14, b: 30 };
 
 export interface PontoLinha { x: string; v: number; min?: number; max?: number; proj?: boolean }
 
-/** Linha com faixa provável opcional (histórico + previsão). */
+/** Linha com faixa indicativa opcional (histórico + previsão). */
 export function GraficoLinha({ pontos, fmt = compact, rotulo, unidade = '', altura = 250 }: { pontos: PontoLinha[]; fmt?: (v: number) => string; rotulo: string; unidade?: string; altura?: number }) {
   const { idx, setIdx, onKeyDown } = useScrub(pontos.length);
   const temProj = pontos.some((p) => p.proj);
@@ -15,7 +15,7 @@ export function GraficoLinha({ pontos, fmt = compact, rotulo, unidade = '', altu
   const pad = (hi - lo) * 0.08 || 1;
   const leitura = idx == null ? null : (() => {
     const p = pontos[idx];
-    const faixa = p.min != null && p.max != null && p.proj ? ` (faixa provável ${fmt(p.min)} a ${fmt(p.max)})` : '';
+    const faixa = p.min != null && p.max != null && p.proj ? ` (faixa indicativa ${fmt(p.min)} a ${fmt(p.max)})` : '';
     return `${p.x}: ${fmt(p.v)}${unidade}${faixa}${p.proj ? ' · projeção' : ''}`;
   })();
   return (
@@ -68,7 +68,7 @@ export function GraficoLinha({ pontos, fmt = compact, rotulo, unidade = '', altu
           );
         }}
       </Responsivo>
-      {temProj && <Legenda itens={[{ cor: 'var(--dado-1)', texto: 'Histórico', forma: 'linha' }, { cor: 'var(--dado-1)', texto: 'Projeção e faixa provável', forma: 'linha', opacidade: 0.5 }]} />}
+      {temProj && <Legenda itens={[{ cor: 'var(--dado-1)', texto: 'Histórico', forma: 'linha' }, { cor: 'var(--dado-1)', texto: 'Projeção e faixa indicativa', forma: 'linha', opacidade: 0.5 }]} />}
     </>
   );
 }

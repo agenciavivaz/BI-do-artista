@@ -49,7 +49,7 @@ export default function Inicio() {
         <div><dt>Ouvintes mensais</dt><dd className="num">{compact(k.ouvintes)}</dd></div>
         <div><dt>Seguidores no Spotify</dt><dd className="num">{compact(k.seguidores_spotify)}</dd></div>
         <div><dt>Seguidores por 100 ouvintes</dt><dd className="num">{int(k.lealdade)}</dd></div>
-        <div><dt>Fãs somados nas redes</dt><dd className="num">{compact(k.fas_total)}</dd></div>
+        <div><dt>Seguidores somados nas redes</dt><dd className="num">{compact(k.fas_total)}</dd><small className="apoio">com sobreposição entre plataformas</small></div>
       </dl>
 
       {/* ---------- radar de gestão ---------- */}

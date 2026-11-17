@@ -18,6 +18,8 @@ const casos: [string, string][] = [
   ['qual a cotação do dólar hoje', 'FALLBACK'],
   ['previsão dos próximos meses', 'proximos-meses'],
   ['feat com quem', 'com-quem-dividir-palco'],
+  ['minha carreira depende de poucas músicas', 'catalogo-concentrado'],
+  ['qual faixa está crescendo agora', 'catalogo-concentrado'],
 ];
 let falhas = 0;
 for (const [txt, esperado] of casos) {

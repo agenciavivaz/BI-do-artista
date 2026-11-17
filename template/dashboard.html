@@ -531,7 +531,7 @@ $('#kpis').innerHTML = [
   {v: fmt(K.ouvintes), l:'ouvintes mensais no Spotify', d:`<span class="${cls(K.ouvintes_g12)}">${sign(K.ouvintes_g12,1)}</span> <span class="muted">em 12 meses</span>`},
   {v: short(K.seguidores_spotify), l:'seguidores no Spotify', d:`<span class="muted">mais seguidores que ouvintes</span>`},
   {v: K.lealdade, l:'seguidores a cada 100 ouvintes', d:`<span class="muted">base que escolheu seguir</span>`},
-  {v: short(K.fas_total), l:'seguidores somados em 8 plataformas', d:`<span class="muted">Spotify, X, YouTube, Instagram…</span>`},
+  {v: short(K.fas_total), l:'seguidores somados em 8 plataformas', d:`<span class="muted">há sobreposição de pessoas entre redes</span>`},
 ].map(k => `<div class="kpi reveal"><div class="v">${k.v}</div><div class="l">${k.l}</div><div class="d">${k.d}</div></div>`).join('');
 
 /* índices */
@@ -618,7 +618,7 @@ line('#forecast', [
   {name:'Projeção', color:'var(--accent-2)', band:true, dash:true, points: hist.map((h,i)=> i===hist.length-1?{v:h.valor,min:h.valor,max:h.valor}:null).concat(fc.map(f=>({v:f.valor,min:f.min,max:f.max})))},
 ], {labels, ticks:8});
 const jan = fc.find(f=>f.mes.startsWith('jan')); const lastH = hist[hist.length-1];
-$('#forecast-note').innerHTML = jan ? `Janeiro deve ficar perto de <b>${short(jan.valor)}</b> ouvintes (faixa ${short(jan.min)}–${short(jan.max)}). O cenário considera sazonalidade; a queda pode ter outras causas: a base dessazonalizada está em ${short(D.base_dessazonalizada)}.` : '';
+$('#forecast-note').innerHTML = jan ? `Janeiro deve ficar perto de <b>${short(jan.valor)}</b> ouvintes (faixa indicativa ${short(jan.min)}–${short(jan.max)}). Método: ${esc(D.previsao_meta.metodo)}, erro médio de ${fmt(D.previsao_meta.erro_medio_pct)}% em ${D.previsao_meta.meses_teste} meses de backtest. Eventos futuros podem mudar a curva.` : '';
 $('#anniv').innerHTML = (D.contexto.aniversarios||[]).map(a => `<div class="tl"><div class="y">${a.ano}</div><div><div class="t">${esc(a.marco)}</div><div class="st">${esc(a.status)}</div></div></div>`).join('');
 const inv = D.serie_inv;
 if (inv.lista && inv.lista.length){
@@ -646,7 +646,7 @@ $('#v-pl').innerHTML = `As playlists editoriais do Spotify estão paradas em <em
 $('#pl-tiles').innerHTML = [
   {v: PR.editoriais, l:'playlists editoriais', d:`<span class="muted">estável desde ${esc(PR.editoriais_parado_desde||'')}</span>`},
   {v: short(PR.usuarios), l:'playlists de fãs', d:`<span class="${cls(PR.usuarios_g12)}">${sign(PR.usuarios_g12,1)}</span> <span class="muted">em 12 meses</span>`},
-  {v: fmt(PR.dependencia_editorial)+'%', l:'do alcance vem de editoriais', d:`<span class="muted">baixa dependência = base sólida</span>`},
+  {v: fmt(PR.alcance_editorial_pct)+'%', l:'do alcance potencial é editorial', d:`<span class="muted">alcance não é origem dos streams</span>`},
   ...(D.destaque_playlist ? [{v: D.destaque_playlist.posicao+'º', l:`lugar na ${esc(D.destaque_playlist.playlist)} (${esc(D.destaque_playlist.tipo.toLowerCase())}, ${esc(D.destaque_playlist.seguidores.replace('K',' mil'))} seg.)`, d:`<span class="muted">com "${esc(D.destaque_playlist.faixa)}" · ${new Date(D.destaque_playlist.data+'T12:00').toLocaleDateString('pt-BR',{month:'short',year:'numeric'}).replace('.','')}</span>`}] : []),
 ].map(k => `<div class="kpi reveal"><div class="v">${k.v}</div><div class="l">${k.l}</div><div class="d">${k.d}</div></div>`).join('');
 const pe = D.playlists.evolucao;
