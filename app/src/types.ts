@@ -97,6 +97,18 @@ export interface Cidade {
 
 export interface Indice { chave: string; nome: string; valor: number; frase: string; explica: string }
 
+export interface RadarCarreira {
+  modelo: string;
+  data: string;
+  tipo: string;
+  titulo: string;
+  leitura: string;
+  acao: string;
+  fonte: string;
+  url: string;
+  evidencias: string[];
+}
+
 /** data.json é grande e vem do pipeline; só tipamos o que o app lê por campo fixo. */
 export interface Data {
   meta: { artista: string; slug: string; gerado_em: string; dados_ate: string; desde: string; fonte: string; arquivos: number };
@@ -108,6 +120,7 @@ export interface Data {
   piores_meses: string[];
   historico: { mes: string; valor: number }[];
   previsao: { mes: string; valor: number; min: number; max: number }[];
+  radar: RadarCarreira[];
   lancamentos: { data: string; nome: string; bruto: number; ajustado: number; antes: number; depois: number }[];
   cidades: Cidade[];
   cidades_mediana_100k: number;
