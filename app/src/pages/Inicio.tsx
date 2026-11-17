@@ -52,6 +52,38 @@ export default function Inicio() {
         <div><dt>Fãs somados nas redes</dt><dd className="num">{compact(k.fas_total)}</dd></div>
       </dl>
 
+      {/* ---------- radar de gestão ---------- */}
+      {data.radar?.length > 0 && (
+        <section aria-labelledby="h-radar" className="secao faixa">
+          <div className="radar-cabecalho">
+            <div>
+              <p className="etiqueta">Radar de gestão</p>
+              <h2 id="h-radar">O que os sinais de agora mudam na decisão</h2>
+            </div>
+            <p className="apoio">Notícias públicas cruzadas com Spotify, YouTube, redes, shows e catálogo.</p>
+          </div>
+          <ol className="radar-lista">
+            {data.radar.map((item) => (
+              <li className="radar-item" key={`${item.data}-${item.modelo}`}>
+                <div className="radar-meta">
+                  <span className="tag tag-oportunidade">{item.tipo}</span>
+                  <time dateTime={item.data}>{dataLonga(item.data)}</time>
+                </div>
+                <h3>{item.titulo}</h3>
+                <p>{item.leitura}</p>
+                <ul className="radar-evidencias" aria-label="Evidências nos dados">
+                  {item.evidencias.map((evidencia) => <li key={evidencia}>{evidencia}</li>)}
+                </ul>
+                <p className="radar-acao"><strong>Próxima ação</strong>{item.acao}</p>
+                <a className="radar-fonte" href={item.url} target="_blank" rel="noopener noreferrer">
+                  Fonte: {item.fonte} <IcSeta />
+                </a>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
       {/* ---------- as decisões ---------- */}
       <section aria-labelledby="h-comece" className="secao faixa">
         <h2 id="h-comece" className="etiqueta">Comece por uma decisão</h2>

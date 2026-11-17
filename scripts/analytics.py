@@ -526,6 +526,61 @@ def milestones(d: Data):
     return [{'data': row.d.strftime('%Y-%m-%d'), 'marco': row['Marco']} for _, row in m.iterrows()]
 
 
+def career_radar(cfg, out):
+    """Cruza fatos públicos editoriais com métricas calculadas dos exports."""
+    radar = cfg.get('contexto', {}).get('radar', [])
+    if not radar:
+        return []
+
+    indices = {x['chave']: x for x in out['indices']}
+    plataformas = {x['plataforma']: x for x in out['plataformas']}
+    shows = {x['tipo']: x for x in out['shows']['por_tipo']}
+    albuns = {x['album']: x for x in out['albuns']}
+    resultado = []
+
+    for item in radar:
+        modelo = item.get('modelo')
+        evidencias = []
+        if modelo == 'merch_comunidade':
+            evidencias = [
+                f"{out['kpis']['lealdade']:.0f} seguidores para cada 100 ouvintes no Spotify",
+                f"Lealdade da base: {indices['lealdade']['valor']:.0f}/100",
+                f"TikTok {br(plataformas['TikTok']['g12'], 1, True)}% e Instagram {br(plataformas['Instagram']['g12'], 1, True)}% em 12 meses",
+            ]
+        elif modelo == 'palco_aquisicao':
+            coletivo = shows.get('Festival / turnê coletiva')
+            proprio = shows.get('Show próprio')
+            if coletivo and proprio:
+                evidencias.append(
+                    f"Palco coletivo: {br(coletivo['mediana'], 1, True)}% de ouvintes depois do show; próprio: {br(proprio['mediana'], 1, True)}%"
+                )
+            evidencias.extend([
+                f"YouTube: {fmt(plataformas['YouTube']['total'])} inscritos ({br(plataformas['YouTube']['g12'], 1, True)}% em 12 meses)",
+                f"Momentum da carreira: {indices['momentum']['valor']:.0f}/100",
+            ])
+        elif modelo == 'catalogo_premium':
+            revanche = albuns.get('Revanche')
+            recentes = [x for x in out['albuns'] if x['ano'] >= pd.Timestamp.now().year - 2]
+            antigos = [x for x in out['albuns'] if x['ano'] <= pd.Timestamp.now().year - 10]
+            recente = max(recentes, key=lambda x: x['popularidade'], default=None)
+            antigo = max(antigos, key=lambda x: x['popularidade'], default=None)
+            evidencias = [
+                f"Força do catálogo: {indices['catalogo']['valor']:.0f}/100",
+            ]
+            if recente and antigo:
+                diferenca = recente['popularidade'] - antigo['popularidade']
+                evidencias.append(
+                    f"{antigo['album']} está a {diferenca} ponto de popularidade de {recente['album']} no Spotify"
+                )
+            if revanche:
+                evidencias.append(
+                    f"Revanche: popularidade {revanche['popularidade']} e alcance potencial de {fmt(revanche['alcance_playlists'])} em playlists"
+                )
+
+        resultado.append({**item, 'evidencias': evidencias})
+    return resultado
+
+
 # ----------------------------------------------------------------------------- índices
 
 def logistic(x, k=0.15):
@@ -641,6 +696,7 @@ def build(slug: str):
         'qualidade': cfg.get('qualidade_dados', []),
     }
     publico.aplicar(out, cfg)  # público provável por praça, calibrado nas âncoras do config
+    out['radar'] = career_radar(cfg, out)
     out['recomendacoes'] = recommendations(out, cfg)
     return out, cfg
 

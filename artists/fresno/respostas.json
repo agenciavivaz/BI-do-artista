@@ -1,6 +1,6 @@
 {
   "artista": "Fresno",
-  "gerado_em": "2026-11-12",
+  "gerado_em": "2026-11-17",
   "fontes": {
     "ouvintes": {
       "nome": "Ouvintes mensais (Spotify)",
@@ -217,8 +217,7 @@
             "demanda_rel",
             "faixa",
             "publico",
-            "ticket_medio",
-            "bilheteria"
+            "conv_pct"
           ],
           "filtro": {
             "faixa": [
