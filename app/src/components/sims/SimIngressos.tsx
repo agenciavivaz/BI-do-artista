@@ -53,9 +53,10 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
         <p className="sim-numero num">{int(cidade.publico)}</p>
         <p className="sim-frase">
           Em {cidade.cidade}, o público mais provável de um show próprio é de <strong className="num">{int(cidade.publico)}</strong> pessoas.
-          Em 8 de cada 10 cenários fica entre <strong className="num">{int(cidade.publico_min)}</strong> e{' '}
+          Faixa indicativa: entre <strong className="num">{int(cidade.publico_min)}</strong> e{' '}
           <strong className="num">{int(cidade.publico_max)}</strong>. Casa sugerida: {CASAS[faixaCasa].rotulo}.
         </p>
+        <p className="apoio">Estimativa exploratória, ainda sem validação independente com bilheteria real. As faixas e probabilidades dependem de premissas e não são garantias.</p>
         <p className="apoio linha-conf">
           <span className={`pastilha pastilha-${cidade.confianca}`}>{conf.rotulo}</span> {conf.motivo}
         </p>
@@ -92,7 +93,7 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
         <div className="chance">
           <div className="chance-trilho"><i style={{ width: `${chance}%` }} /></div>
           <p className="chance-valor">
-            <strong className="num">{chance}%</strong> de chance de esgotar {int(lugares)} lugares
+            <strong className="num">{chance}%</strong> de chance estimada pelo modelo de esgotar {int(lugares)} lugares
           </p>
         </div>
         <p className="apoio">
@@ -100,7 +101,7 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
             ? <>Sobra demanda: cerca de <strong className="num">{int(sobra)}</strong> pessoas ficariam sem ingresso — é o argumento de casa maior ou de uma segunda data.</>
             : sobra < -lugares * 0.3
               ? <>A casa é grande para a praça hoje: a previsão enche <strong className="num">{pct((cidade.publico / lugares) * 100)}</strong> dela.</>
-              : <>Casa e demanda batem: é o cenário de manter a casa e subir o preço.</>}
+              : <>Casa e demanda estimada estão próximas. Valide preço e capacidade com a bilheteria.</>}
         </p>
       </div>
 
@@ -161,7 +162,7 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
               </small>
             </li>
             <li>
-              <span>Faixa de 8 em 10 cenários</span>
+              <span>Faixa indicativa</span>
               <strong className="num">{int(cidade.publico_min)}–{int(cidade.publico_max)}</strong>
               <small className="apoio">
                 ±{cidade.incerteza_pct}%, somando o erro do ajuste (R² {m.r2 != null ? dec(m.r2, 2) : '—'}, desvio de {pct(m.sigma * 100)} em log)
@@ -172,19 +173,19 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
 
           {m.validacao && (
             <div className="validacao">
-              <h5>O quanto esse modelo erra</h5>
+              <h5>Teste histórico exploratório</h5>
               <p className="apoio">
-                Tiramos um show de cada vez do ajuste e pedimos ao modelo que previsse justamente ele. Nos{' '}
-                <strong className="num">{m.validacao.n_medidos}</strong> shows com número de público, o erro foi de{' '}
+                Tiramos um show de cada vez do ajuste e pedimos ao modelo que previsse justamente ele. A fórmula foi escolhida usando estes mesmos testes, e os públicos são estimados: o resultado não é uma validação independente. Nos{' '}
+                <strong className="num">{m.validacao.n_medidos}</strong> shows com público estimado, o erro foi de{' '}
                 <strong className="num">{m.validacao.erro_mediano_pct}%</strong> na mediana e{' '}
                 <strong className="num">{m.validacao.erro_medio_pct}%</strong> na média, com um pior caso de {m.validacao.erro_maximo_pct}%.
                 Os outros {m.validacao.n_pisos} esgotaram, então só dizem um piso: o modelo respeitou{' '}
                 <strong className="num">{m.validacao.pisos_respeitados}</strong> deles.
-                {m.fator_faixa > 1.01 && <> A faixa original pegava o número real em {m.validacao.cobertura_pct}% das vezes,
-                  menos que os 80% prometidos, então foi alargada {dec(m.fator_faixa, 2)}x — a que você vê já está corrigida.</>}
+                {m.fator_faixa > 1.01 && <> A faixa original incluía a estimativa em {m.validacao.cobertura_pct}% das vezes,
+                  abaixo da meta teórica de 80%, então foi alargada {dec(m.fator_faixa, 2)}x; isso não comprova a cobertura futura.</>}
               </p>
               <table className="t-val">
-                <thead><tr><th>Show</th><th>Real</th><th>Previsto</th><th>Erro</th></tr></thead>
+                <thead><tr><th>Show</th><th>Referência estimada</th><th>Previsto</th><th>Erro</th></tr></thead>
                 <tbody>
                   {m.validacao.linhas.map((l) => (
                     <tr key={l.data + l.local}>

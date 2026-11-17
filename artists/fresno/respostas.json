@@ -1,6 +1,6 @@
 {
   "artista": "Fresno",
-  "gerado_em": "2026-11-12",
+  "gerado_em": "2026-11-17",
   "fontes": {
     "ouvintes": {
       "nome": "Ouvintes mensais (Spotify)",
@@ -136,7 +136,7 @@
     },
     {
       "tipo": "previsao",
-      "titulo": "Janeiro: queda sazonal para ~399 mil ouvintes",
+      "titulo": "Janeiro: queda sazonal para ~397 mil ouvintes",
       "pergunta": "proximos-meses"
     }
   ],
@@ -217,8 +217,7 @@
             "demanda_rel",
             "faixa",
             "publico",
-            "ticket_medio",
-            "bilheteria"
+            "conv_pct"
           ],
           "filtro": {
             "faixa": [
@@ -358,7 +357,7 @@
           "ms": 700
         },
         {
-          "texto": "Lendo a agenda própria da banda: 34 shows desde 2024",
+          "texto": "Lendo a agenda própria da banda: 30 shows desde 2024",
           "fontes": [
             "shows",
             "imprensa"
@@ -366,7 +365,7 @@
           "ms": 700
         },
         {
-          "texto": "Ajustando a regressão nos 10 shows com capacidade de casa conhecida",
+          "texto": "Ajustando a regressão nos 9 shows com capacidade de casa conhecida",
           "fontes": [
             "shows",
             "cidades"
@@ -374,7 +373,7 @@
           "ms": 700
         },
         {
-          "texto": "Testando: tira um show, tenta prever ele — erro mediano de 13% nos 5 com número de público",
+          "texto": "Testando: tira um show, tenta prever ele — erro mediano de 20% nos 4 com público estimado",
           "fontes": [
             "shows",
             "imprensa"
@@ -390,20 +389,20 @@
           "ms": 700
         }
       ],
-      "veredito": "São Paulo: 8.000 pessoas é o cenário mais provável, 77% de chance de esgotar a casa que a banda usou lá. Em Curitiba, a previsão já passa da casa usada.",
-      "explicacao": "A conta não é uma taxa de conversão escolhida a dedo nem uma média. É uma regressão sobre os shows próprios da banda, com o público crescendo com a base de fãs da praça elevada a 0,51 — menor que 1, ou seja, praça grande converte uma fatia menor. Show esgotado entra como piso e não como teto, porque lotar diz que a banda venderia pelo menos aquilo. Testado show a show, o modelo erra 13% na mediana nos 5 shows com número de público, e respeita o piso em 4 dos 5 que esgotaram — é a margem com que esses números devem ser lidos.",
+      "veredito": "São Paulo: 8.000 pessoas é o cenário mais provável, 99% de chance de esgotar a casa que a banda usou lá. Em São Paulo, a previsão já passa da casa usada.",
+      "explicacao": "A conta não é uma taxa de conversão escolhida a dedo nem uma média. É uma regressão sobre os shows próprios da banda, com o público crescendo com a base de fãs da praça elevada a 0,48 — menor que 1, ou seja, praça grande converte uma fatia menor. Show esgotado entra como piso e não como teto, porque lotar diz que a banda venderia pelo menos aquilo. Testado show a show, o modelo erra 20% na mediana nos 4 shows com público estimado, e respeita o piso em 3 dos 5 que esgotaram — é a margem com que esses números devem ser lidos. Os públicos não esgotados são estimativas de ocupação, não bilheterias confirmadas; a seleção da fórmula e o teste usam os mesmos shows e não constituem validação independente.",
       "numeros": [
         {
           "valor": "8.000",
-          "rotulo": "São Paulo · 77% de esgotar"
+          "rotulo": "São Paulo · 99% de esgotar"
         },
         {
-          "valor": "3.900",
-          "rotulo": "Porto Alegre · 69% de esgotar"
+          "valor": "3.600",
+          "rotulo": "Porto Alegre · 50% de esgotar"
         },
         {
           "valor": "3.500",
-          "rotulo": "Curitiba · 98% de esgotar"
+          "rotulo": "Curitiba · 94% de esgotar"
         }
       ],
       "blocos": [
@@ -442,13 +441,13 @@
         }
       ],
       "acoes": [
-        "Em Curitiba, a previsão passa da casa usada: peça casa maior ou uma segunda data.",
+        "Em São Paulo, Curitiba, Jundiaí, a previsão passa da casa usada: peça casa maior ou uma segunda data.",
         "Prefira a casa que lota no limite de baixo da faixa: casa cheia vira conteúdo e escassez.",
         "Anote capacidade e ocupação de cada show em config.json → calibracao.ancoras: a regressão se refaz sozinha."
       ],
       "confianca": {
-        "nivel": "média",
-        "motivo": "Regressão sobre 10 shows próprios com capacidade de casa conhecida, de 34 na agenda, com a fórmula escolhida entre 8 candidatas pela validação. O erro mediano é de 13% e o pior caso foi 30%. Capacidade de casa quase nunca é publicada no Brasil e a ocupação é presumida quando a fonte não diz: com bilheteria oficial, a margem cai."
+        "nivel": "baixa",
+        "motivo": "Regressão sobre 9 shows próprios com capacidade de casa conhecida, de 30 na agenda, com a fórmula escolhida entre 2 candidatas pela validação. O erro mediano é de 20% e o pior caso foi 28%. Capacidade de casa quase nunca é publicada no Brasil e a ocupação é presumida quando a fonte não diz: com bilheteria oficial, será possível medir o erro com mais segurança."
       },
       "seguintes": [
         "onde-cobrar-mais",
@@ -838,26 +837,26 @@
           "ms": 700
         },
         {
-          "texto": "Desenhando a faixa provável (80%)",
+          "texto": "Desenhando uma faixa indicativa pela variação histórica",
           "fontes": [
             "ouvintes"
           ],
           "ms": 700
         }
       ],
-      "veredito": "Janeiro deve ficar perto de 399 mil ouvintes. É a queda de todo ano, não perda de público.",
-      "explicacao": "A base sem efeito sazonal está em 429 mil. A faixa provável para janeiro vai de 371 mil a 426 mil; a recuperação vem a partir de abril.",
+      "veredito": "Janeiro deve ficar perto de 397 mil ouvintes. É um cenário sazonal, sujeito a lançamentos e outros eventos.",
+      "explicacao": "A base sem efeito sazonal está em 427 mil. A faixa provável para janeiro vai de 369 mil a 426 mil; a faixa é indicativa e não foi validada como intervalo de 80%.",
       "numeros": [
         {
-          "valor": "427 mil",
+          "valor": "426 mil",
           "rotulo": "dez/26"
         },
         {
-          "valor": "399 mil",
+          "valor": "397 mil",
           "rotulo": "jan/27"
         },
         {
-          "valor": "408 mil",
+          "valor": "407 mil",
           "rotulo": "fev/27"
         }
       ],
@@ -868,7 +867,7 @@
         }
       ],
       "acoes": [
-        "Não leia a queda de janeiro como crise; planeje o conteúdo de catálogo para esse período."
+        "Compare o resultado real com a projeção e planeje conteúdo de catálogo para esse período."
       ],
       "confianca": {
         "nivel": "média",

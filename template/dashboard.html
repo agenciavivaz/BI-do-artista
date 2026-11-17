@@ -241,7 +241,7 @@ footer li{margin:4px 0}
       <div class="card"><h3>Efeito de cada lançamento</h3><div class="sub">Ouvintes 1 mês depois × semana anterior, sem efeito sazonal</div><div class="chart" id="lifts"></div></div>
     </div>
     <div class="grid g-21" style="margin-top:16px">
-      <div class="card"><h3>Próximos 6 meses</h3><div class="sub">Ouvintes mensais: histórico de 3 anos e projeção com faixa provável (80%)</div><div class="legend"><span><i style="background:var(--data-1)"></i>Histórico</span><span><i style="background:var(--accent-2)"></i>Projeção</span></div><div class="chart" id="forecast"></div><p class="note" id="forecast-note"></p></div>
+      <div class="card"><h3>Próximos 6 meses</h3><div class="sub">Ouvintes mensais: histórico de 3 anos e projeção com faixa indicativa, sem cobertura validada</div><div class="legend"><span><i style="background:var(--data-1)"></i>Histórico</span><span><i style="background:var(--accent-2)"></i>Projeção</span></div><div class="chart" id="forecast"></div><p class="note" id="forecast-note"></p></div>
       <div class="card"><h3>Calendário da nostalgia</h3><div class="sub">Aniversários que viram turnê, vinil e coleção</div><div class="timeline" id="anniv"></div></div>
     </div>
     <div class="card" style="margin-top:16px"><h3>Lançar em capítulos: até onde funciona</h3><div class="sub" id="inv-sub"></div><div class="chart" id="inv"></div></div>
@@ -618,7 +618,7 @@ line('#forecast', [
   {name:'Projeção', color:'var(--accent-2)', band:true, dash:true, points: hist.map((h,i)=> i===hist.length-1?{v:h.valor,min:h.valor,max:h.valor}:null).concat(fc.map(f=>({v:f.valor,min:f.min,max:f.max})))},
 ], {labels, ticks:8});
 const jan = fc.find(f=>f.mes.startsWith('jan')); const lastH = hist[hist.length-1];
-$('#forecast-note').innerHTML = jan ? `Janeiro deve ficar perto de <b>${short(jan.valor)}</b> ouvintes (faixa ${short(jan.min)}–${short(jan.max)}). É a queda sazonal de todo ano, não perda de público: a base dessazonalizada está em ${short(D.base_dessazonalizada)}.` : '';
+$('#forecast-note').innerHTML = jan ? `Janeiro deve ficar perto de <b>${short(jan.valor)}</b> ouvintes (faixa ${short(jan.min)}–${short(jan.max)}). O cenário considera sazonalidade; a queda pode ter outras causas: a base dessazonalizada está em ${short(D.base_dessazonalizada)}.` : '';
 $('#anniv').innerHTML = (D.contexto.aniversarios||[]).map(a => `<div class="tl"><div class="y">${a.ano}</div><div><div class="t">${esc(a.marco)}</div><div class="st">${esc(a.status)}</div></div></div>`).join('');
 const inv = D.serie_inv;
 if (inv.lista && inv.lista.length){

@@ -148,7 +148,7 @@ def build_answers(d):
             step(f"Lendo a agenda própria da banda: {mod['n_provas']} shows desde 2024", ['shows', 'imprensa']),
             step(f"Ajustando a regressão nos {mod['n_shows']} shows com capacidade de casa conhecida", ['shows', 'cidades']),
             step(f"Testando: tira um show, tenta prever ele — erro mediano de {val.get('erro_mediano_pct','–')}% "
-                 f"nos {val.get('n_medidos','–')} com número de público", ['shows', 'imprensa']),
+                 f"nos {val.get('n_medidos','–')} com público estimado", ['shows', 'imprensa']),
             step('Projetando público, chance de esgotar e bilheteria', ['cidades', 'ibge']),
         ],
         'veredito': (f"{melhor['cidade']}: {n(melhor['publico'])} pessoas é o cenário mais provável, "
@@ -159,9 +159,9 @@ def build_answers(d):
                        f"{br(mod['beta'][1],2)} — menor que 1, ou seja, praça grande converte uma fatia menor. "
                        f"Show esgotado entra como piso e não como teto, porque lotar diz que a banda venderia pelo menos "
                        f"aquilo. Testado show a show, o modelo erra {val.get('erro_mediano_pct','–')}% na mediana nos "
-                       f"{val.get('n_medidos','–')} shows com número de público, e respeita o piso em "
+                       f"{val.get('n_medidos','–')} shows com público estimado, e respeita o piso em "
                        f"{val.get('pisos_respeitados','–')} dos {val.get('n_pisos','–')} que esgotaram — é a margem com que "
-                       f"esses números devem ser lidos."),
+                       f"esses números devem ser lidos. Os públicos não esgotados são estimativas de ocupação, não bilheterias confirmadas; a seleção da fórmula e o teste usam os mesmos shows e não constituem validação independente."),
         'numeros': [{'valor': n(c['publico']), 'rotulo': f"{c['cidade']} · {c['chance_esgotar']}% de esgotar"} for c in com_casa[:3]],
         'blocos': [{'tipo': 'simulador', 'simulador': 'ingressos', 'dados': 'cidades'},
                    {'tipo': 'tabela', 'dados': 'cidades',
@@ -174,13 +174,13 @@ def build_answers(d):
                   if crescer else []) +
                  ['Prefira a casa que lota no limite de baixo da faixa: casa cheia vira conteúdo e escassez.',
                   'Anote capacidade e ocupação de cada show em config.json → calibracao.ancoras: a regressão se refaz sozinha.'],
-        'confianca': {'nivel': 'média',
+        'confianca': {'nivel': 'baixa',
                       'motivo': (f"Regressão sobre {mod['n_shows']} shows próprios com capacidade de casa conhecida, de "
                                  f"{mod['n_provas']} na agenda, com a fórmula escolhida entre "
                                  f"{len(mod.get('comparacao') or [])} candidatas pela validação. O erro mediano é de "
                                  f"{val.get('erro_mediano_pct','–')}% e o pior caso foi {val.get('erro_maximo_pct','–')}%. "
                                  f"Capacidade de casa quase nunca é publicada no Brasil e a ocupação é presumida quando a "
-                                 f"fonte não diz: com bilheteria oficial, a margem cai.")},
+                                 f"fonte não diz: com bilheteria oficial, será possível medir o erro com mais segurança.")},
         'seguintes': ['onde-cobrar-mais', 'proxima-cidade'],
     })
 
@@ -294,13 +294,13 @@ def build_answers(d):
         'variacoes': ['previsão', 'próximos meses', 'vai cair', 'vai crescer', 'projeção', 'futuro'],
         'pensando': [step('Calculando o nível real, sem efeito do mês, dos últimos 12 meses', ['ouvintes']),
                      step('Aplicando o padrão de cada mês', ['ouvintes']),
-                     step('Desenhando a faixa provável (80%)', ['ouvintes'])],
-        'veredito': f"Janeiro deve ficar perto de {short(jan['valor'])} ouvintes. É a queda de todo ano, não perda de público.",
+                     step('Desenhando uma faixa indicativa pela variação histórica', ['ouvintes'])],
+        'veredito': f"Janeiro deve ficar perto de {short(jan['valor'])} ouvintes. É um cenário sazonal, sujeito a lançamentos e outros eventos.",
         'explicacao': (f"A base sem efeito sazonal está em {short(d['base_dessazonalizada'])}. A faixa provável para janeiro vai de "
-                       f"{short(jan['min'])} a {short(jan['max'])}; a recuperação vem a partir de abril."),
+                       f"{short(jan['min'])} a {short(jan['max'])}; a faixa é indicativa e não foi validada como intervalo de 80%."),
         'numeros': [{'valor': short(f['valor']), 'rotulo': f['mes']} for f in fc[:3]],
         'blocos': [{'tipo': 'previsao', 'dados': 'historico+previsao'}],
-        'acoes': ['Não leia a queda de janeiro como crise; planeje o conteúdo de catálogo para esse período.'],
+        'acoes': ['Compare o resultado real com a projeção e planeje conteúdo de catálogo para esse período.'],
         'confianca': {'nivel': 'média', 'motivo': 'Projeção estatística simples; um lançamento ou show grande muda a curva.'},
         'seguintes': ['quando-lancar'],
     })

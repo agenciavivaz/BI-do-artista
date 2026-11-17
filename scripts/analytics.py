@@ -167,7 +167,7 @@ def seasonality(listeners: pd.Series):
 
 def forecast(listeners: pd.Series, season: dict, months=6):
     monthly = listeners.resample('ME').mean()
-    last12 = monthly.iloc[-13:-1] if monthly.index[-1].day < 25 else monthly.iloc[-12:]
+    last12 = monthly.iloc[-13:-1] if listeners.index.max().day < 25 else monthly.iloc[-12:]
     deseason = [v / (1 + season[d.month] / 100) for d, v in last12.items()]
     base = float(np.mean(deseason))
     resid = np.std(deseason)

@@ -70,7 +70,7 @@ export interface PublicoPraca {
 }
 
 export const CONFIANCA: Record<string, { rotulo: string; motivo: string }> = {
-  alta: { rotulo: 'bilheteria conhecida', motivo: 'A banda esgotou uma casa aqui, então sabemos o piso da demanda.' },
+  alta: { rotulo: 'há registro de casa cheia', motivo: 'A banda esgotou uma casa aqui, então sabemos o piso da demanda.' },
   media: { rotulo: 'praça já trabalhada', motivo: 'A banda já fez show próprio aqui; a bilheteria exata não é pública.' },
   baixa: { rotulo: 'praça nova', motivo: 'Sem show próprio no histórico: a predição vem só do tamanho e da afinidade da praça.' },
 };
