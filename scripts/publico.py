@@ -297,7 +297,7 @@ def _loocv(X, y, w, censurado=None, desloc=None, piso=0.0, teto=1.5, z=Z90):
     medidos = [l for l in linhas if not l['esgotou']]
     pisos = [l for l in linhas if l['esgotou']]
     furados = [l for l in pisos if l['previsto'] < l['real']]
-    erros = sorted(abs(l['erro_pct']) for l in medidos + furados) or [0]
+    erros = sorted(abs(l['erro_pct']) for l in medidos) or [0]
     meio = len(erros) // 2
     razoes = sorted(razao[i] for i, l in enumerate(linhas) if not l['esgotou'] and razao[i] > 0) or [z]
     alvo = razoes[min(int(math.ceil(0.8 * len(razoes))) - 1, len(razoes) - 1)] if razoes else z
@@ -310,7 +310,7 @@ def _loocv(X, y, w, censurado=None, desloc=None, piso=0.0, teto=1.5, z=Z90):
         'erro_mediano_pct': erros[meio] if len(erros) % 2 else round((erros[meio - 1] + erros[meio]) / 2),
         'erro_medio_pct': round(sum(erros) / len(erros)),
         'erro_maximo_pct': erros[-1],
-        'cobertura_pct': round(dentro / len(linhas) * 100),
+        'cobertura_pct': round(sum(1 for i, l in enumerate(linhas) if not l['esgotou'] and razao[i] <= z) / len(medidos) * 100) if medidos else 0,
         'linhas': linhas,
     }
 
@@ -422,7 +422,7 @@ def _monta(usadas, termos, fixo, prior):
     return X, y, [u['peso'] for u in usadas]
 
 
-def calibrar(cidades: list[dict], kpis: dict, cal: dict, historico: list[dict] | None = None) -> dict:
+def calibrar(cidades: list[dict], kpis: dict, cal: dict, historico: list[dict] | None = None, data_referencia: str | None = None) -> dict:
     p = {**PADRAO, **{k: v for k, v in (cal or {}).items() if k in PADRAO}}
     soma = sum(c['ouvintes'] for c in cidades) or 1
     atuais = kpis.get('ouvintes') or soma
@@ -433,7 +433,8 @@ def calibrar(cidades: list[dict], kpis: dict, cal: dict, historico: list[dict] |
     base_de = lambda c: c['ouvintes'] * f_atualiza * f_fa
     no_tempo = _fator_tempo(historico)
 
-    ancoras = list((cal or {}).get('ancoras') or [])
+    ancoras = [a for a in ((cal or {}).get('ancoras') or [])
+               if not data_referencia or a.get('data', '') <= data_referencia]
     festivais = {}
     for a in ancoras:
         if a.get('tipo') == 'festival':
@@ -682,7 +683,7 @@ def estimar(cidade: dict, ctx: dict) -> dict:
         if folga >= ctx['limiares']['crescer']:
             veredito = 'cabe casa maior ou uma segunda data'
         elif folga >= ctx['limiares']['encolher']:
-            veredito = 'mesma casa, com espaço para subir preço'
+            veredito = 'avaliar a mesma casa; preço depende de bilheteria e custos'
         else:
             veredito = 'casa menor, festival ou mais mídia antes'
 
@@ -722,7 +723,7 @@ def estimar(cidade: dict, ctx: dict) -> dict:
 
 
 def aplicar(out: dict, cfg: dict) -> dict:
-    ctx = calibrar(out['cidades'], out['kpis'], dict(cfg.get('calibracao') or {}), out.get('historico'))
+    ctx = calibrar(out['cidades'], out['kpis'], dict(cfg.get('calibracao') or {}), out.get('historico'), out.get('meta', {}).get('dados_ate'))
     for c in out['cidades']:
         e = estimar(c, ctx)
         c.update(e)

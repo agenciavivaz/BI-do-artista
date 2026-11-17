@@ -52,6 +52,8 @@ export const COLUNAS: Record<string, Col> = {
   faixa_musica: { rotulo: 'Música', ...txt((v) => v) },
   forca: { rotulo: 'Força (0 a 100)', num: true, ...txt((v) => int(v)) },
   streams_90d: { rotulo: 'Streams em 90 dias', num: true, ...txt((v) => compact(v)) },
+  streams_30d: { rotulo: 'Streams em 30 dias', num: true, ...txt((v) => compact(v)) },
+  aceleracao_30d: { rotulo: 'Ritmo vs. 60 dias anteriores', num: true, ...txt((v) => (v == null ? '—' : signed(v, 1))) },
   youtube: { rotulo: 'Views no YouTube', num: true, ...txt((v) => compact(v)) },
   playlists: { rotulo: 'Playlists', num: true, ...txt((v) => int(v)) },
   plataforma: { rotulo: 'Rede', ...txt((v) => v) },

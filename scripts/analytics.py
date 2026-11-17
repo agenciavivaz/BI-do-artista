@@ -166,21 +166,63 @@ def seasonality(listeners: pd.Series):
 
 
 def forecast(listeners: pd.Series, season: dict, months=6):
+    """Projeção sazonal escolhida por backtest, sem assumir tendência à força.
+
+    Compara quatro regras simples em meses já observados e usa a de menor erro
+    percentual médio. Modelos pequenos e auditáveis são mais adequados aqui que
+    uma curva complexa: lançamentos e turnês são choques que a série sozinha não
+    consegue antecipar.
+    """
     monthly = listeners.resample('ME').mean()
-    last12 = monthly.iloc[-13:-1] if monthly.index[-1].day < 25 else monthly.iloc[-12:]
-    deseason = [v / (1 + season[d.month] / 100) for d, v in last12.items()]
-    base = float(np.mean(deseason))
-    resid = np.std(deseason)
+    if listeners.index.max().day < 25:
+        monthly = monthly.iloc[:-1]  # mês parcial não participa do ajuste
+
+    def predizer(hist, data, metodo):
+        ds = np.array([v / (1 + season[d.month] / 100) for d, v in hist.items()])
+        fator = 1 + season[data.month] / 100
+        if metodo == 'nível recente (6 meses)':
+            return float(np.mean(ds[-6:])) * fator
+        if metodo == 'nível anual (12 meses)':
+            return float(np.mean(ds[-12:])) * fator
+        if metodo == 'tendência curta (12 meses)':
+            janela = ds[-12:]
+            slope, intercept = np.polyfit(np.arange(len(janela)), janela, 1)
+            # Evita transformar um ruído curto em crescimento/queda explosiva.
+            futuro = np.clip(intercept + slope * len(janela), np.mean(janela) * .8, np.mean(janela) * 1.2)
+            return float(futuro) * fator
+        return float(hist.iloc[-12])  # mesmo mês do ano anterior
+
+    metodos = ['nível recente (6 meses)', 'nível anual (12 meses)',
+               'tendência curta (12 meses)', 'mesmo mês do ano anterior']
+    erros = {m: [] for m in metodos}
+    inicio = max(24, len(monthly) - 24)
+    for i in range(inicio, len(monthly)):
+        hist = monthly.iloc[:i]
+        for metodo in metodos:
+            previsto = predizer(hist, monthly.index[i], metodo)
+            erros[metodo].append(abs(previsto / monthly.iloc[i] - 1))
+    metodo = min(metodos, key=lambda m: np.mean(erros[m]) if erros[m] else float('inf'))
+    erros_escolhidos = np.array(erros[metodo])
+    base = float(np.mean([v / (1 + season[d.month] / 100) for d, v in monthly.iloc[-6:].items()]))
+    if metodo == 'nível anual (12 meses)':
+        base = float(np.mean([v / (1 + season[d.month] / 100) for d, v in monthly.iloc[-12:].items()]))
+    # Quantil empírico do erro de um mês; a incerteza cresce com o horizonte.
+    erro80 = float(np.quantile(erros_escolhidos, .8)) if len(erros_escolhidos) else .10
     out = []
     start = monthly.index[-1]
     for i in range(1, months + 1):
         d = (start + pd.offsets.MonthEnd(i))
-        f = base * (1 + season[d.month] / 100)
+        f = predizer(monthly, d, metodo)
+        margem = erro80 * math.sqrt(i)
         out.append({'mes': f"{MES_NOME[d.month-1]}/{str(d.year)[2:]}", 'valor': round(f),
-                    'min': round(f - 1.28 * resid), 'max': round(f + 1.28 * resid)})
+                    'min': round(max(f * (1 - margem), 0)), 'max': round(f * (1 + margem))})
     hist = [{'mes': f"{MES_NOME[d.month-1]}/{str(d.year)[2:]}", 'valor': round(v)}
             for d, v in monthly.iloc[-36:].items()]
-    return hist, out, base
+    meta = {'metodo': metodo, 'meses_teste': len(erros_escolhidos),
+            'erro_medio_pct': r(np.mean(erros_escolhidos) * 100),
+            'erro_mediano_pct': r(np.median(erros_escolhidos) * 100),
+            'erro80_pct': r(erro80 * 100)}
+    return hist, out, base, meta
 
 
 def release_lifts(d: Data, listeners: pd.Series, season: dict):
@@ -214,8 +256,12 @@ def show_effect(d: Data, season: dict):
     ev['tipo'] = np.where(ev['Evento'].str.lower().str.contains(festival_kw), 'Festival / turnê coletiva', 'Show próprio')
     ev['mes'] = ev.dt.dt.month
     ev['ajustado'] = ev.impacto - ev.mes.map(lambda m: season[(m % 12) + 1] - season[m])
-    by = ev.groupby('tipo').agg(n=('impacto', 'size'), mediana=('ajustado', 'median'),
-                                media=('ajustado', 'mean'), pos=('ajustado', lambda x: (x > 0).mean() * 100))
+    # Vários shows da mesma turnê compartilham a mesma variação mensal e não são
+    # observações independentes. Cada mês/tipo entra uma vez na comparação.
+    ev['periodo'] = ev.dt.dt.to_period('M').astype(str)
+    amostras = ev.groupby(['periodo', 'tipo'], as_index=False).ajustado.median()
+    by = amostras.groupby('tipo').agg(n=('ajustado', 'size'), mediana=('ajustado', 'median'),
+                                      media=('ajustado', 'mean'), pos=('ajustado', lambda x: (x > 0).mean() * 100))
     events = [{'evento': e.Evento, 'local': e.Local, 'data': e.dt.strftime('%Y-%m-%d'),
                'capacidade': None if math.isnan(e.cap) else int(e.cap), 'impacto': r(e.impacto),
                'ajustado': r(e.ajustado), 'tipo': e.tipo} for e in ev.itertuples()]
@@ -357,8 +403,12 @@ def tracks(d: Data):
         last = g.v.iloc[-1]
         d30 = last - g[g.dia <= g.dia.max() - 30].v.iloc[-1]
         d90 = last - g[g.dia <= g.dia.max() - 90].v.iloc[-1]
+        prev60 = max(d90 - d30, 0)
+        ritmo_anterior = prev60 / 2
+        aceleracao = (d30 / ritmo_anterior - 1) * 100 if ritmo_anterior > 0 else None
         d365 = last - g[g.dia <= g.dia.max() - 365].v.iloc[-1] if g.dia.max() > 365 else None
         row = {'faixa': nome, 'streams': int(last), 'streams_30d': int(d30), 'streams_90d': int(d90),
+               'aceleracao_30d': r(aceleracao),
                'streams_365d': int(d365) if d365 is not None else None, 'idade_anos': r(g.dia.max() / 365, 0)}
         for key, df in (('playlists', pl), ('alcance_playlists', reach), ('youtube', yt)):
             if df is not None:
@@ -373,6 +423,32 @@ def tracks(d: Data):
     df = df.sort_values('forca', ascending=False)
     return [{**{k: v for k, v in row.items() if not k.endswith('_n')}, 'forca': r(row['forca'], 0)}
             for row in df.to_dict('records')]
+
+
+def catalog_health(faixas: list[dict]):
+    """Diagnóstico de concentração e velocidade do catálogo recente."""
+    validas = [f for f in faixas if (f.get('streams_90d') or 0) > 0]
+    total = sum(f['streams_90d'] for f in validas)
+    ordem = sorted(validas, key=lambda f: -f['streams_90d'])
+    acumulado = 0
+    n80 = 0
+    for faixa in ordem:
+        acumulado += faixa['streams_90d']
+        n80 += 1
+        if acumulado >= total * .8:
+            break
+    acelerando = sorted((f for f in validas if (f.get('aceleracao_30d') or 0) > 10),
+                        key=lambda f: -f['aceleracao_30d'])
+    return {
+        'streams_90d': int(total),
+        'top1_pct': r(ordem[0]['streams_90d'] / total * 100, 0) if total else None,
+        'top3_pct': r(sum(f['streams_90d'] for f in ordem[:3]) / total * 100, 0) if total else None,
+        'top5_pct': r(sum(f['streams_90d'] for f in ordem[:5]) / total * 100, 0) if total else None,
+        'faixas_80pct': n80,
+        'faixas_ativas': len(validas),
+        'acelerando': [{'faixa': f['faixa'], 'aceleracao_30d': f['aceleracao_30d'],
+                        'streams_30d': f['streams_30d']} for f in acelerando[:8]],
+    }
 
 
 def sounds(d: Data):
@@ -433,7 +509,7 @@ def playlists(d: Data):
     resumo = {'editoriais': last['editoriais'], 'usuarios': last['usuarios'],
               'usuarios_g12': r((last['usuarios'] / yago['usuarios'] - 1) * 100),
               'editoriais_g12': r((last['editoriais'] / yago['editoriais'] - 1) * 100),
-              'dependencia_editorial': r(last['alcance_editorial'] / total_reach * 100),
+              'alcance_editorial_pct': r(last['alcance_editorial'] / total_reach * 100),
               'editoriais_parado_desde': parado_desde}
     recs = []
     if d.has('playlist_recommendations'):
@@ -595,7 +671,7 @@ def build(slug: str):
     followers = d.series('spotify_followers')
     conv = d.series('spotify_fan_conversion')
     season, season_years = seasonality(listeners)
-    hist, fc, base = forecast(listeners, season)
+    hist, fc, base, fc_meta = forecast(listeners, season)
     lifts = release_lifts(d, listeners, season)
     events, by_type = show_effect(d, season)
     city_cases = city_show_cases(d, cfg.get('casos_show_cidade', []))
@@ -603,6 +679,7 @@ def build(slug: str):
     yt_growth = youtube_city_growth(d)
     plats = platforms(d)
     trk = tracks(d)
+    saude_catalogo = catalog_health(trk)
     snd = sounds(d)
     alb = albums(d)
     pl_ev, pl_res, pl_recs = playlists(d)
@@ -681,14 +758,14 @@ def build(slug: str):
         'sazonalidade_anos': f"{season_years[0]}–{season_years[-1]}",
         'melhores_meses': [MES_NOME[m - 1] for m, _ in best_months],
         'piores_meses': [MES_NOME[m - 1] for m, _ in worst_months],
-        'historico': hist, 'previsao': fc, 'base_dessazonalizada': round(base),
+        'historico': hist, 'previsao': fc, 'base_dessazonalizada': round(base), 'previsao_meta': fc_meta,
         'lancamentos': lifts_list,
         'serie_inv': {'n': int(len(inv)), 'primeiro': r(inv_first), 'ultimo': r(inv_last),
                       'lista': [{'nome': x.nome.split(':')[0], 'ajustado': x.ajustado} for x in inv.itertuples()] if len(inv) else []},
         'shows': {'eventos': events, 'por_tipo': by_type, 'casos_cidade': city_cases},
         'cidades': city_rows, 'cidades_mediana_100k': med_100k, 'youtube_cidades_12m': yt_growth,
         'plataformas': plats,
-        'faixas': trk, 'sons': snd, 'albuns': alb[:10],
+        'faixas': trk, 'saude_catalogo': saude_catalogo, 'sons': snd, 'albuns': alb[:10],
         'playlists': {'evolucao': pl_ev, 'resumo': pl_res, 'recomendadas': pl_recs},
         'publico': demo, 'comentarios': com,
         'pares': prs, 'co_palco': cop, 'marcas': brd, 'marcos': mil, 'destaque_playlist': playlist_highlight(d),
@@ -737,11 +814,11 @@ def recommendations(o, cfg):
     if fest and prop:
         recs.append({
             'area': 'Shows', 'icone': 'mic',
-            'titulo': 'Festivais e turnês coletivas rendem mais Spotify que show próprio',
+            'titulo': 'Meses com festivais têm sinal melhor que meses de show próprio',
             'porque': (f"Na mediana, depois de festival/turnê coletiva os ouvintes mudam {br(fest['mediana'], 1, True)}% "
-                       f"(já descontada a sazonalidade) contra {br(prop['mediana'], 1, True)}% em show próprio. "
-                       "Palco dividido coloca a banda na frente de quem ainda não é fã."),
-            'acao': 'Priorize 2–3 festivais/line-ups de nostalgia por semestre; use show próprio para monetizar a base.',
+                       f"(já descontada a sazonalidade) contra {br(prop['mediana'], 1, True)}% em meses de show próprio. "
+                       "É associação observacional: lançamentos, mídia e vários shows no mesmo período também influenciam o resultado."),
+            'acao': 'Teste festival e show próprio com códigos rastreáveis; compare novos ouvintes, seguidores e resultado líquido.',
             'impacto': 'Novos ouvintes',
         })
     cc = o['shows']['casos_cidade']
@@ -752,7 +829,7 @@ def recommendations(o, cfg):
             'titulo': f"{c0['titulo']}: +{c0['lift']:.0f}% de ouvintes na cidade",
             'porque': (f"Após {c0['descricao']}, os ouvintes em {NOME_BONITO.get(c0['coluna'], c0['coluna'])} subiram {c0['lift']:.0f}% em até 30 dias. "
                        "Show grande na cidade certa funciona como campanha de mídia."),
-            'acao': 'Repita o formato (gratuito/patrocinado ou de grande porte) em 1 praça-chave por ano, com marca parceira pagando a conta.',
+            'acao': 'Em uma próxima praça, use campanha e links rastreáveis para separar o efeito do show de lançamento, imprensa e mídia.',
             'impacto': 'Base local',
         })
     # lançamento
@@ -810,7 +887,8 @@ def recommendations(o, cfg):
             'titulo': f"Playlists editoriais pararam em {pr['editoriais']} — os fãs não",
             'porque': (f"O número de playlists editoriais do Spotify está parado em torno de {pr['editoriais']} desde {pr['editoriais_parado_desde']}, mesmo com disco novo, "
                        f"enquanto as playlists criadas por fãs cresceram {pr['usuarios_g12']:+.0f}% em 12 meses "
-                       f"({fmt(pr['usuarios'])} hoje). Só {pr['dependencia_editorial']:.0f}% do alcance depende de editoriais: base sólida, teto baixo."),
+                       f"({fmt(pr['usuarios'])} hoje). As editoriais representam {pr['alcance_editorial_pct']:.0f}% do alcance potencial "
+                       "somado das playlists; alcance não informa quantos streams vieram de cada origem."),
             'acao': 'Pitch editorial a cada lançamento (rock, nostalgia, "emo") + ativar fãs curadores com maior alcance.',
             'impacto': 'Descoberta',
         })

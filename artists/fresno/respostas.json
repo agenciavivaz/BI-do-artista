@@ -136,7 +136,7 @@
     },
     {
       "tipo": "previsao",
-      "titulo": "Janeiro: queda sazonal para ~399 mil ouvintes",
+      "titulo": "Janeiro: queda sazonal para ~412 mil ouvintes",
       "pergunta": "proximos-meses"
     }
   ],
@@ -357,7 +357,7 @@
           "ms": 700
         },
         {
-          "texto": "Lendo a agenda própria da banda: 34 shows desde 2024",
+          "texto": "Lendo a agenda própria da banda: 30 shows desde 2024",
           "fontes": [
             "shows",
             "imprensa"
@@ -365,7 +365,7 @@
           "ms": 700
         },
         {
-          "texto": "Ajustando a regressão nos 10 shows com capacidade de casa conhecida",
+          "texto": "Ajustando a regressão nos 9 shows com capacidade de casa conhecida",
           "fontes": [
             "shows",
             "cidades"
@@ -373,7 +373,7 @@
           "ms": 700
         },
         {
-          "texto": "Testando: tira um show, tenta prever ele — erro mediano de 13% nos 5 com número de público",
+          "texto": "Testando: tira um show, tenta prever ele — erro mediano de 20% nos 4 com público estimado",
           "fontes": [
             "shows",
             "imprensa"
@@ -389,20 +389,20 @@
           "ms": 700
         }
       ],
-      "veredito": "São Paulo: 8.000 pessoas é o cenário mais provável, 77% de chance de esgotar a casa que a banda usou lá. Em Curitiba, a previsão já passa da casa usada.",
-      "explicacao": "A conta não é uma taxa de conversão escolhida a dedo nem uma média. É uma regressão sobre os shows próprios da banda, com o público crescendo com a base de fãs da praça elevada a 0,51 — menor que 1, ou seja, praça grande converte uma fatia menor. Show esgotado entra como piso e não como teto, porque lotar diz que a banda venderia pelo menos aquilo. Testado show a show, o modelo erra 13% na mediana nos 5 shows com número de público, e respeita o piso em 4 dos 5 que esgotaram — é a margem com que esses números devem ser lidos.",
+      "veredito": "São Paulo: 8.000 pessoas é o cenário mais provável, 100% de chance de esgotar a casa que a banda usou lá. Em São Paulo, a previsão já passa da casa usada.",
+      "explicacao": "A conta não é uma taxa de conversão escolhida a dedo nem uma média. É uma regressão sobre os shows próprios da banda, com o público crescendo com a base de fãs da praça elevada a 0,48 — menor que 1, ou seja, praça grande converte uma fatia menor. Show esgotado entra como piso e não como teto, porque lotar diz que a banda venderia pelo menos aquilo. Testado show a show, o modelo erra 20% na mediana nos 4 shows com público estimado, e respeita o piso em 3 dos 5 que esgotaram — é a margem com que esses números devem ser lidos. Os públicos não esgotados são estimativas de ocupação, não bilheterias confirmadas; a seleção da fórmula e o teste usam os mesmos shows e não constituem validação independente.",
       "numeros": [
         {
           "valor": "8.000",
-          "rotulo": "São Paulo · 77% de esgotar"
+          "rotulo": "São Paulo · 100% de esgotar"
         },
         {
-          "valor": "3.900",
-          "rotulo": "Porto Alegre · 69% de esgotar"
+          "valor": "3.600",
+          "rotulo": "Porto Alegre · 51% de esgotar"
         },
         {
-          "valor": "3.500",
-          "rotulo": "Curitiba · 98% de esgotar"
+          "valor": "3.600",
+          "rotulo": "Curitiba · 96% de esgotar"
         }
       ],
       "blocos": [
@@ -441,13 +441,13 @@
         }
       ],
       "acoes": [
-        "Em Curitiba, a previsão passa da casa usada: peça casa maior ou uma segunda data.",
+        "Em São Paulo, Curitiba, Jundiaí, a previsão passa da casa usada: peça casa maior ou uma segunda data.",
         "Prefira a casa que lota no limite de baixo da faixa: casa cheia vira conteúdo e escassez.",
         "Anote capacidade e ocupação de cada show em config.json → calibracao.ancoras: a regressão se refaz sozinha."
       ],
       "confianca": {
-        "nivel": "média",
-        "motivo": "Regressão sobre 10 shows próprios com capacidade de casa conhecida, de 34 na agenda, com a fórmula escolhida entre 8 candidatas pela validação. O erro mediano é de 13% e o pior caso foi 30%. Capacidade de casa quase nunca é publicada no Brasil e a ocupação é presumida quando a fonte não diz: com bilheteria oficial, a margem cai."
+        "nivel": "baixa",
+        "motivo": "Regressão sobre 9 shows próprios com capacidade de casa conhecida, de 30 na agenda, com a fórmula escolhida entre 2 candidatas pela validação. O erro mediano é de 20% e o pior caso foi 26%. Capacidade de casa quase nunca é publicada no Brasil e a ocupação é presumida quando a fonte não diz: com bilheteria oficial, será possível medir o erro com mais segurança."
       },
       "seguintes": [
         "onde-cobrar-mais",
@@ -458,7 +458,7 @@
       "id": "show-da-retorno",
       "tema": "shows",
       "destaque": true,
-      "pergunta": "Show grande dá retorno no streaming?",
+      "pergunta": "O streaming costuma mudar perto dos shows?",
       "variacoes": [
         "show aumenta",
         "show grande",
@@ -492,8 +492,8 @@
           "ms": 700
         }
       ],
-      "veredito": "Sim: Porto Alegre ganhou 30% de ouvintes depois do show na Redenção.",
-      "explicacao": "Após o show gratuito na Redenção (cerca de 70 mil pessoas, 16/05/2026), os ouvintes em Porto Alegre foram de +27% para +66% em relação a nov/2025. Show grande na cidade certa funciona como campanha de mídia.",
+      "veredito": "Em Porto Alegre, os ouvintes subiram 30% perto do show na Redenção.",
+      "explicacao": "Após o show gratuito na Redenção (cerca de 70 mil pessoas, 16/05/2026), os ouvintes em Porto Alegre foram de +27% para +66% em relação a nov/2025. A coincidência é útil para planejar mídia, mas não prova que o show causou a alta.",
       "numeros": [
         {
           "valor": "+30%",
@@ -523,8 +523,8 @@
         "Publique conteúdo do show na semana seguinte: é quando a cidade está ouvindo."
       ],
       "confianca": {
-        "nivel": "alta",
-        "motivo": "Série diária da cidade com o salto exatamente na semana do show."
+        "nivel": "média",
+        "motivo": "Série diária da cidade; lançamento, imprensa, mídia e outros eventos próximos podem explicar parte da alta."
       },
       "seguintes": [
         "festival-ou-proprio",
@@ -544,7 +544,7 @@
       ],
       "pensando": [
         {
-          "texto": "Separando 55 eventos desde 2019 em dois tipos",
+          "texto": "Separando 35 combinações de mês e tipo desde 2019",
           "fontes": [
             "shows"
           ],
@@ -567,15 +567,15 @@
           "ms": 700
         }
       ],
-      "veredito": "Festival traz público novo; show próprio monetiza quem já é fã.",
-      "explicacao": "Depois de festival ou turnê coletiva os ouvintes mudam +1,8% na mediana (68% dos casos com alta), contra −0,2% em show próprio. Palco dividido coloca a banda na frente de quem ainda não ouve.",
+      "veredito": "Nos dados observados, meses com festival tiveram sinal melhor; use isso como hipótese de teste.",
+      "explicacao": "Depois de festival ou turnê coletiva os ouvintes mudam +2,4% na mediana (62% dos casos com alta), contra +0,1% em show próprio. O resultado é uma associação: lançamentos, mídia e outras datas no mesmo mês também influenciam.",
       "numeros": [
         {
-          "valor": "+1,8%",
+          "valor": "+2,4%",
           "rotulo": "festival / coletivo"
         },
         {
-          "valor": "−0,2%",
+          "valor": "+0,1%",
           "rotulo": "show próprio"
         }
       ],
@@ -586,12 +586,12 @@
         }
       ],
       "acoes": [
-        "2 a 3 festivais ou line-ups de nostalgia por semestre.",
-        "Shows próprios nas praças de prêmio de cachê."
+        "Teste um festival com campanha e códigos rastreáveis; compare novos ouvintes e seguidores antes/depois.",
+        "Use show próprio nas praças fortes e registre bilheteria, mídia e resultado líquido."
       ],
       "confianca": {
-        "nivel": "média",
-        "motivo": "55 eventos: amostra pequena, direção consistente."
+        "nivel": "baixa",
+        "motivo": "35 meses/tipos observados, sem grupo de controle; útil como hipótese para teste."
       },
       "seguintes": [
         "com-quem-dividir-palco",
@@ -823,41 +823,41 @@
       ],
       "pensando": [
         {
-          "texto": "Calculando o nível real, sem efeito do mês, dos últimos 12 meses",
+          "texto": "Comparando quatro métodos simples nos meses já observados",
           "fontes": [
             "ouvintes"
           ],
           "ms": 700
         },
         {
-          "texto": "Aplicando o padrão de cada mês",
+          "texto": "Escolhendo o método que menos errou no backtest",
           "fontes": [
             "ouvintes"
           ],
           "ms": 700
         },
         {
-          "texto": "Desenhando a faixa provável (80%)",
+          "texto": "Aplicando o padrão de cada mês e ampliando a margem com o horizonte",
           "fontes": [
             "ouvintes"
           ],
           "ms": 700
         }
       ],
-      "veredito": "Janeiro deve ficar perto de 399 mil ouvintes. É a queda de todo ano, não perda de público.",
-      "explicacao": "A base sem efeito sazonal está em 429 mil. A faixa provável para janeiro vai de 371 mil a 426 mil; a recuperação vem a partir de abril.",
+      "veredito": "Janeiro deve ficar perto de 412 mil ouvintes. É um cenário sazonal, sujeito a lançamentos e outros eventos.",
+      "explicacao": "O método escolhido foi nível recente (6 meses), com erro médio de 3,8% em 24 meses de teste. A faixa indicativa para janeiro vai de 371 mil a 453 mil; ela aumenta nos meses mais distantes e não antecipa lançamento, viral ou show grande.",
       "numeros": [
         {
-          "valor": "427 mil",
+          "valor": "444 mil",
+          "rotulo": "nov/26"
+        },
+        {
+          "valor": "442 mil",
           "rotulo": "dez/26"
         },
         {
-          "valor": "399 mil",
+          "valor": "412 mil",
           "rotulo": "jan/27"
-        },
-        {
-          "valor": "408 mil",
-          "rotulo": "fev/27"
         }
       ],
       "blocos": [
@@ -867,11 +867,11 @@
         }
       ],
       "acoes": [
-        "Não leia a queda de janeiro como crise; planeje o conteúdo de catálogo para esse período."
+        "Compare o resultado real com a projeção e planeje conteúdo de catálogo para esse período."
       ],
       "confianca": {
         "nivel": "média",
-        "motivo": "Projeção estatística simples; um lançamento ou show grande muda a curva."
+        "motivo": "Método escolhido em backtest de 24 meses; eventos futuros não estão na série e podem mudar a curva."
       },
       "seguintes": [
         "quando-lancar"
@@ -957,6 +957,86 @@
         "motivo": "O export cobre 5 faixas monitoradas; a API cobre o catálogo inteiro."
       },
       "seguintes": [
+        "viralizando",
+        "edicao-comemorativa"
+      ]
+    },
+    {
+      "id": "catalogo-concentrado",
+      "tema": "catalogo",
+      "pergunta": "Minha carreira depende de poucas músicas?",
+      "variacoes": [
+        "catálogo concentrado",
+        "dependo de hits",
+        "poucas músicas",
+        "cauda longa",
+        "músicas acelerando",
+        "qual música está crescendo",
+        "faixa crescendo agora"
+      ],
+      "pensando": [
+        {
+          "texto": "Somando os streams de cada faixa nos últimos 90 dias",
+          "fontes": [
+            "faixas"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Medindo quanto as três maiores representam",
+          "fontes": [
+            "faixas"
+          ],
+          "ms": 700
+        },
+        {
+          "texto": "Comparando os últimos 30 dias com os 60 anteriores",
+          "fontes": [
+            "faixas"
+          ],
+          "ms": 700
+        }
+      ],
+      "veredito": "No recorte exportado, 4 de 5 faixas formam 80% dos streams recentes.",
+      "explicacao": "O relatório fornecido contém 5 faixas com streams nos últimos 90 dias, não o catálogo completo. Nesse recorte, a maior responde por 32% e as três maiores por 72%. Nenhuma faixa está mais de 10% acima do ritmo dos 60 dias anteriores. Concentração não é ruim por si só, mas aumenta o risco de setlist, mídia e receita dependerem dos mesmos hits.",
+      "numeros": [
+        {
+          "valor": "72%",
+          "rotulo": "dos streams nas 3 maiores do recorte"
+        },
+        {
+          "valor": "4",
+          "rotulo": "faixas formam 80% do consumo"
+        },
+        {
+          "valor": "0",
+          "rotulo": "faixas acelerando agora"
+        }
+      ],
+      "blocos": [
+        {
+          "tipo": "tabela",
+          "dados": "faixas",
+          "colunas": [
+            "faixa",
+            "streams_30d",
+            "streams_90d",
+            "aceleracao_30d",
+            "forca"
+          ],
+          "titulo": "Velocidade e peso de cada faixa"
+        }
+      ],
+      "acoes": [
+        "Proteja os hits no setlist, mas escolha uma faixa acelerando para receber conteúdo e mídia.",
+        "Acompanhe mensalmente quantas faixas são necessárias para formar 80% dos streams."
+      ],
+      "confianca": {
+        "nivel": "média",
+        "motivo": "As contas são exatas para as faixas exportadas, mas o arquivo não contém o catálogo completo."
+      },
+      "seguintes": [
+        "setlist",
         "viralizando",
         "edicao-comemorativa"
       ]
@@ -1360,7 +1440,7 @@
         }
       ],
       "veredito": "As editoriais pararam em 29 desde out/2024; os fãs continuam colocando a banda nas deles.",
-      "explicacao": "Mesmo com disco novo, o número de editoriais não mudou. Já as playlists de fãs cresceram +6% em 12 meses (15.734). Só 22% do alcance vem de editorial: base sólida, teto baixo. O melhor sinal recente: 1º lugar na Pátria Rock com \"Tentar de Novo e de Novo\".",
+      "explicacao": "Mesmo com disco novo, o número de editoriais não mudou. Já as playlists de fãs cresceram +6% em 12 meses (15.734). As editoriais representam 22% do alcance potencial somado das playlists; isso mede exposição possível, não a origem dos streams. O melhor sinal recente: 1º lugar na Pátria Rock com \"Tentar de Novo e de Novo\".",
       "numeros": [
         {
           "valor": "29",
@@ -1372,7 +1452,7 @@
         },
         {
           "valor": "22%",
-          "rotulo": "do alcance é editorial"
+          "rotulo": "do alcance potencial é editorial"
         }
       ],
       "blocos": [

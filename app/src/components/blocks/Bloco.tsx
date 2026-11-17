@@ -131,7 +131,7 @@ function construir(b: BlocoT, d: Data): Saida | null {
       return {
         titulo: t(TITULOS.previsao),
         grafico: <GraficoLinha pontos={pontos} rotulo={`Ouvintes mensais: ${d.historico.length} meses de histórico e ${d.previsao.length} de projeção`} />,
-        tabela: { cabecalho: ['Mês', 'Ouvintes', 'Faixa provável'], linhas: pontos.map((p) => [p.x, int(p.v), p.min != null ? `${int(p.min)} a ${int(p.max!)}` : '—']) },
+        tabela: { cabecalho: ['Mês', 'Ouvintes', 'Faixa indicativa'], linhas: pontos.map((p) => [p.x, int(p.v), p.min != null ? `${int(p.min)} a ${int(p.max!)}` : '—']) },
       };
     }
     case 'linha': {
