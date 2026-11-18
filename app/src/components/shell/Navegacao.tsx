@@ -1,14 +1,14 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { useArtist } from '../../data/ArtistContext';
-import { IcDados, IcInicio, IcMapa, IcPerguntar, IcSimular } from './Icones';
+import { IcDados, IcInicio, IcMapa, IcSimular } from './Icones';
 
 /** As cinco seções. O rótulo diz o que a pessoa vai fazer, não o nome da tela. */
 export function useSecoes() {
   const { base } = useArtist();
   return [
     { to: base, rotulo: 'Início', icone: <IcInicio />, end: true },
-    { to: `${base}/perguntas`, rotulo: 'Perguntar', icone: <IcPerguntar /> },
-    { to: `${base}/simular/ingressos`, rotulo: 'Simular', icone: <IcSimular />, prefixo: `${base}/simular` },
+    { to: `${base}/simular/ingressos`, rotulo: 'Shows', icone: <IcSimular />, prefixo: `${base}/simular` },
+    { to: `${base}/streaming`, rotulo: 'Streaming', icone: <IcDados /> },
     { to: `${base}/mapa`, rotulo: 'Mapa', icone: <IcMapa /> },
     { to: `${base}/dados`, rotulo: 'Dados', icone: <IcDados /> },
   ];

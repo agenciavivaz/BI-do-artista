@@ -27,7 +27,7 @@ function Estrutura() {
             <span className="marca-sistema">Camarim</span>
           </Link>
           <Menu />
-          <button type="button" className="btn btn-primario topo-cta" onClick={() => abrirConversao('topo')}>Quer isso vivo?</button>
+          <button type="button" className="btn btn-primario topo-cta" onClick={() => abrirConversao('topo')}>Sobre o piloto</button>
         </div>
         {!inicio && (
           <div className="topo-busca faixa">

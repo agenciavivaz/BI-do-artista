@@ -6,6 +6,7 @@ import Pergunta from './pages/Pergunta';
 
 const Perguntas = lazy(() => import('./pages/Perguntas'));
 const Simular = lazy(() => import('./pages/Simular'));
+const Streaming = lazy(() => import('./pages/Streaming'));
 const Mapa = lazy(() => import('./pages/Mapa'));
 const Dados = lazy(() => import('./pages/Dados'));
 
@@ -36,6 +37,7 @@ export default function App() {
           <Route path="perguntas" element={<Perguntas />} />
           <Route path="simular" element={<Navigate replace to="ingressos" />} />
           <Route path="simular/:sim" element={<Simular />} />
+          <Route path="streaming" element={<Streaming />} />
           <Route path="mapa" element={<Mapa />} />
           <Route path="dados" element={<Dados />} />
           <Route path="relatorio" element={<Relatorio />} />

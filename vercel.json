@@ -6,7 +6,10 @@
   "outputDirectory": "app/dist",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/((?!data/|assets/|.*\\..*).*)", "destination": "/index.html" }
+    { "source": "/:slug", "destination": "/" },
+    { "source": "/:slug/p/:id", "destination": "/" },
+    { "source": "/:slug/simular/:sim?", "destination": "/" },
+    { "source": "/:slug/:secao(perguntas|streaming|mapa|dados)", "destination": "/" }
   ],
   "headers": [
     { "source": "/(.*)", "headers": [ { "key": "X-Robots-Tag", "value": "noindex, nofollow" } ] }

@@ -123,7 +123,7 @@ export function CtaVivo() {
         <strong>Gostou? Isso funciona com qualquer pergunta.</strong>
         <p className="apoio">A versão viva atualiza toda semana e responde com a IA, com os dados ao vivo.</p>
       </div>
-      <button type="button" className="btn btn-primario" onClick={() => abrirConversao('resposta')}>Quer isso vivo?</button>
+      <button type="button" className="btn btn-primario" onClick={() => abrirConversao('resposta')}>Sobre o piloto</button>
     </aside>
   );
 }

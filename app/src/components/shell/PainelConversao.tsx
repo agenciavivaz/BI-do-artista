@@ -16,7 +16,7 @@ export function PainelConversao() {
   const zap = c.whatsapp.replace(/\D/g, '');
   const temContato = c.email || zap || c.instagram;
   return (
-    <Gaveta aberta={conversaoAberta} onFechar={fecharConversao} titulo="Quer isso vivo?" id="conv">
+    <Gaveta aberta={conversaoAberta} onFechar={fecharConversao} titulo="Sobre o piloto" id="conv">
       <p className="conv-texto">{c.texto_cta}</p>
       <h3 className="conv-sub">O que muda na versão completa</h3>
       <ul className="conv-lista">
@@ -24,7 +24,7 @@ export function PainelConversao() {
           <li key={t}><strong>{t}</strong><span className="apoio">{d}</span></li>
         ))}
       </ul>
-      {temContato && (
+      {temContato ? (
         <div className="conv-contato">
           <h3 className="conv-sub">Fale com a gente{c.nome ? `, ${c.nome}` : ''}</h3>
           <div className="chips">
@@ -33,7 +33,7 @@ export function PainelConversao() {
             {c.instagram && <a className="btn" href={`https://instagram.com/${c.instagram.replace('@', '')}`} target="_blank" rel="noopener noreferrer">Instagram</a>}
           </div>
         </div>
-      )}
+      ) : <p className="apoio">O canal para solicitar um piloto ainda não está disponível nesta demo.</p>}
     </Gaveta>
   );
 }

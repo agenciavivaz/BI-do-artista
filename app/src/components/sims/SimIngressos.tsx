@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useArtist } from '../../data/ArtistContext';
 import { dec, int } from '../../lib/format';
-import { CASAS, CONFIANCA, casaPara, chanceDeEsgotar, coef, dataBr, fraseProva, pct, pub } from '../../lib/publico';
+import { CASAS, CONFIANCA, casaPara, coef, dataBr, fraseProva, pct, pub } from '../../lib/publico';
 import { evento } from '../../lib/track';
 import { CidadeBusca } from './CidadeBusca';
 
@@ -14,6 +14,7 @@ export function useDebounceEvento() {
 }
 
 /** degraus de casa para o controle: 200 … 20 mil, sempre redondos */
+const reais = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 const DEGRAUS = [200, 300, 400, 500, 700, 900, 1200, 1500, 2000, 2500, 3000, 3600, 4400, 5500, 7000, 8500, 10000, 13000, 16000, 20000];
 const maisPerto = (n: number) => DEGRAUS.reduce((a, b) => (Math.abs(b - n) < Math.abs(a - n) ? b : a), DEGRAUS[0]);
 
@@ -24,6 +25,8 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
   const inicial = cidades.find((c) => c.cidade === cidadeInicial) ?? [...cidades].sort((a, b) => b.publico - a.publico)[0];
   const [cidade, setCidade] = useState(inicial);
   const [casa, setCasa] = useState<number | null>(null); // null = a casa que a banda já usou
+  const [preco, setPreco] = useState<number | null>(null);
+  const [custos, setCustos] = useState<number | null>(null);
   const marcar = useDebounceEvento();
 
   const casaPadrao = useMemo(() => {
@@ -33,11 +36,18 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
   useEffect(() => {
     if (!cidadeInicial) return;
     const c = cidades.find((x) => x.cidade === cidadeInicial);
-    if (c) { setCidade(c); setCasa(null); }
+    if (c) { setCidade(c); setCasa(null); setPreco(null); setCustos(null); }
   }, [cidadeInicial, cidades]);
 
   const lugares = casa ?? casaPadrao;
-  const chance = chanceDeEsgotar(cidade, lugares);
+  const ticket = preco ?? cidade.ticket_medio ?? 0;
+  const vendidos = Math.min(cidade.publico, lugares);
+  const ticketCentavos = Math.round(ticket * 100);
+  const custoCentavos = custos === null ? null : Math.round(custos * 100);
+  const bilheteria = vendidos * ticketCentavos;
+  const equilibrio = ticketCentavos > 0 && custoCentavos !== null
+    ? Math.ceil(custoCentavos / ticketCentavos)
+    : null;
   const faixaCasa = casaPara(cidade.publico);
   const conf = CONFIANCA[cidade.confianca];
   const m = p.modelo;
@@ -47,14 +57,13 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
 
   return (
     <div className="sim">
-      <CidadeBusca cidades={cidades} valor={cidade} onChange={(c) => { setCidade(c); setCasa(null); mudou(c); }} />
+      <CidadeBusca cidades={cidades} valor={cidade} onChange={(c) => { setCidade(c); setCasa(null); setPreco(null); setCustos(null); mudou(c); }} />
 
       <div className="sim-saida painel" aria-live="polite">
         <p className="sim-numero num">{int(cidade.publico)}</p>
         <p className="sim-frase">
-          Em {cidade.cidade}, o público mais provável de um show próprio é de <strong className="num">{int(cidade.publico)}</strong> pessoas.
-          Em 8 de cada 10 cenários fica entre <strong className="num">{int(cidade.publico_min)}</strong> e{' '}
-          <strong className="num">{int(cidade.publico_max)}</strong>. Casa sugerida: {CASAS[faixaCasa].rotulo}.
+          Demanda estimada para um show próprio em {cidade.cidade}. Faixa indicativa de <strong className="num">{int(cidade.publico_min)}</strong> e{' '}
+          <strong className="num">{int(cidade.publico_max)}</strong> pessoas. Casa sugerida: {CASAS[faixaCasa].rotulo}.
         </p>
         <p className="apoio linha-conf">
           <span className={`pastilha pastilha-${cidade.confianca}`}>{conf.rotulo}</span> {conf.motivo}
@@ -66,16 +75,7 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
             Esta aqui está fora disso, então a previsão é extrapolação e a faixa vem mais larga de propósito.
           </p>
         )}
-        {cidade.ticket_medio && (
-          <p className="apoio">
-            Bilheteria bruta provável: <strong className="num">R$ {int(cidade.bilheteria ?? 0)}</strong> — {int(cidade.publico)} pessoas
-            a um ticket médio de R$ {int(cidade.ticket_medio)}
-            {cidade.preco_proprio
-              ? ` (preço praticado pela banda nesta praça: inteira de R$ ${int(cidade.preco_inteira ?? 0)})`
-              : ` (sem preço publicado aqui; usamos a mediana das praças, inteira de R$ ${int(cidade.preco_inteira ?? 0)})`}.
-            A conta supõe que metade do público paga meia.
-          </p>
-        )}
+        <p className="apoio">Estimativa exploratória baseada no histórico disponível.</p>
         <ol className="casas" aria-label="Tamanho de casa">
           {CASAS.map((c, i) => <li key={c.curto} className={i === faixaCasa ? 'sel' : ''} aria-current={i === faixaCasa ? 'true' : undefined}>{c.curto}</li>)}
         </ol>
@@ -89,20 +89,41 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
         <input id="casa" className="slider" type="range" min={0} max={DEGRAUS.length - 1} step={1}
           value={Math.max(DEGRAUS.indexOf(lugares), 0)}
           onChange={(e) => { const v = DEGRAUS[Number(e.target.value)]; setCasa(v); mudou(cidade, v); }} />
-        <div className="chance">
-          <div className="chance-trilho"><i style={{ width: `${chance}%` }} /></div>
-          <p className="chance-valor">
-            <strong className="num">{chance}%</strong> de chance de esgotar {int(lugares)} lugares
-          </p>
-        </div>
         <p className="apoio">
           {sobra > lugares * 0.05
-            ? <>Sobra demanda: cerca de <strong className="num">{int(sobra)}</strong> pessoas ficariam sem ingresso — é o argumento de casa maior ou de uma segunda data.</>
-            : sobra < -lugares * 0.3
-              ? <>A casa é grande para a praça hoje: a previsão enche <strong className="num">{pct((cidade.publico / lugares) * 100)}</strong> dela.</>
-              : <>Casa e demanda batem: é o cenário de manter a casa e subir o preço.</>}
+            ? <>A demanda estimada supera a capacidade em {int(sobra)} pessoas. Compare uma casa maior ou uma segunda data.</>
+            : <>O cenário indica ocupação de {pct((vendidos / lugares) * 100)} da casa.</>}
         </p>
       </div>
+
+      <div className="campo">
+        <label htmlFor="ticket-medio" className="campo-rotulo">Preço médio por ingresso (R$)</label>
+        <input id="ticket-medio" className="campo-input" type="number" min="0" step="0.01"
+          value={preco ?? cidade.ticket_medio ?? ''}
+          onChange={(e) => setPreco(e.target.value === '' ? 0 : Math.max(0, Number(e.target.value)))} />
+        {preco === null && ticketCentavos > 0 && (
+          <p className="apoio">Referência {cidade.preco_proprio ? 'da praça' : 'das praças com preço publicado'}, com a premissa de metade dos ingressos a meia-entrada.</p>
+        )}
+      </div>
+      <div className="campo">
+        <label htmlFor="custo-show" className="campo-rotulo">Custo total estimado do show (R$)</label>
+        <input id="custo-show" className="campo-input" type="number" min="0" step="0.01"
+          value={custos ?? ''} onChange={(e) => setCustos(e.target.value === '' ? null : Math.max(0, Number(e.target.value)))} />
+        <p className="apoio">Inclua os gastos da operação. A conta considera bilheteria integral e custos fixos.</p>
+      </div>
+      <section className="sim-saida painel" aria-labelledby="h-bilheteria" aria-live="polite">
+        <h3 id="h-bilheteria">Bilheteria da casa selecionada</h3>
+        <p>{int(vendidos)} ingressos estimados em uma casa de {int(lugares)} lugares.</p>
+        {ticketCentavos > 0 ? <p>Bilheteria bruta estimada <strong className="num">{reais.format(bilheteria / 100)}</strong></p>
+          : <p className="apoio">Informe um preço médio para calcular a bilheteria.</p>}
+        {equilibrio !== null && custoCentavos !== null && (
+          <>
+            <p>Ingressos para cobrir os custos <strong className="num">{int(equilibrio)}</strong></p>
+            {equilibrio > lugares && <p>O ponto de equilíbrio supera a capacidade da casa.</p>}
+            <p>Resultado estimado após os custos informados <strong className="num">{reais.format((bilheteria - custoCentavos) / 100)}</strong></p>
+          </>
+        )}
+      </section>
 
       {cidade.provas.length > 0 && (
         <section className="provas" aria-labelledby="h-provas">

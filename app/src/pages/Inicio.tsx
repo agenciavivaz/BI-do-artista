@@ -4,7 +4,7 @@ import { BarraDePergunta } from '../components/shell/BarraDePergunta';
 import { IcSeta } from '../components/shell/Icones';
 import { useArtist } from '../data/ArtistContext';
 import { useUi } from '../data/UiContext';
-import { compact, dataLonga, dec, int } from '../lib/format';
+import { compact, dataLonga, int } from '../lib/format';
 import { lerJSON } from '../lib/store';
 import type { Alerta } from '../types';
 
@@ -22,20 +22,17 @@ export default function Inicio() {
 
   return (
     <div className="inicio">
-      {/* ---------- capa do dossiê ---------- */}
+      {/* ---------- entrada da gestão ---------- */}
       <section className="capa faixa" aria-label={config.nome}>
         <div className="capa-texto">
-          <p className="etiqueta">Dossiê de carreira</p>
+          <p className="etiqueta">Gestão de shows e streaming</p>
           <h1 className="capa-nome">{config.nome}</h1>
           <p className="capa-sub">
-            {config.subtitulo}. {config.cidade_origem}, desde {config.desde}.{' '}
-            <strong>{dec(k.ouvintes_g12, 1)}% mais ouvintes</strong> que há 12 meses.
-            Dados até {dataLonga(data.meta.dados_ate)}.
+            Planeje shows e encontre oportunidades para o catálogo.
           </p>
-          <div className="capa-busca">
-            <BarraDePergunta />
-            <p className="apoio capa-dica">Escreva com suas palavras ou escolha uma das perguntas abaixo.</p>
-          </div>
+          <p className="apoio capa-dica">
+            Demo com dados de audiência até {dataLonga(data.meta.dados_ate)}.
+          </p>
         </div>
         {config.fotos?.capa && (
           <figure className="capa-foto">
@@ -44,11 +41,27 @@ export default function Inicio() {
         )}
       </section>
 
-      {/* ---------- números de topo ---------- */}
+      <section className="gestao faixa" aria-label="Por onde começar">
+        <article className="painel">
+          <h2>Shows</h2>
+          <p>Compare o público estimado, a capacidade da casa e a bilheteria do cenário.</p>
+          <Link className="btn btn-primario" to={`${base}/simular/ingressos`}>Simular um show</Link>
+        </article>
+        <article className="painel">
+          <h2>Streaming</h2>
+          <p>Veja quais faixas ganharam tração e escolha uma ação para o catálogo.</p>
+          <Link className="btn" to={`${base}/streaming`}>Ver oportunidades do catálogo</Link>
+        </article>
+      </section>
+
+      <div className="inicio-busca faixa">
+        <BarraDePergunta />
+      </div>
+
+      {/* ---------- audiência ---------- */}
       <dl className="kpis faixa">
         <div><dt>Ouvintes mensais</dt><dd className="num">{compact(k.ouvintes)}</dd></div>
         <div><dt>Seguidores no Spotify</dt><dd className="num">{compact(k.seguidores_spotify)}</dd></div>
-        <div><dt>Seguidores por 100 ouvintes</dt><dd className="num">{int(k.lealdade)}</dd></div>
         <div><dt>Fãs somados nas redes</dt><dd className="num">{compact(k.fas_total)}</dd></div>
       </dl>
 
@@ -132,7 +145,7 @@ export default function Inicio() {
                       <div className="investigar painel" role="region" aria-label="Investigar">
                         <p>{a.texto}</p>
                         <p className="apoio">Hoje isto é um retrato de um dia. Na versão com API o sistema cruza a cidade com shows, vídeos e playlists e responde sozinho.</p>
-                        <button type="button" className="btn" onClick={() => abrirConversao('alerta')}>Quer isso vivo?</button>
+                        <button type="button" className="btn" onClick={() => abrirConversao('alerta')}>Sobre o piloto</button>
                       </div>
                     )}
                   </>
@@ -197,7 +210,7 @@ export default function Inicio() {
             {dataLonga(data.meta.dados_ate)}. Ligado às APIs, o Camarim refaz as contas todo dia e avisa quando algo muda.
           </p>
           <div className="chips">
-            <button type="button" className="btn btn-primario" onClick={() => abrirConversao('inicio')}>Quer isso vivo?</button>
+            <button type="button" className="btn btn-primario" onClick={() => abrirConversao('inicio')}>Sobre o piloto</button>
             <a className="btn" href={`${base}/relatorio`}>Ver o relatório em uma página</a>
           </div>
         </div>

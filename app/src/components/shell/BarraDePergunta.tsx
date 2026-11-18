@@ -2,7 +2,6 @@ import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useArtist } from '../../data/ArtistContext';
 import { casar, sugerir } from '../../lib/match';
-import { useMedia } from '../../lib/useMedia';
 import { evento } from '../../lib/track';
 import type { Pergunta } from '../../types';
 import { IcBusca } from './Icones';
@@ -15,7 +14,6 @@ export function BarraDePergunta() {
   const [ativo, setAtivo] = useState(-1);
   const input = useRef<HTMLInputElement>(null);
   const uid = useId();
-  const estreito = useMedia('(max-width: 899px)');
   const ignorar = useMemo(() => [config.nome], [config.nome]);
 
   const lista: Pergunta[] = useMemo(() => {
@@ -66,7 +64,7 @@ export function BarraDePergunta() {
   const mostrar = aberta && lista.length > 0;
   return (
     <form className="barra" role="search" onSubmit={enviar}>
-      <label className="sr-only" htmlFor={`${uid}-in`}>Pergunte sobre a carreira de {config.nome}</label>
+      <label className="sr-only" htmlFor={`${uid}-in`}>Buscar perguntas prontas sobre {config.nome}</label>
       <span className="barra-icone"><IcBusca /></span>
       <input
         ref={input}
@@ -75,7 +73,7 @@ export function BarraDePergunta() {
         type="text"
         autoComplete="off"
         enterKeyHint="search"
-        placeholder={estreito ? 'Pergunte sobre a carreira…' : `Pergunte sobre a carreira da ${config.nome}…`}
+        placeholder="Buscar perguntas prontas…"
         value={texto}
         onChange={(e) => { setTexto(e.target.value); setAberta(true); }}
         onFocus={() => setAberta(true)}

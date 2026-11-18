@@ -5,7 +5,7 @@ import { SimJanela } from '../components/sims/SimJanela';
 import { useArtist } from '../data/ArtistContext';
 
 const SIMS = {
-  ingressos: { nome: 'Ingressos por cidade', texto: 'Quantas pessoas vão ao show numa cidade, e que tamanho de casa vale a pena.' },
+  ingressos: { nome: 'Show próprio', texto: 'Compare casas e calcule a bilheteria e o mínimo de ingressos para cobrir os custos.' },
   cache: { nome: 'Prêmio de cachê', texto: 'Quanto pedir a mais (ou a menos) conforme a demanda da cidade.' },
   janela: { nome: 'Janela de lançamento', texto: 'O que esperar dos ouvintes conforme o mês em que você solta o trabalho.' },
 } as const;
