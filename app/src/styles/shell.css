@@ -1,11 +1,10 @@
-/* ---------- esqueleto: cabeçalho fixo + uma coluna de leitura ---------- */
+/* ---------- esqueleto: cabeçalho fixo + faixas responsivas ---------- */
 .shell { display: flex; flex-direction: column; min-height: 100dvh; }
 .principal { flex: 1; min-width: 0; outline: none; padding: 28px 0 120px; }
 
 /* toda faixa de conteúdo usa a mesma coluna e as mesmas margens */
-.faixa, .principal > * { width: 100%; max-width: var(--coluna); margin-inline: auto; padding-inline: 28px; }
+.faixa, .principal > * { width: 100%; max-width: var(--coluna); margin-inline: auto; padding-inline: var(--margem); }
 .principal > .inicio { max-width: none; padding-inline: 0; }  /* a capa sangra; cada seção traz sua .faixa */
-.principal > .largo, .largo .faixa { max-width: 1180px; }
 
 /* ---------- cabeçalho ---------- */
 .topo {
@@ -98,14 +97,17 @@
 /* ---------- < 900px: menu vira barra inferior ---------- */
 @media (max-width: 899px) {
   .menu { display: none; }
-  .topo-cta { display: none; }
+  .topo-cta { margin-left: auto; min-height: var(--alvo); }
   .topo-linha { min-height: 58px; gap: 12px; }
   .marca-sistema { display: none; }
+  .topo:has(.topo-busca) { position: relative; }
   .topo-busca { padding-bottom: 10px; }
   .topo-data { display: none; }
   .barra-atalho { display: none; }
+  .barra-input { padding-right: 16px; }
+  .barra-lista { max-height: 42dvh; overflow-y: auto; }
   .faixa, .principal > * { padding-inline: 18px; }
-  .principal { padding: 18px 0 104px; }
+  .principal { padding: 18px 0 calc(84px + env(safe-area-inset-bottom)); }
 
   .tabbar {
     display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
@@ -113,13 +115,13 @@
     border-top: 1px solid var(--ferragem); padding-bottom: env(safe-area-inset-bottom);
   }
   .tabbar ul { display: flex; }
-  .tabbar li { flex: 1; }
+  .tabbar li { flex: 1; min-width: 0; }
   .tab {
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
     min-height: 58px; color: var(--fumaca); text-decoration: none; font-size: var(--t-13); font-weight: 500;
   }
   .tab svg { width: 21px; height: 21px; }
-  .tab.ativo { color: var(--luz); }
+  .tab.ativo { color: var(--luz); font-weight: 700; }
   .tab.ativo svg { color: var(--refletor); }
   .gaveta { width: 100vw; border-left: 0; }
 }

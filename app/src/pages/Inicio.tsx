@@ -23,7 +23,7 @@ export default function Inicio() {
   return (
     <div className="inicio">
       {/* ---------- entrada da gestão ---------- */}
-      <section className="capa faixa" aria-label={config.nome}>
+      <div className={config.fotos?.capa ? 'capa capa-com-foto faixa' : 'capa faixa'}>
         <div className="capa-texto">
           <p className="etiqueta">Gestão de shows e streaming</p>
           <h1 className="capa-nome">{config.nome}</h1>
@@ -34,28 +34,26 @@ export default function Inicio() {
             Demo com dados de audiência até {dataLonga(data.meta.dados_ate)}.
           </p>
         </div>
+        <section className="gestao" aria-label="Por onde começar">
+          <article className="painel">
+            <h2>Shows</h2>
+            <p>Compare o público estimado, a capacidade da casa e a bilheteria do cenário.</p>
+            <Link className="btn btn-primario" to={`${base}/simular/ingressos`}>Simular um show</Link>
+          </article>
+          <article className="painel">
+            <h2>Streaming</h2>
+            <p>Veja quais faixas ganharam tração e escolha uma ação para o catálogo.</p>
+            <Link className="btn" to={`${base}/streaming`}>Ver oportunidades do catálogo</Link>
+          </article>
+        </section>
+        <div className="inicio-busca">
+          <BarraDePergunta />
+        </div>
         {config.fotos?.capa && (
           <figure className="capa-foto">
             <img src={config.fotos.capa} alt={config.fotos.capa_alt ?? config.nome} width={738} height={414} />
           </figure>
         )}
-      </section>
-
-      <section className="gestao faixa" aria-label="Por onde começar">
-        <article className="painel">
-          <h2>Shows</h2>
-          <p>Compare o público estimado, a capacidade da casa e a bilheteria do cenário.</p>
-          <Link className="btn btn-primario" to={`${base}/simular/ingressos`}>Simular um show</Link>
-        </article>
-        <article className="painel">
-          <h2>Streaming</h2>
-          <p>Veja quais faixas ganharam tração e escolha uma ação para o catálogo.</p>
-          <Link className="btn" to={`${base}/streaming`}>Ver oportunidades do catálogo</Link>
-        </article>
-      </section>
-
-      <div className="inicio-busca faixa">
-        <BarraDePergunta />
       </div>
 
       {/* ---------- audiência ---------- */}

@@ -52,7 +52,8 @@
   --alvo: 44px;
 
   /* largura da coluna de leitura */
-  --coluna: 920px;
+  --coluna: 1920px;
+  --margem: clamp(24px, 3.4vw, 64px);
 }
 
 /* bloco escuro: inverte os tokens para o conteúdo de dentro */

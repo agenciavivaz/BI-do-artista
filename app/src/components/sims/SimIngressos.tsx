@@ -57,73 +57,81 @@ export function SimIngressos({ cidadeInicial }: { cidadeInicial?: string | null 
 
   return (
     <div className="sim">
-      <CidadeBusca cidades={cidades} valor={cidade} onChange={(c) => { setCidade(c); setCasa(null); setPreco(null); setCustos(null); mudou(c); }} />
+      <div className="sim-ingressos-grade">
+        <div className="sim">
+          <CidadeBusca cidades={cidades} valor={cidade} onChange={(c) => { setCidade(c); setCasa(null); setPreco(null); setCustos(null); mudou(c); }} />
 
-      <div className="sim-saida painel" aria-live="polite">
-        <p className="sim-numero num">{int(cidade.publico)}</p>
-        <p className="sim-frase">
-          Demanda estimada para um show próprio em {cidade.cidade}. Faixa indicativa de <strong className="num">{int(cidade.publico_min)}</strong> e{' '}
-          <strong className="num">{int(cidade.publico_max)}</strong> pessoas. Casa sugerida: {CASAS[faixaCasa].rotulo}.
-        </p>
-        <p className="apoio linha-conf">
-          <span className={`pastilha pastilha-${cidade.confianca}`}>{conf.rotulo}</span> {conf.motivo}
-        </p>
-        {cidade.extrapolada && m.faixa_demanda && (
-          <p className="apoio linha-conf">
-            <span className="pastilha pastilha-baixa">fora do intervalo testado</span>
-            O modelo foi medido em praças com afinidade de {dec(m.faixa_demanda[0], 1)}x a {dec(m.faixa_demanda[1], 1)}x a mediana.
-            Esta aqui está fora disso, então a previsão é extrapolação e a faixa vem mais larga de propósito.
+          <div className="campo">
+            <label htmlFor="casa" className="campo-rotulo">
+              Casa de <strong className="num">{int(lugares)}</strong> lugares
+              {casa == null && <span className="apoio"> · {cidade.provas.find((pr) => pr.capacidade) ? 'a casa que a banda já usou aqui' : 'uma casa do tamanho da previsão'}</span>}
+            </label>
+            <input id="casa" className="slider" type="range" min={0} max={DEGRAUS.length - 1} step={1}
+              value={Math.max(DEGRAUS.indexOf(lugares), 0)}
+              onChange={(e) => { const v = DEGRAUS[Number(e.target.value)]; setCasa(v); mudou(cidade, v); }} />
+          </div>
+
+          <div className="sim-valores">
+            <div className="campo">
+              <label htmlFor="ticket-medio" className="campo-rotulo">Preço médio por ingresso (R$)</label>
+              <input id="ticket-medio" className="campo-input" type="number" inputMode="decimal" min="0" step="0.01"
+                value={preco ?? cidade.ticket_medio ?? ''}
+                onChange={(e) => setPreco(e.target.value === '' ? 0 : Math.max(0, Number(e.target.value)))} />
+              {preco === null && ticketCentavos > 0 && (
+                <p className="apoio">Referência {cidade.preco_proprio ? 'da praça' : 'das praças com preço publicado'}, com a premissa de metade dos ingressos a meia-entrada.</p>
+              )}
+            </div>
+            <div className="campo">
+              <label htmlFor="custo-show" className="campo-rotulo">Custo total estimado do show (R$)</label>
+              <input id="custo-show" className="campo-input" type="number" inputMode="decimal" min="0" step="0.01"
+                value={custos ?? ''} onChange={(e) => setCustos(e.target.value === '' ? null : Math.max(0, Number(e.target.value)))} />
+              <p className="apoio">Inclua os gastos da operação. A conta considera bilheteria integral e custos fixos.</p>
+            </div>
+          </div>
+          <p className="apoio">
+            {sobra > lugares * 0.05
+              ? <>A demanda estimada supera a capacidade em {int(sobra)} pessoas. Compare uma casa maior ou uma segunda data.</>
+              : <>O cenário indica ocupação de {pct((vendidos / lugares) * 100)} da casa.</>}
           </p>
-        )}
-        <p className="apoio">Estimativa exploratória baseada no histórico disponível.</p>
-        <ol className="casas" aria-label="Tamanho de casa">
-          {CASAS.map((c, i) => <li key={c.curto} className={i === faixaCasa ? 'sel' : ''} aria-current={i === faixaCasa ? 'true' : undefined}>{c.curto}</li>)}
-        </ol>
-      </div>
+        </div>
+        <div className="sim">
+          <section className="sim-saida painel" aria-labelledby="h-bilheteria" aria-live="polite">
+            <h3 id="h-bilheteria">Bilheteria da casa selecionada</h3>
+            <p>{int(vendidos)} ingressos estimados em uma casa de {int(lugares)} lugares.</p>
+            {ticketCentavos > 0 ? <p>Bilheteria bruta estimada <strong className="num">{reais.format(bilheteria / 100)}</strong></p>
+              : <p className="apoio">Informe um preço médio para calcular a bilheteria.</p>}
+            {equilibrio !== null && custoCentavos !== null && (
+              <>
+                <p>Ingressos para cobrir os custos <strong className="num">{int(equilibrio)}</strong></p>
+                {equilibrio > lugares && <p>O ponto de equilíbrio supera a capacidade da casa.</p>}
+                <p>Resultado estimado após os custos informados <strong className="num">{reais.format((bilheteria - custoCentavos) / 100)}</strong></p>
+              </>
+            )}
+          </section>
 
-      <div className="campo">
-        <label htmlFor="casa" className="campo-rotulo">
-          Casa de <strong className="num">{int(lugares)}</strong> lugares
-          {casa == null && <span className="apoio"> · {cidade.provas.find((pr) => pr.capacidade) ? 'a casa que a banda já usou aqui' : 'uma casa do tamanho da previsão'}</span>}
-        </label>
-        <input id="casa" className="slider" type="range" min={0} max={DEGRAUS.length - 1} step={1}
-          value={Math.max(DEGRAUS.indexOf(lugares), 0)}
-          onChange={(e) => { const v = DEGRAUS[Number(e.target.value)]; setCasa(v); mudou(cidade, v); }} />
-        <p className="apoio">
-          {sobra > lugares * 0.05
-            ? <>A demanda estimada supera a capacidade em {int(sobra)} pessoas. Compare uma casa maior ou uma segunda data.</>
-            : <>O cenário indica ocupação de {pct((vendidos / lugares) * 100)} da casa.</>}
-        </p>
+          <div className="sim-saida painel" aria-live="polite">
+            <p className="sim-numero num">{int(cidade.publico)}</p>
+            <p className="sim-frase">
+              Demanda estimada para um show próprio em {cidade.cidade}. Faixa indicativa entre <strong className="num">{int(cidade.publico_min)}</strong> e{' '}
+              <strong className="num">{int(cidade.publico_max)}</strong> pessoas. Casa sugerida: {CASAS[faixaCasa].rotulo}.
+            </p>
+            <p className="apoio linha-conf">
+              <span className={`pastilha pastilha-${cidade.confianca}`}>{conf.rotulo}</span> {conf.motivo}
+            </p>
+            {cidade.extrapolada && m.faixa_demanda && (
+              <p className="apoio linha-conf">
+                <span className="pastilha pastilha-baixa">fora do intervalo testado</span>
+                O modelo foi medido em praças com afinidade de {dec(m.faixa_demanda[0], 1)}x a {dec(m.faixa_demanda[1], 1)}x a mediana.
+                Esta aqui está fora disso, então a previsão é extrapolação e a faixa vem mais larga de propósito.
+              </p>
+            )}
+            <p className="apoio">Estimativa exploratória baseada no histórico disponível.</p>
+            <ol className="casas" aria-label="Tamanho de casa">
+              {CASAS.map((c, i) => <li key={c.curto} className={i === faixaCasa ? 'sel' : ''} aria-current={i === faixaCasa ? 'true' : undefined}>{c.curto}</li>)}
+            </ol>
+          </div>
+        </div>
       </div>
-
-      <div className="campo">
-        <label htmlFor="ticket-medio" className="campo-rotulo">Preço médio por ingresso (R$)</label>
-        <input id="ticket-medio" className="campo-input" type="number" min="0" step="0.01"
-          value={preco ?? cidade.ticket_medio ?? ''}
-          onChange={(e) => setPreco(e.target.value === '' ? 0 : Math.max(0, Number(e.target.value)))} />
-        {preco === null && ticketCentavos > 0 && (
-          <p className="apoio">Referência {cidade.preco_proprio ? 'da praça' : 'das praças com preço publicado'}, com a premissa de metade dos ingressos a meia-entrada.</p>
-        )}
-      </div>
-      <div className="campo">
-        <label htmlFor="custo-show" className="campo-rotulo">Custo total estimado do show (R$)</label>
-        <input id="custo-show" className="campo-input" type="number" min="0" step="0.01"
-          value={custos ?? ''} onChange={(e) => setCustos(e.target.value === '' ? null : Math.max(0, Number(e.target.value)))} />
-        <p className="apoio">Inclua os gastos da operação. A conta considera bilheteria integral e custos fixos.</p>
-      </div>
-      <section className="sim-saida painel" aria-labelledby="h-bilheteria" aria-live="polite">
-        <h3 id="h-bilheteria">Bilheteria da casa selecionada</h3>
-        <p>{int(vendidos)} ingressos estimados em uma casa de {int(lugares)} lugares.</p>
-        {ticketCentavos > 0 ? <p>Bilheteria bruta estimada <strong className="num">{reais.format(bilheteria / 100)}</strong></p>
-          : <p className="apoio">Informe um preço médio para calcular a bilheteria.</p>}
-        {equilibrio !== null && custoCentavos !== null && (
-          <>
-            <p>Ingressos para cobrir os custos <strong className="num">{int(equilibrio)}</strong></p>
-            {equilibrio > lugares && <p>O ponto de equilíbrio supera a capacidade da casa.</p>}
-            <p>Resultado estimado após os custos informados <strong className="num">{reais.format((bilheteria - custoCentavos) / 100)}</strong></p>
-          </>
-        )}
-      </section>
 
       {cidade.provas.length > 0 && (
         <section className="provas" aria-labelledby="h-provas">
